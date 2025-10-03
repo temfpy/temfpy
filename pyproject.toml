@@ -1,0 +1,69 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "temfpy"
+description = """
+            TeMFpy (Tensor Networks for Mean Field States in Python) is a library for
+            converting mean-field fermionic wavefunctions into matrix product states (MPS).
+"""
+dynamic = ["version"]
+readme = "README.md"
+authors = [
+    {name = "TeMFpy Developers", email="temfpy@gmail.com"},
+    {name = "Simon Hans Hille", email="simon.hille@physik.uzh.ch"},
+    {name = "Attila Szabó", email="attila.szabo@physik.uzh.ch"},
+
+]
+maintainers = [
+    {name = "TeMFpy Developers", email="temfpy@gmail.com"},
+    {name = "Simon Hans Hille", email="simon.hille@physik.uzh.ch"},
+    {name = "Attila Szabó", email="attila.szabo@physik.uzh.ch"},
+]
+keywords = [
+            "TeNPy", 
+            "matrix product states", 
+            "mean-field theory",
+]
+license = "MIT"
+
+
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "scipy",
+    "physics-tenpy>=1.0.0",
+    "pfapack",
+]
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Unix",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",  
+]
+
+[project.optional-dependencies]
+dev = [
+    "black>=25.1.0",
+    "docformatter",
+]
+docs = [
+    "sphinx",
+    "sphinx_rtd_theme",
+    "sphinx-autodoc-typehints",
+    "myst_nb",
+]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/temfpy/_version.py"
+pattern = "v(?P<version>.*)"
