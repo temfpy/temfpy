@@ -16,7 +16,7 @@ If you use Windows and want to use the Pfaffian-state functionality, [make sure 
 
 ## Documentation
 
-The documentation is available online at https://temfpy.github.io/temfpy. In addition, every object in TeMFpy comes with detailed docstrings that are available through the `help()` function in Python.
+The documentation is available [on this website](https://temfpy.github.io/temfpy). In addition, every object in TeMFpy comes with detailed docstrings that are available through the `help()` function in Python.
 
 ## Contribute
 
