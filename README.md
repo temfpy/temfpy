@@ -1,6 +1,6 @@
 # TeMFpy: Tensor-Network Mean-Field Python
 
-TeMFpy (**Te**nsor Networks for **M**ean-**F**ield States in **Py**thon, suggested pronuncation: ˈtɛmɸ.paɪ) is a [TeNPy](https://tenpy.readthedocs.io/en/latest/)-based Python library for converting fermionic mean-field states to finite or infinite matrix product state form. TeMFpy includes new, efficient, and easy-to-understand algorithms for both Slater determinants and Pfaffian states. Together with Gutzwiller projection, these also allow the user to build variational wave functions for various strongly correlated electron systems, such as quantum spin liquids. Being built on top of TeNPy, it integrates seamlessly with existing MPS-based algorithms.
+[TeMFpy](https://github.com/temfpy/temfpy) (**Te**nsor Networks for **M**ean-**F**ield States in **Py**thon, suggested pronuncation: ˈtɛmɸ.paɪ) is a [TeNPy](https://tenpy.readthedocs.io/en/latest/)-based Python library for converting fermionic mean-field states to finite or infinite matrix product state form. TeMFpy includes new, efficient, and easy-to-understand algorithms for both Slater determinants and Pfaffian states. Together with Gutzwiller projection, these also allow the user to build variational wave functions for various strongly correlated electron systems, such as quantum spin liquids. Being built on top of TeNPy, it integrates seamlessly with existing MPS-based algorithms.
 
 ## Installation
 TeMFpy runs on all operating systems and requires Python 3.10 or later. We support installation through pip:
