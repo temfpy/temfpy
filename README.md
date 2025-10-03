@@ -16,22 +16,22 @@ If you use Windows and want to use the Pfaffian-state functionality, [make sure 
 
 ## Documentation
 
-The documentation is available online at **TODO readthedocs link**. In addition, every object in TeMFpy comes with detailed docstrings that are available through the `help()` function in Python.
+The documentation is available online at https://temfpy.github.io/temfpy. In addition, every object in TeMFpy comes with detailed docstrings that are available through the `help()` function in Python.
 
 ## Contribute
 
 The most up-to-date version of TeMFpy is available on [GitHub](https://github.com/temfpy/temfpy). If you find any bugs in the library, please let us know by [opening an issue](https://github.com/temfpy/temfpy/issues), including a minimal example to reproduce the issue.
 
-We also welcome contributions, whether bug fixes or new features, please see our [contributor guidelines] **TODO link** for details.
+We also welcome contributions, whether bug fixes or new features, please see our [contributor guidelines](https://temfpy.github.io/temfpy/getting_started/contribute.html) for details.
 
 ## Citing TeMFpy
 
-If you find the **TeMFpy** project useful for your research, please consider citing the following software paper in order to help us to continue devoting time and resources to the **TeMFpy** development:
+If you find the **TeMFpy** project useful for your research, please consider citing the following software paper in order to help us continue devoting time and resources to the **TeMFpy** development:
 
 ```bibtex
-@Article{temfpy:2025,
-	title={{Tensor Networks for Mean Field States in Python (TeMFPy) - version 1}},
-	author={Attila Szabó and Simon Hans Hille},
+@Article{temfpy,
+	title={{TeMFpy: a Python library for converting fermionic mean-field states into tensor networks}},
+	author={Simon Hans Hille and Attila Szabó},
 	journal={TODO},
 	pages={TODO},
 	year={2025},
@@ -44,7 +44,7 @@ If you find the **TeMFpy** project useful for your research, please consider cit
 Please consider citing [the underlying **TeNPy** library](https://scipost.org/10.21468/SciPostPhysCodeb.41) as well:
 
 ```bibtex
-@Article{tenpy2024,
+@Article{tenpy,
     title={{Tensor network Python (TeNPy) version 1}},
     author={Johannes Hauschild and Jakob Unfried and Sajant Anand and Bartholomew Andrews and Marcus Bintz and Umberto Borla and Stefan Divic and Markus Drescher and Jan Geiger and Martin Hefel and Kévin Hémery and Wilhelm Kadow and Jack Kemp and Nico Kirchner and Vincent S. Liu and Gunnar Möller and Daniel Parker and Michael Rader and Anton Romen and Samuel Scalet and Leon Schoonderwoerd and Maximilian Schulz and Tomohiro Soejima and Philipp Thoma and Yantao Wu and Philip Zechmann and Ludwig Zweng and Roger S. K. Mong and Michael P. Zaletel and Frank Pollmann},
     journal={SciPost Phys. Codebases},
