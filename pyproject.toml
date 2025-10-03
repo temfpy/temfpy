@@ -55,7 +55,7 @@ dev = [
     "docformatter",
 ]
 docs = [
-    "sphinx",
+    "sphinx>=8.2",
     "sphinx_rtd_theme",
     "sphinx-autodoc-typehints",
     "myst_nb",
