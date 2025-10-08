@@ -30,7 +30,7 @@ If you find the **TeMFpy** project useful for your research, please consider cit
 
 ```bibtex
 @misc{temfpy,
-      title={TeMFpy: a Python library for converting fermionic mean-field states into tensor networks}, 
+      title={{TeMFpy}: a {Python} library for converting fermionic mean-field states into tensor networks}, 
       author={Simon H. Hille and Attila Szabó},
       year={2025},
       eprint={2510.05227},
