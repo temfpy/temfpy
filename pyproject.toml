@@ -49,6 +49,9 @@ classifiers = [
     "Programming Language :: Python :: 3.12",  
 ]
 
+[project.urls]
+Documentation = "https://temfpy.github.io/temfpy/"
+
 [project.optional-dependencies]
 dev = [
     "black>=25.1.0",
@@ -66,4 +69,7 @@ source = "vcs"
 
 [tool.hatch.build.hooks.vcs]
 version-file = "src/temfpy/_version.py"
-pattern = "v(?P<version>.*)"
+
+[tool.hatch.version.raw-options]
+local_scheme = "no-local-version"
+version_scheme = "no-guess-dev"
