@@ -12,7 +12,7 @@ pip install --upgrade temfpy
 
 We will set up installation via Conda in the near future.
 
-If you use Windows and want to use the Pfaffian-state functionality, [make sure you install the `pfapack` dependency correctly!](https://pfapack.readthedocs.io/en/latest/\#usage)
+If you use Windows and want to use the Pfaffian-state functionality, [make sure you install the `pfapack` dependency correctly!](https://pfapack.readthedocs.io/en/latest/\#usage). Alternatively, consider using [Windows Subsystem for Linux](https://ubuntu.com/desktop/wsl).
 
 ## Documentation
 
@@ -29,15 +29,14 @@ We also welcome contributions, whether bug fixes or new features, please see our
 If you find the **TeMFpy** project useful for your research, please consider citing the following software paper in order to help us continue devoting time and resources to the **TeMFpy** development:
 
 ```bibtex
-@Article{temfpy,
-	title={{TeMFpy: a Python library for converting fermionic mean-field states into tensor networks}},
-	author={Simon Hans Hille and Attila Szabó},
-	journal={TODO},
-	pages={TODO},
-	year={2025},
-	publisher={TODO},
-	doi={TODO},
-	url={TODO},
+@misc{temfpy,
+      title={TeMFpy: a Python library for converting fermionic mean-field states into tensor networks}, 
+      author={Simon H. Hille and Attila Szabó},
+      year={2025},
+      eprint={2510.05227},
+      archivePrefix={arXiv},
+      primaryClass={cond-mat.str-el},
+      url={https://arxiv.org/abs/2510.05227}, 
 }
 ```
 
