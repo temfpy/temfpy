@@ -1,10 +1,12 @@
 # Publish a new release to either TestPyPI or PyPI
-# push to main -> TestPyPI
+# push to main / new Tag -> TestPyPI
 # create a new release -> push to PyPI
 name: Release
 
 on:
   push:
+    tags:
+      - '*'
     branches:
       - master
   release:
@@ -36,7 +38,7 @@ jobs:
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-          fetch-depth: 0 #no shallow clone, needed for automated versioning
+          fetch-depth: 0 # no shallow clone, needed for automated versioning
           persist-credentials: false
 
       - name: Setup Python
