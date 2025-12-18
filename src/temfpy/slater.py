@@ -1414,15 +1414,21 @@ def C_to_iMPS(
       defaults to 1e-6.
     - If :attr:`trunc_par.degeneracy_tol` is not provided, the degeneracy tolerance
       defaults to 1e-12.
+    - If ``spinful`` fermions are requested, ``sites_per_cell`` and ``cut`` still
+      refer to indices in the original correlation matrices.
     """
     trunc_par = to_stopping_condition(trunc_par)
 
     if spinful == "simple":
         C_short = spinful_correlation_matrix(C_short, False)
         C_long = spinful_correlation_matrix(C_long, False)
+        sites_per_cell *= 2
+        cut *= 2
     elif spinful == "PH":
         C_short = spinful_correlation_matrix(C_short, True)
         C_long = spinful_correlation_matrix(C_long, True)
+        sites_per_cell *= 2
+        cut *= 2
     elif spinful is not None:
         raise ValueError(
             f"`spinful` must be 'simple', 'PH', or `None`, got {spinful!r}"
