@@ -18,6 +18,7 @@ slater
     :signatures: none
 
     correlation_matrix
+    spinful_correlation_matrix
     C_to_MPS
     C_to_iMPS
 
@@ -46,6 +47,8 @@ Functions
 ---------
 
 .. autofunction:: temfpy.slater.correlation_matrix
+
+.. autofunction:: temfpy.slater.spinful_correlation_matrix
 
 .. autofunction:: temfpy.slater.C_to_MPS
 
