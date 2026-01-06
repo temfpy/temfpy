@@ -44,7 +44,7 @@ def parity_mask(leg: npc.charges.LegCharge, parity: int = 0) -> np.ndarray:
 def number_mask(leg: npc.charges.LegCharge, n: int) -> np.ndarray:
     """Generates a mask selecting the physical charge block for a fermionic leg.
 
-    Only really makes sense for aU(1) conserving ``leg``.
+    Only really makes sense for a U(1) conserving ``leg``.
 
     Parameters
     ----------
