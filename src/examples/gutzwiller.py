@@ -16,11 +16,10 @@ L = 32
 
 H = hoppingH(L)
 C, _ = slater.correlation_matrix(H)
-C = np.kron(C, np.eye(2))  # Add spin
 
 chi = 200
 
-mps_ferm = slater.C_to_MPS(C, {"chi_max": chi})
+mps_ferm = slater.C_to_MPS(C, {"chi_max": chi}, spinful="PH")
 
 mps_spin = gutzwiller.abrikosov_ph(mps_ferm, inplace=False, return_canonical=True)
 

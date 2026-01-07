@@ -4,7 +4,7 @@
 # Standard library
 # ---------------
 import logging
-from typing import Type
+from typing import Type, Literal
 from dataclasses import dataclass
 
 # Third-party libraries
@@ -1180,12 +1180,46 @@ def correlation_matrix(H: np.ndarray, N: int | None = None) -> tuple[np.ndarray,
     return C, N
 
 
+def spinful_correlation_matrix(C: np.ndarray, ph: bool = True):
+    r"""Enlarged correlation matrix for spinful fermions.
+
+    Doubles the size of the correlation matrix: even and odd sites
+    in the new matrix correspond to up- and down-spin orbitals correlated
+    among themselves like the input correlation matrix, and uncorrelated
+    between up and down spins.
+
+    Parameters
+    ----------
+    C:
+        The correlation matrix, :math:`C_{ij} = \langle c_j^\dagger c_i\rangle`.
+    ph:
+        Whether the down-spin (odd index) orbitals should be particle-hole
+        transformed (:math:`c_{i\downarrow} \leftrightarrow c_{i\downarrow}^\dagger`)
+
+    Returns
+    -------
+        The enlarged spinful correlation matrix.
+    """
+    n, m = C.shape
+    assert n == m, f"Got non-square {C.shape} correlation matrix"
+
+    C2 = np.zeros((2 * n, 2 * n), dtype=C.dtype)
+    C2[::2, ::2] = C
+    if ph:
+        C2[1::2, 1::2] = np.eye(n) - C
+    else:
+        C2[1::2, 1::2] = C
+
+    return C2
+
+
 def C_to_MPS(
     C: np.ndarray,
     trunc_par: dict | StoppingCondition,
     *,
     diag_tol: float = _DIAG_TOL,
     ortho_center: int = None,
+    spinful: Literal["simple", "PH", None] = None,
 ) -> networks.MPS:
     r"""MPS representation of a Slater determinant from its correlation matrix.
 
@@ -1206,6 +1240,11 @@ def C_to_MPS(
     ortho_center:
         Orthogonality centre of the mixed canonical MPS.
         Midpoint of the chain by default.
+    spinful:
+        Whether to treat the input correlation matrix as describing a
+        spin-rotation symmetric state of spinful fermions or not (``None``),
+        either with (``"PH"``) or without (``"simple"``) particle-hole
+        rotation in the down-spin sector.
 
     Returns
     -------
@@ -1219,6 +1258,15 @@ def C_to_MPS(
       defaults to 1e-12.
     """
     trunc_par = to_stopping_condition(trunc_par)
+
+    if spinful == "simple":
+        C = spinful_correlation_matrix(C, False)
+    elif spinful == "PH":
+        C = spinful_correlation_matrix(C, True)
+    elif spinful is not None:
+        raise ValueError(
+            f"`spinful` must be 'simple', 'PH', or `None`, got {spinful!r}"
+        )
 
     L = len(C)
     assert C.shape == (L, L), f"Got non-square {C.shape} correlation matrix"
@@ -1301,6 +1349,7 @@ def C_to_iMPS(
     diag_tol: float = _DIAG_TOL,
     unitary_tol: float = iMPS._UNITARY_TOL,
     schmidt_tol: float = iMPS._SCHMIDT_TOL,
+    spinful: Literal["simple", "PH", None] = None,
 ) -> tuple[networks.MPS, iMPS.iMPSError]:
     r"""iMPS representation of a Slater determinant from correlation matrices.
 
@@ -1345,6 +1394,11 @@ def C_to_iMPS(
     schmidt_tol:
         Maximum mixing of unequal Schmidt values by the gauge rotation matrices
         before a warning is raised.
+    spinful:
+        Whether to treat the input correlation matrices as describing a
+        spin-rotation symmetric state of spinful fermions or not (``None``),
+        either with (``"PH"``) or without (``"simple"``) particle-hole
+        rotation in the down-spin sector.
 
     Returns
     -------
@@ -1360,8 +1414,25 @@ def C_to_iMPS(
       defaults to 1e-6.
     - If :attr:`trunc_par.degeneracy_tol` is not provided, the degeneracy tolerance
       defaults to 1e-12.
+    - If ``spinful`` fermions are requested, ``sites_per_cell`` and ``cut`` still
+      refer to indices in the original correlation matrices.
     """
     trunc_par = to_stopping_condition(trunc_par)
+
+    if spinful == "simple":
+        C_short = spinful_correlation_matrix(C_short, False)
+        C_long = spinful_correlation_matrix(C_long, False)
+        sites_per_cell *= 2
+        cut *= 2
+    elif spinful == "PH":
+        C_short = spinful_correlation_matrix(C_short, True)
+        C_long = spinful_correlation_matrix(C_long, True)
+        sites_per_cell *= 2
+        cut *= 2
+    elif spinful is not None:
+        raise ValueError(
+            f"`spinful` must be 'simple', 'PH', or `None`, got {spinful!r}"
+        )
 
     L_short = len(C_short)
     err = f"Got non-square {C_short.shape} correlation matrix"
