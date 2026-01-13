@@ -196,7 +196,7 @@ def abrikosov_ph(
     return_canonical: bool = True,
     cutoff: float = 1e-12,
 ) -> None | networks.MPS:
-    r"""Projection from particle hole rotated Abrikosov fermions to a spin-1/2 Hilbert space.
+    r"""Projection from particle-hole rotated Abrikosov fermions to a spin-1/2 Hilbert space.
 
     The input MPS must contain an even number of sites, sites :math:`2i`
     and :math:`2i+1` representing modes :math:`f_{i\uparrow}` and
