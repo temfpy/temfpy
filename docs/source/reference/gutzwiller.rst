@@ -21,17 +21,14 @@ gutzwiller
 
 
 Gutzwiller projections of Abrikosov fermions
----------------------------------------------
-
-Gutzwiller projections
-^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------------------
 
 .. autofunction:: temfpy.gutzwiller.abrikosov
 
 .. autofunction:: temfpy.gutzwiller.abrikosov_ph
 
 Helper functions
-^^^^^^^^^^^^^^^^
+----------------
 
 .. autofunction:: temfpy.gutzwiller.parity_mask
 
