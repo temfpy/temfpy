@@ -111,6 +111,11 @@ def abrikosov(
     Returns
     -------
         The Gutzwiller projected ``mps``, if ``inplace`` is :obj:`False`.
+    
+    Note
+    ----
+        Currently, no symmetry quantum numbers other than fermion number or parity 
+        can be handled, i.e. :class:`~tenpy.networks.site.GroupedSite` is not supported.
     """
 
     assert (
@@ -224,6 +229,11 @@ def abrikosov_ph(
     Returns
     -------
         The Gutzwiller projected ``mps``, if ``inplace`` is :obj:`False`.
+    
+    Note
+    ----
+        Currently, no symmetry quantum numbers other than fermion number or parity 
+        can be handled, i.e. :class:`~tenpy.networks.site.GroupedSite` is not supported.
     """
 
     assert (

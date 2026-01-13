@@ -26,7 +26,7 @@ We also welcome contributions, whether bug fixes or new features, please see our
 
 ## Citing TeMFpy
 
-If you find the **TeMFpy** project useful for your research, please consider citing the following software paper in order to help us continue devoting time and resources to the **TeMFpy** development:
+If you find the **TeMFpy** project useful for your research, please consider citing [the following software paper](https://arxiv.org/abs/2510.05227) in order to help us continue devoting time and resources to the **TeMFpy** development:
 
 ```bibtex
 @misc{temfpy,

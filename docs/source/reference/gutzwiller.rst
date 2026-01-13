@@ -3,7 +3,7 @@ gutzwiller
 
 .. automodule:: temfpy.gutzwiller
 
-.. rubric:: Gutzwiller projections for Abrikosov fermions
+.. rubric:: Gutzwiller projections
 
 .. autosummary::
     :signatures: none
@@ -11,22 +11,17 @@ gutzwiller
     abrikosov
     abrikosov_ph
 
-Gutzwiller projections for Abrikosov fermions
+.. rubric:: Helper functions
+
+.. autosummary::
+    :signatures: none
+
+    parity_mask
+    number_mask 
+
+
+Gutzwiller projections of Abrikosov fermions
 ---------------------------------------------
-The input MPS is assumed to describe Abrikosov fermions :math:`f_{i,\sigma}` and
-each site within the :class:`~tenpy.networks.mps.MPS` has to contain
-an instance of :class:`~tenpy.networks.site.FermionSite` (spinless fermionic site).
-
-.. note::
-    Currently, no symmetry quantum numbers other than fermion number or parity 
-    can be handled, i.e. :class:`~tenpy.networks.site.GroupedSite` is not supported.
-
-Helper functions
-^^^^^^^^^^^^^^^^
-
-.. autofunction:: temfpy.gutzwiller.parity_mask
-
-.. autofunction:: temfpy.gutzwiller.number_mask
 
 Gutzwiller projections
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -34,4 +29,11 @@ Gutzwiller projections
 .. autofunction:: temfpy.gutzwiller.abrikosov
 
 .. autofunction:: temfpy.gutzwiller.abrikosov_ph
+
+Helper functions
+^^^^^^^^^^^^^^^^
+
+.. autofunction:: temfpy.gutzwiller.parity_mask
+
+.. autofunction:: temfpy.gutzwiller.number_mask
 
