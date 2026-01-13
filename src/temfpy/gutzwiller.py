@@ -115,7 +115,7 @@ def abrikosov(
     Note
     ----
         Currently, no symmetry quantum numbers other than fermion number or parity 
-        can be handled, i.e. :class:`~tenpy.networks.site.GroupedSite` is not supported.
+        can be handled.
     """
 
     assert (
@@ -233,7 +233,7 @@ def abrikosov_ph(
     Note
     ----
         Currently, no symmetry quantum numbers other than fermion number or parity 
-        can be handled, i.e. :class:`~tenpy.networks.site.GroupedSite` is not supported.
+        can be handled.
     """
 
     assert (
