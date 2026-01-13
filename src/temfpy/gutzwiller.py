@@ -11,6 +11,12 @@ import tenpy.linalg as npc
 
 logger = logging.getLogger(__name__)
 
+#### Gutzwiller projections for Abrikosov fermions ####
+#### --------------------------------------------- ####
+
+# Helper functions
+# ----------------
+
 
 def parity_mask(leg: npc.charges.LegCharge, parity: int = 0) -> np.ndarray:
     """Generates a mask selecting the physical parity blocks for a given
@@ -63,6 +69,10 @@ def number_mask(leg: npc.charges.LegCharge, n: int) -> np.ndarray:
     return mask
 
 
+# Gutzwiller projections
+# ----------------------
+
+
 def abrikosov(
     mps: networks.MPS,
     *,
@@ -70,11 +80,10 @@ def abrikosov(
     return_canonical: bool = True,
     cutoff: float = 1e-12,
 ) -> None | networks.MPS:
-    r"""Gutzwiller projection from Abrikosov fermions to a spin-1/2 Hilbert space.
+    r"""Projection from Abrikosov fermions to a spin-1/2 Hilbert space.
 
-    The input MPS is assumed to describe Abrikosov fermions:
-    it must contain an even number of spinless fermion sites,
-    sites :math:`2i` and :math:`2i+1` representing modes :math:`f_{i\uparrow}` and
+    The input MPS must contain an even number of sites, sites :math:`2i` and
+    :math:`2i+1` representing modes :math:`f_{i\uparrow}` and
     :math:`f_{i\downarrow}`, respectively.
     These pairs are projected to a spin-1/2 Hilbert space using the following rules:
 
@@ -102,20 +111,16 @@ def abrikosov(
     Returns
     -------
         The Gutzwiller projected ``mps``, if ``inplace`` is :obj:`False`.
-
-    Note
-    ----
-        Currently, no symmetry quantum numbers other than fermion
-        number or parity can be handled.
     """
 
     assert (
         mps.L % 2 == 0
     ), "Odd-length MPS cannot represent an Abrikosov fermion Hilbert space"
     # TODO: allow grouped sites which include a FermionicSite
-    assert isinstance(
-        mps.sites[0], networks.FermionSite
-    ), f"All sites must be fermionic, found: {mps.sites[0]}"
+    for i, site in enumerate(mps.sites):
+        assert isinstance(
+            site, networks.FermionSite
+        ), f"All sites must be fermionic, found: {site} at site {i}"
 
     if not inplace:
         mps = mps.copy()
@@ -186,28 +191,19 @@ def abrikosov_ph(
     return_canonical: bool = True,
     cutoff: float = 1e-12,
 ) -> None | networks.MPS:
-    r"""Gutzwiller projection from Abrikosov fermions to a spin-1/2 Hilbert space.
+    r"""Projection from particle hole rotated Abrikosov fermions to a spin-1/2 Hilbert space.
 
-    The input MPS is assumed to describe  Abrikosov fermions, with the down
-    spins particle-hole transformed; i.e.:
-
-    .. math::
-
-        c_{i,\uparrow} := f_{i,\uparrow},
-        \qquad \qquad
-        c_{i,\downarrow} := f_{i,\downarrow}^\dagger.
-
-    Therefore, it must contain an even number of spinless fermion sites:
-    sites :math:`2i` and :math:`2i+1` represent modes :math:`c_{i\uparrow}` and
-    :math:`c_{i\downarrow}`, respectively.
+    The input MPS must contain an even number of sites, sites :math:`2i`
+    and :math:`2i+1` representing modes :math:`f_{i\uparrow}` and
+    :math:`f_{i\downarrow}^\dagger`, respectively.
     These pairs are projected to a spin-1/2 Hilbert space using the following rules:
 
     - Zero occupation → spin-down state
+    - Double occupation of → spin-up state
     - Single occupation → unphysical states, dropped
-    - Double occupation → spin-up state
 
-    Therefore, depending on the conserved charge of the input MPS, only the following charge blocks
-    of the virtual legs are kept:
+    Depending on the conserved charge of the input MPS, the following spin quantum numbers
+    are kept in the output:
 
     - ``'N'`` (particle number) → even ``'N'`` blocks → ``'S_z'`` conserved
     - ``'parity'`` → even ``'parity'`` blocks → no conserved charge
@@ -228,20 +224,16 @@ def abrikosov_ph(
     Returns
     -------
         The Gutzwiller projected ``mps``, if ``inplace`` is :obj:`False`.
-
-    Note
-    ----
-        Currently, no symmetry quantum numbers other than fermion
-        number or parity can be handled.
     """
 
     assert (
         mps.L % 2 == 0
     ), "Odd-length MPS cannot represent an Abrikosov fermion Hilbert space"
     # TODO: allow grouped sites which include a FermionicSite
-    assert isinstance(
-        mps.sites[0], networks.FermionSite
-    ), f"All sites must be fermionic, found: {mps.sites[0]}"
+    for i, site in enumerate(mps.sites):
+        assert isinstance(
+            site, networks.FermionSite
+        ), f"All sites must be fermionic, found: {site} at site {i}"
 
     if not inplace:
         mps = mps.copy()
