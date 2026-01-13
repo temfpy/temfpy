@@ -121,7 +121,7 @@ def abrikosov(
     assert (
         mps.L % 2 == 0
     ), "Odd-length MPS cannot represent an Abrikosov fermion Hilbert space"
-    # TODO: allow grouped sites which include a FermionicSite
+    # TODO: allow more general sites with a charge for fermion number/parity
     for i, site in enumerate(mps.sites):
         assert isinstance(
             site, networks.FermionSite
@@ -239,7 +239,7 @@ def abrikosov_ph(
     assert (
         mps.L % 2 == 0
     ), "Odd-length MPS cannot represent an Abrikosov fermion Hilbert space"
-    # TODO: allow grouped sites which include a FermionicSite
+    # TODO: allow more general sites with a charge for fermion number/parity
     for i, site in enumerate(mps.sites):
         assert isinstance(
             site, networks.FermionSite
