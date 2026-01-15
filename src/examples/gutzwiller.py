@@ -23,8 +23,11 @@ mps_ferm = slater.C_to_MPS(C, {"chi_max": chi}, spinful="PH")
 
 mps_spin = gutzwiller.abrikosov_ph(mps_ferm, inplace=False, return_canonical=True)
 
+print(mps_spin.sites[0])
+
 spectrum = mps_spin.entanglement_spectrum(by_charge=True)
 bond = L // 2
+logging.disable()  # suppress matplotlib debug logs
 for (q,), s in spectrum[bond]:
     plt.plot(q * np.ones(len(s)), s, "kx")
 plt.show()
