@@ -719,7 +719,7 @@ class SchmidtModes:
         trunc_par:
             Which Schmidt modes should be kept as entangled.
 
-            Must be either a :class:`~temfpy.schmidt_sets.StoppingCondition` object
+            Must be either a :class:`~temfpy.schmidt_utils.StoppingCondition` object
             or a dictionary with matching keys.
         basis:
             whether the correlation matrix is supplied in
@@ -1163,7 +1163,7 @@ class SchmidtVectors:
         trunc_par:
             Specifies which Schmidt states should be kept.
 
-            Must be either a :class:`~temfpy.schmidt_sets.StoppingCondition` object
+            Must be either a :class:`~temfpy.schmidt_utils.StoppingCondition` object
             or a dictionary with matching keys.
 
             The filtering function `is_sector` is applied to the number of
@@ -1769,7 +1769,6 @@ class MPSTensorData:
 #### High-level functions ####
 #### -------------------- ####
 
-
 def C_to_MPS(
     C: np.ndarray,
     trunc_par: dict | StoppingCondition,
@@ -1788,7 +1787,7 @@ def C_to_MPS(
     trunc_par:
         Specifies which Schmidt states should be kept.
 
-        Must be either a :class:`~temfpy.schmidt_sets.StoppingCondition` object
+        Must be either a :class:`~temfpy.schmidt_utils.StoppingCondition` object
         or a dictionary with matching keys.
 
         Only specify the field ``sectors`` if you know what you are doing!!
@@ -1937,7 +1936,7 @@ def C_to_iMPS(
     trunc_par:
         Specifies which Schmidt states should be kept.
 
-        Must be either a :class:`~temfpy.schmidt_sets.StoppingCondition` object
+        Must be either a :class:`~temfpy.schmidt_utils.StoppingCondition` object
         or a dictionary with matching keys.
 
         Only specify the field ``sectors`` if you know what you are doing!!
@@ -2053,3 +2052,155 @@ def C_to_iMPS(
     )
     error = iMPS.iMPSError(left_unitary, left_schmidt, 0.0, 0.0)
     return iMPS_, error
+
+
+def H_to_MPS(
+    H: np.ndarray,
+    trunc_par: dict | StoppingCondition,
+    *,
+    basis: str,
+    diag_tol: float = _DIAG_TOL,
+    ortho_center: int = None,
+) -> networks.MPS:
+    r"""MPS representation of a Nambu mean-field ground state from its single particle Hamiltonian.
+
+    Parameters
+    ----------
+    H:
+        Single particle Hamiltonian in the basis indicated by ``basis``.
+    trunc_par:
+        Specifies which Schmidt states should be kept.
+
+        Must be either a :class:`~temfpy.schmidt_utils.StoppingCondition` object
+        or a dictionary with matching keys.
+
+        Only specify the field ``sectors`` if you know what you are doing!!
+    basis:
+        "M" or "C", indicates whether the Hamiltonian is given
+        in the Majorana or the complex-fermion basis.
+    ortho_center:
+        Orthogonality centre of the mixed canonical MPS.
+        Midpoint of the chain by default.
+    diag_tol:
+        Largest allowed offdiagonal matrix element in diagonalised / SVD
+        correlation submatrices before an error is raised.
+
+    Returns
+    -------
+        The wave function as a TeNPy :class:`~tenpy.networks.mps.MPS` object.
+
+    Note
+    ----
+    - If :attr:`trunc_par.svd_min` is not provided, the truncation threshold
+      defaults to 1e-6.
+    - If :attr:`trunc_par.degeneracy_tol` is not provided, the degeneracy tolerance
+      defaults to 1e-12.
+    """
+    C = correlation_matrix(H, basis=f"{basis}->M")
+    return C_to_MPS(
+        C,
+        trunc_par,
+        basis="M",
+        diag_tol=diag_tol,
+        ortho_center=ortho_center,
+    )
+
+
+def H_to_iMPS(
+    H_short: np.ndarray,
+    H_long: np.ndarray,
+    trunc_par: dict | StoppingCondition,
+    sites_per_cell: int,
+    cut: int,
+    *,
+    basis: str | list[str, str] | tuple[str, str],
+    diag_tol: float = _DIAG_TOL,
+    unitary_tol: float = iMPS._UNITARY_TOL,
+    schmidt_tol: float = iMPS._SCHMIDT_TOL,
+) -> tuple[networks.MPS, iMPS.iMPSError]:
+    r"""iMPS representation of a Nambu mean-field state from single particle hamiltonians.
+
+    It is expected that the two single-particle Hamiltonians describe two 
+    translation-invariant systems that differ by one repeating unit cell.
+
+    The method is analogous to :func:`.iMPS.MPS_to_iMPS`, with two differences:
+
+    - No explicit MPS tensors are computed for the environment of the iMPS unit
+      cell. Instead, the Schmidt vector overlaps needed for gauge fixing are
+      computed using the Pfaffian state overlap formulas implemented in
+      :class:`MPSTensorData`.
+    - The rightmost tensor is computed directly using the right Schmidt vectors
+      of the shorter chain. This means that no separate :class:`~.iMPS.iMPSError`\ s
+      are returned for the right side.
+
+    Parameters
+    ----------
+    H_short:
+        Single particle Hamiltonian in the basis indicated by ``basis``
+        for the shorter chain.
+    H_long:
+        Single particle Hamiltonian in the basis indicated by ``basis``
+        for the longer chain.
+    trunc_par:
+        Specifies which Schmidt states should be kept.
+
+        Must be either a :class:`~temfpy.schmidt_utils.StoppingCondition` object
+        or a dictionary with matching keys.
+
+        Only specify the field ``sectors`` if you know what you are doing!!
+    sites_per_cell:
+        Size of the iMPS unit cell.
+    cut:
+        First site of the repeating unit cell in ``H_long``.
+    basis:
+        Indicates whether the single-particle Hamiltonian is in the Majorana ('M') 
+        or complex-fermion ('C') basis. If a list-like object with two entries is 
+        provided, they specify the basis for ``H_short`` and ``H_long``, respectively.
+    diag_tol:
+        Largest allowed offdiagonal matrix element in diagonalised / SVD
+        correlation submatrices before an error is raised.
+    unitary_tol:
+        Maximum deviation of the gauge rotation matrices from unitarity
+        before a warning is raised.
+    schmidt_tol:
+        Maximum mixing of unequal Schmidt values by the gauge rotation matrices
+        before a warning is raised.
+
+    Returns
+    -------
+    iMPS: :class:`~tenpy.networks.mps.MPS`
+        iMPS with unit cell size ``sites_per_cell``, constructed from the
+        additional unit cell of ``mps_long``.
+    validation_metric: :class:`~.iMPS.iMPSError`
+        Errors introduced during the conversion.
+
+    Note
+    ----
+    - If :attr:`trunc_par.svd_min` is not provided, the truncation threshold
+      defaults to 1e-6.
+    - If :attr:`trunc_par.degeneracy_tol` is not provided, the degeneracy tolerance
+      defaults to 1e-12.
+    """
+    if isinstance(basis, (list, tuple)):
+        if len(basis) != 2:
+            raise ValueError(
+                "If `basis` is a list or tuple, it must have exactly two entries."
+            )
+        basis_short, basis_long = basis
+    else:
+        basis_short = basis_long = basis
+        
+    C_short = correlation_matrix(H_short, basis=f"{basis_short}->M")
+    C_long = correlation_matrix(H_long, basis=f"{basis_long}->M")
+    return C_to_iMPS(
+        C_short,
+        C_long,
+        trunc_par,
+        sites_per_cell,
+        cut,
+        basis="M",
+        diag_tol=diag_tol,
+        unitary_tol=unitary_tol,
+        schmidt_tol=schmidt_tol,
+    )
+

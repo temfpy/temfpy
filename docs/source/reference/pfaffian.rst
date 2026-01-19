@@ -21,6 +21,8 @@ pfaffian
     parity
     C_to_MPS
     C_to_iMPS
+    H_to_MPS
+    H_to_iMPS
 
 .. rubric:: Helper functions
 
@@ -66,6 +68,10 @@ High-level functions
 .. autofunction:: temfpy.pfaffian.C_to_MPS
 
 .. autofunction:: temfpy.pfaffian.C_to_iMPS
+
+.. autofunction:: temfpy.pfaffian.H_to_MPS
+
+.. autofunction:: temfpy.pfaffian.H_to_iMPS
 
 Helper functions
 ----------------

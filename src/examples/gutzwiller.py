@@ -15,11 +15,10 @@ def hoppingH(L, t=-1):
 L = 32
 
 H = hoppingH(L)
-C, _ = slater.correlation_matrix(H)
 
 chi = 200
 
-mps_ferm = slater.C_to_MPS(C, {"chi_max": chi}, spinful="PH")
+mps_ferm = slater.H_to_MPS(H, {"chi_max": chi}, spinful="PH")
 
 mps_spin = gutzwiller.abrikosov_ph(mps_ferm, inplace=False, return_canonical=True)
 

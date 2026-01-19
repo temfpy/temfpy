@@ -24,9 +24,11 @@ chi = 200
 
 L = 32
 H = randomH(L)
-C, _ = slater.correlation_matrix(H)
 
-mps = slater.C_to_MPS(C, {"chi_max": chi})
+mps = slater.H_to_MPS(H, {"chi_max": chi})
+
+# Verify with correlation matrix
+C, _ = slater.correlation_matrix(H)
 
 CdC = mps.correlation_function("Cd", "C").T
 dev = CdC - C

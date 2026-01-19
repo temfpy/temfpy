@@ -20,11 +20,13 @@ def majorana_random_Hamiltonian(L, range=3):
 L = 20
 
 H = majorana_random_Hamiltonian(L)
-C = pfaffian.correlation_matrix(H, basis="M->C")
 
 chi = 200
 
-psi = pfaffian.C_to_MPS(C, {"chi_max": chi}, basis="C")
+psi = pfaffian.H_to_MPS(H, {"chi_max": chi}, basis="M")
+
+# Verify with correlation matrix
+C = pfaffian.correlation_matrix(H, basis="M->C")
 
 CdC = psi.correlation_function("Cd", "C").T
 dev = CdC - C[::2, ::2]
