@@ -21,6 +21,8 @@ slater
     spinful_correlation_matrix
     C_to_MPS
     C_to_iMPS
+    H_to_MPS
+    H_to_iMPS
 
 .. rubric:: Static variables
 
@@ -53,3 +55,7 @@ Functions
 .. autofunction:: temfpy.slater.C_to_MPS
 
 .. autofunction:: temfpy.slater.C_to_iMPS
+
+.. autofunction:: temfpy.slater.H_to_MPS
+
+.. autofunction:: temfpy.slater.H_to_iMPS

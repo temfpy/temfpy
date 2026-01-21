@@ -296,7 +296,7 @@ class SchmidtModes:
         trunc_par:
             Which Schmidt modes should be kept as entangled.
 
-            Must be either a :class:`~temfpy.schmidt_sets.StoppingCondition` object
+            Must be either a :class:`~temfpy.schmidt_utils.StoppingCondition` object
             or a dictionary with matching keys.
         which:
             Whether to return left and/or right Schmidt modes.
@@ -646,7 +646,7 @@ class SchmidtVectors:
         trunc_par:
             Specifies which Schmidt states should be kept.
 
-            Must be either a :class:`~temfpy.schmidt_sets.StoppingCondition` object
+            Must be either a :class:`~temfpy.schmidt_utils.StoppingCondition` object
             or a dictionary with matching keys.
 
             If ``modes`` contains left modes,
@@ -722,7 +722,7 @@ class SchmidtVectors:
         trunc_par:
             Specifies which Schmidt states should be kept.
 
-            Must be either a :class:`~temfpy.schmidt_sets.StoppingCondition` object
+            Must be either a :class:`~temfpy.schmidt_utils.StoppingCondition` object
             or a dictionary with matching keys.
 
             If left Schmidt modes are calculated,
@@ -1230,7 +1230,7 @@ def C_to_MPS(
     trunc_par:
         Specifies which Schmidt states should be kept.
 
-        Must be either a :class:`~temfpy.schmidt_sets.StoppingCondition` object
+        Must be either a :class:`~temfpy.schmidt_utils.StoppingCondition` object
         or a dictionary with matching keys.
 
         Only specify the field `sectors` if you know what you are doing!!
@@ -1377,7 +1377,7 @@ def C_to_iMPS(
     trunc_par:
         Specifies which Schmidt states should be kept.
 
-        Must be either a :class:`~temfpy.schmidt_sets.StoppingCondition` object
+        Must be either a :class:`~temfpy.schmidt_utils.StoppingCondition` object
         or a dictionary with matching keys.
 
         Only specify the field ``sectors`` if you know what you are doing!!
@@ -1506,3 +1506,143 @@ def C_to_iMPS(
     )
     error = iMPS.iMPSError(left_unitary, left_schmidt, 0.0, 0.0)
     return iMPS_, error
+
+
+def H_to_MPS(
+    H: np.ndarray,
+    trunc_par: dict | StoppingCondition,
+    *,
+    diag_tol: float = _DIAG_TOL,
+    ortho_center: int = None,
+    spinful: Literal["simple", "PH", None] = None,
+) -> networks.MPS:
+    r"""MPS representation of a Slater determinant from its single body Hamiltonian.
+
+    Parameters
+    ----------
+    H:
+        The single body Hamiltonian :math:`H_{ij}`.
+    trunc_par:
+        Specifies which Schmidt states should be kept.
+
+        Must be either a :class:`~temfpy.schmidt_utils.StoppingCondition` object
+        or a dictionary with matching keys.
+
+        Only specify the field `sectors` if you know what you are doing!!
+    diag_tol:
+        Largest allowed offdiagonal matrix element in diagonalised / SVD
+        correlation submatrices before an error is raised.
+    ortho_center:
+        Orthogonality centre of the mixed canonical MPS.
+        Midpoint of the chain by default.
+    spinful:
+        Whether to treat the input single particle Hamiltonian as describing a
+        spin-rotation symmetric state of spinful fermions or not (``None``),
+        either with (``"PH"``) or without (``"simple"``) particle-hole
+        rotation in the down-spin sector.
+
+    Returns
+    -------
+    The wave function as a TeNPy :class:`~tenpy.networks.mps.MPS` object.
+
+    Note
+    ----
+    - If :attr:`trunc_par.svd_min` is not provided, the truncation threshold
+      defaults to 1e-6.
+    - If :attr:`trunc_par.degeneracy_tol` is not provided, the degeneracy tolerance
+      defaults to 1e-12.
+    """
+
+    C, _ = correlation_matrix(H)
+    return C_to_MPS(C, trunc_par, diag_tol=diag_tol, ortho_center=ortho_center, spinful=spinful)
+
+    
+def H_to_iMPS(
+    H_short: np.ndarray,
+    H_long: np.ndarray,
+    trunc_par: dict | StoppingCondition,
+    sites_per_cell: int,
+    cut: int,
+    *,
+    diag_tol: float = _DIAG_TOL,
+    unitary_tol: float = iMPS._UNITARY_TOL,
+    schmidt_tol: float = iMPS._SCHMIDT_TOL,
+    spinful: Literal["simple", "PH", None] = None,
+) -> tuple[networks.MPS, iMPS.iMPSError]:
+    r"""iMPS representation of a Slater determinant from single particle Hamiltonians.
+
+    It is expected that the two single-particle Hamiltonians describe two 
+    translation-invariant systems that differ by one repeating unit cell.
+
+    The method is analogous to :func:`.iMPS.MPS_to_iMPS`, with two differences:
+
+    - No explicit MPS tensors are computed for the environment of the iMPS unit
+      cell. Instead, the Schmidt vector overlaps needed for gauge fixing are
+      computed using the Slater determinant overlap formulas implemented in
+      :class:`MPSTensorData`.
+    - The rightmost tensor is computed directly using the right Schmidt vectors
+      of the shorter chain. This means that no separate :class:`~.iMPS.iMPSError`\ s
+      are returned for the right side.
+
+    Parameters
+    ----------
+    H_short:
+        The single particle Hamiltonian :math:`H_{ij}` for the shorter chain.
+    H_long:
+        The single particle Hamiltonian for the longer chain.
+    trunc_par:
+        Specifies which Schmidt states should be kept.
+
+        Must be either a :class:`~temfpy.schmidt_utils.StoppingCondition` object
+        or a dictionary with matching keys.
+
+        Only specify the field ``sectors`` if you know what you are doing!!
+    sites_per_cell:
+        Size of the iMPS unit cell.
+    cut:
+        First site of the repeating unit cell in ``H_long``.
+    diag_tol:
+        Largest allowed offdiagonal matrix element in diagonalised / SVD
+        correlation submatrices before an error is raised.
+    unitary_tol:
+        Maximum deviation of the gauge rotation matrices from unitarity
+        before a warning is raised.
+    schmidt_tol:
+        Maximum mixing of unequal Schmidt values by the gauge rotation matrices
+        before a warning is raised.
+    spinful:
+        Whether to treat the input single particle Hamiltonians as describing a
+        spin-rotation symmetric state of spinful fermions or not (``None``),
+        either with (``"PH"``) or without (``"simple"``) particle-hole
+        rotation in the down-spin sector.
+
+    Returns
+    -------
+    iMPS: :class:`~tenpy.networks.mps.MPS`
+        iMPS with unit cell size ``sites_per_cell``, constructed from the
+        additional unit cell of ``mps_long``.
+    validation_metric: :class:`~.iMPS.iMPSError`
+        Errors introduced during the conversion.
+
+    Note
+    ----
+    - If :attr:`trunc_par.svd_min` is not provided, the truncation threshold
+      defaults to 1e-6.
+    - If :attr:`trunc_par.degeneracy_tol` is not provided, the degeneracy tolerance
+      defaults to 1e-12.
+    - If ``spinful`` fermions are requested, ``sites_per_cell`` and ``cut`` still
+      refer to indices in the original correlation matrices.
+    """
+    C_short, _ = correlation_matrix(H_short)
+    C_long, _ = correlation_matrix(H_long)
+    return C_to_iMPS(
+        C_short,
+        C_long,
+        trunc_par,
+        sites_per_cell,
+        cut,
+        diag_tol=diag_tol,
+        unitary_tol=unitary_tol,
+        schmidt_tol=schmidt_tol,
+        spinful=spinful,
+    )
