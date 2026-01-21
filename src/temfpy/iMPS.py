@@ -272,6 +272,12 @@ def MPS_to_iMPS(
     # Left gauge fixing matrix C
     bra = mps_short.extract_segment(0, cut - 1)
     ket = mps_long.extract_segment(0, cut - 1)
+    # TODO: In TenPy unit_cell_width for a segment is 
+    # TODO: not set correctly. If this is fixed by TenPy, remove workaround
+    # ------------------------
+    bra.unit_cell_width = bra.L
+    ket.unit_cell_width = ket.L
+    # ------------------------
     S_ket = mps_long.get_SL(cut)
     C = overlap_schmidt(bra, ket, mode="left")
     C, left_unitary, left_schmidt = basis_rotation(
@@ -281,6 +287,13 @@ def MPS_to_iMPS(
     # Right gauge fixing matrix D
     bra = mps_short.extract_segment(cut, L_short - 1)
     ket = mps_long.extract_segment(cut + sites_per_cell, L_long - 1)
+    # TODO: In TenPy unit_cell_width for a segment is 
+    # TODO: not set correctly. If this is fixed by TenPy, remove workaround
+    # ------------------------
+    bra.unit_cell_width = bra.L
+    ket.unit_cell_width = ket.L
+    # ------------------------
+
     S_ket = mps_long.get_SL(cut + sites_per_cell)
     D = overlap_schmidt(bra, ket, mode="right")
     D, right_unitary, right_schmidt = basis_rotation(

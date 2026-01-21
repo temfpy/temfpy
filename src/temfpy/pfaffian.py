@@ -2096,11 +2096,11 @@ def H_to_MPS(
     - If :attr:`trunc_par.degeneracy_tol` is not provided, the degeneracy tolerance
       defaults to 1e-12.
     """
-    C = correlation_matrix(H, basis=f"{basis}->M")
+    C = correlation_matrix(H, basis=f"{basis}->{basis}")
     return C_to_MPS(
         C,
         trunc_par,
-        basis="M",
+        basis=basis,
         diag_tol=diag_tol,
         ortho_center=ortho_center,
     )
@@ -2113,7 +2113,7 @@ def H_to_iMPS(
     sites_per_cell: int,
     cut: int,
     *,
-    basis: str | list[str, str] | tuple[str, str],
+    basis: str,
     diag_tol: float = _DIAG_TOL,
     unitary_tol: float = iMPS._UNITARY_TOL,
     schmidt_tol: float = iMPS._SCHMIDT_TOL,
@@ -2153,9 +2153,8 @@ def H_to_iMPS(
     cut:
         First site of the repeating unit cell in ``H_long``.
     basis:
-        Indicates whether the single-particle Hamiltonian is in the Majorana ('M') 
-        or complex-fermion ('C') basis. If a list-like object with two entries is 
-        provided, they specify the basis for ``H_short`` and ``H_long``, respectively.
+        "M" or "C", indicates whether the Hamiltonian is given
+        in the Majorana or the complex-fermion basis.
     diag_tol:
         Largest allowed offdiagonal matrix element in diagonalised / SVD
         correlation submatrices before an error is raised.
@@ -2181,24 +2180,16 @@ def H_to_iMPS(
     - If :attr:`trunc_par.degeneracy_tol` is not provided, the degeneracy tolerance
       defaults to 1e-12.
     """
-    if isinstance(basis, (list, tuple)):
-        if len(basis) != 2:
-            raise ValueError(
-                "If `basis` is a list or tuple, it must have exactly two entries."
-            )
-        basis_short, basis_long = basis
-    else:
-        basis_short = basis_long = basis
         
-    C_short = correlation_matrix(H_short, basis=f"{basis_short}->M")
-    C_long = correlation_matrix(H_long, basis=f"{basis_long}->M")
+    C_short = correlation_matrix(H_short, basis=f"{basis}->{basis}")
+    C_long = correlation_matrix(H_long, basis=f"{basis}->{basis}")
     return C_to_iMPS(
         C_short,
         C_long,
         trunc_par,
         sites_per_cell,
         cut,
-        basis="M",
+        basis=basis,
         diag_tol=diag_tol,
         unitary_tol=unitary_tol,
         schmidt_tol=schmidt_tol,
