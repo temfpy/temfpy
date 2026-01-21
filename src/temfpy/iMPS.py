@@ -266,6 +266,13 @@ def MPS_to_iMPS(
     assert all(x is not None for x in mps_short.form), "mps_short is not canonical"
     assert all(x is not None for x in mps_long.form), "mps_long is not canonical"
 
+    # TODO: In TenPy unit_cell_width for a segment is 
+    # TODO: not set correctly. If this is fixed by TenPy, remove workaround
+    # ------------------------
+    mps_short.unit_cell_width = mps_short.L
+    mps_long.unit_cell_width = mps_long.L
+    # ------------------------
+
     # Schmidt values in the short chain at the reference cut
     S0 = mps_short.get_SL(cut)
 
