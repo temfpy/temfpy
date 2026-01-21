@@ -90,7 +90,7 @@ class StoppingCondition:
         max_logval = -np.log(self.svd_min) + self.degeneracy_tol
         object.__setattr__(self, "max_logval", max_logval)
 
-    def __call__(self, logvals: np.ndarray | list | tuple) -> bool:
+    def __call__(self, logvals: Iterable[float]) -> bool:
         """Check if any of the stopping conditions had been satisfied.
 
         Allows for generating slightly more states than the
@@ -131,7 +131,7 @@ class StoppingCondition:
 
         return True
 
-    def truncate(self, logvals: np.ndarray | list | tuple) -> int:
+    def truncate(self, logvals: Iterable[float]) -> int:
         """Finds number of Schmidt states to retain to be consistent with every
         constraint (including near-degeneracy).
 
@@ -203,7 +203,7 @@ def to_stopping_condition(trunc_par: dict | StoppingCondition) -> StoppingCondit
 
 
 def lowest_sums(
-    a: np.ndarray | list | tuple,
+    a: Iterable[float],
     trunc_par: StoppingCondition,
     *,
     filled_left: int | None = None,
