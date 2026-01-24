@@ -10,6 +10,7 @@ getting_started/installation
 getting_started/contribute
 getting_started/citing
 getting_started/examples
+changelog
 ```
 
 ```{toctree}
@@ -26,3 +27,4 @@ reference/schmidt_utils
 reference/utils
 
 ```
+
