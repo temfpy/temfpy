@@ -19,10 +19,16 @@ _DEFAULT_DEG_TOL = 1e-12
 class StoppingCondition:
     """Describes a stopping condition for enumerating Schmidt states."""
 
-    sectors: Callable[[int], bool] | list[int] | int | None = None
-    r"""Specifies which charge sectors to retain.
+    sectors: Callable[[int], bool] | Iterable[int] | int | None = None
+    r"""Specifies which charge sectors to retain in one of the following ways:
 
-    Internally, all options are converted to a :obj:`int` → :class:`bool` 
+    * An :obj:`int` → :class:`bool` function that returns whether a given
+      charge value should be kept or not.
+    * A list of integer charge values to be kept
+    * A single integer charge value to be kept
+    * :obj:`None` if all charge sectors should be kept (default).
+
+    Internally, all options are converted to an :obj:`int` → :class:`bool` 
     function :func:`is_sector`.
 
     Note

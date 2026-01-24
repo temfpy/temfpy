@@ -1,6 +1,6 @@
 # Contributors' guide
 
-We gladly welcome contributions in the form of pull requests at https://github.com/temfpy/temfpy/pulls.
+We gladly welcome contributions in the form of [pull requests](https://github.com/temfpy/temfpy/pulls).
 
 ## Best practices
 
