@@ -127,7 +127,7 @@ def basis_rotation(
     # C @ S_ket
     C_Sk = overlap.scale_axis(Schmidt_ket, v_ket)
     # unitary_error^2 = tr(S_ket^2 - S_ket @ C^dagger @ C @ S_ket)
-    unitary_error = (
+    unitary_error = np.abs(
         np.sum(Schmidt_ket**2) - npc.inner(C_Sk, C_Sk, do_conj=True)
     ) ** 0.5
     logging.info(f"{mode.capitalize()} deviation from unitary: {unitary_error:.4e}")
