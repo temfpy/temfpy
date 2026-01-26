@@ -7,7 +7,7 @@ Representing Nambu correlation matrices
 ---------------------------------------
 
 The input of the algorithm is the Nambu correlation matrix that contains
-:math:`\langle cc \rangle` and :math:`\langle c^\dagger c \rangle` correlators
+:math:`\langle cc \rangle` and :math:`\langle c^\dagger c\dagger \rangle` correlators
 in addition to the standard :math:`\langle c^\dagger c \rangle` ones.
 Such a correlation matrix may be specified in two different bases:
 

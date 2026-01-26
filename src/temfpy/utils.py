@@ -47,7 +47,7 @@ def block_svd(
         Rows/columns ``i`` and ``i+1`` are assumed to be in different blocks
         if ``abs(e[i] - e[i+1]) > degeneracy_tol``.
     overwrite:
-        Overwrite ``vL`` and ``vR`` with the signular vectors (default: :obj:`True`).
+        Overwrite ``vL`` and ``vR`` with the singular vectors (default: :obj:`True`).
 
     Returns
     -------
