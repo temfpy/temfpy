@@ -6,12 +6,14 @@ import warnings
 from typing import NamedTuple
 
 import numpy as np
-
 import tenpy.linalg.np_conserved as npc
 from tenpy import networks as nw
 
+from .testing import assert_array_less
+
 logger = logging.getLogger(__name__)
 
+_NUMERICAL_TOL = 1e-14
 _UNITARY_TOL = 1e-6
 _SCHMIDT_TOL = 1e-6
 
@@ -65,7 +67,9 @@ def basis_rotation(
     Schmidt_bra: np.ndarray,
     Schmidt_ket: np.ndarray,
     mode: str,
+    *,
     form: str = "B",
+    numerical_tol: float = _NUMERICAL_TOL,
     unitary_tol: float = _UNITARY_TOL,
     schmidt_tol: float = _SCHMIDT_TOL,
 ) -> tuple[npc.Array, float, float]:
@@ -90,6 +94,11 @@ def basis_rotation(
     form:
         Whether the basis rotation is to be used for a left ("A")
         or a right ("B", default) canonical MPS tensor.
+    numerical_tol:
+        Highest allowed negative value of the square of the unitary error.
+        
+        Should be more than machine precision (:math:`\sim 10^{-16}` 
+        for ``float64``) but less than ``unitary_tol`` squared.
     unitary_tol:
         Highest allowed deviation from unitarity (weighted with Schmidt values)
         in the overlaps before a warning is raised.
@@ -127,10 +136,24 @@ def basis_rotation(
     # C @ S_ket
     C_Sk = overlap.scale_axis(Schmidt_ket, v_ket)
     # unitary_error^2 = tr(S_ket^2 - S_ket @ C^dagger @ C @ S_ket)
-    unitary_error = (
-        np.sum(Schmidt_ket**2) - npc.inner(C_Sk, C_Sk, do_conj=True)
-    ) ** 0.5
-    logging.info(f"{mode.capitalize()} deviation from unitary: {unitary_error:.4e}")
+    unitary_error_square = np.sum(Schmidt_ket**2) - npc.inner(C_Sk, C_Sk, do_conj=True)
+
+    if unitary_error_square < 0:
+        err_mssg = (
+            f"{mode.capitalize()} deviation from unitary: The square of the "
+            f"unitary error {unitary_error_square} is negative and exceeds "
+            f"the numerical tolerance {numerical_tol:.1e}."
+        )
+        assert_array_less(abs(unitary_error_square), numerical_tol, err_mssg)
+        logging.info(
+            f"{mode.capitalize()} devitation from unitary: The square of the "
+            f"unitary error {unitary_error_square:.4e} is negative, setting it to zero."
+        )
+        unitary_error = 0.0
+    else:
+        unitary_error = np.sqrt(unitary_error_square)
+        logging.info(f"{mode.capitalize()} deviation from unitary: {unitary_error:.4e}")
+
     if unitary_error > unitary_tol:
         warnings.warn(
             f"\n{mode.capitalize()} overlap matrix deviates from unitarity by "
@@ -170,14 +193,16 @@ def basis_rotation(
 
 
 class iMPSError(NamedTuple):
-    """Container of the approximation errors accrued by :func:`MPS_to_iMPS`."""
+    """Container of the approximation errors accrued by :func:`MPS_to_iMPS`.
 
+    If printed, only non-zero approximation errors are displayed.
+    """
     left_unitary: float
     """Deviation of left environment from unitarity."""
     left_schmidt: float
     """Mixing between unequal Schmidt values by the left environment."""
     right_unitary: float
-    """Deviation of left environment from unitarity."""
+    """Deviation of right environment from unitarity."""
     right_schmidt: float
     """Mixing between unequal Schmidt values by the right environment."""
 
@@ -266,7 +291,7 @@ def MPS_to_iMPS(
     assert all(x is not None for x in mps_short.form), "mps_short is not canonical"
     assert all(x is not None for x in mps_long.form), "mps_long is not canonical"
 
-    # TODO: In TenPy unit_cell_width for a segment is 
+    # TODO: In TenPy unit_cell_width for a segment is
     # TODO: not set correctly. If this is fixed by TenPy, remove workaround
     # ------------------------
     mps_short.unit_cell_width = mps_short.L
@@ -279,7 +304,7 @@ def MPS_to_iMPS(
     # Left gauge fixing matrix C
     bra = mps_short.extract_segment(0, cut - 1)
     ket = mps_long.extract_segment(0, cut - 1)
-    # TODO: In TenPy unit_cell_width for a segment is 
+    # TODO: In TenPy unit_cell_width for a segment is
     # TODO: not set correctly. If this is fixed by TenPy, remove workaround
     # ------------------------
     bra.unit_cell_width = bra.L
@@ -294,7 +319,7 @@ def MPS_to_iMPS(
     # Right gauge fixing matrix D
     bra = mps_short.extract_segment(cut, L_short - 1)
     ket = mps_long.extract_segment(cut + sites_per_cell, L_long - 1)
-    # TODO: In TenPy unit_cell_width for a segment is 
+    # TODO: In TenPy unit_cell_width for a segment is
     # TODO: not set correctly. If this is fixed by TenPy, remove workaround
     # ------------------------
     bra.unit_cell_width = bra.L
