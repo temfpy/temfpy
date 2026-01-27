@@ -6,9 +6,10 @@ import warnings
 from typing import NamedTuple
 
 import numpy as np
-
 import tenpy.linalg.np_conserved as npc
 from tenpy import networks as nw
+
+from .testing import assert_array_less
 
 logger = logging.getLogger(__name__)
 
@@ -66,7 +67,9 @@ def basis_rotation(
     Schmidt_bra: np.ndarray,
     Schmidt_ket: np.ndarray,
     mode: str,
+    *,
     form: str = "B",
+    numerical_tol: float = _NUMERICAL_TOL,
     unitary_tol: float = _UNITARY_TOL,
     schmidt_tol: float = _SCHMIDT_TOL,
 ) -> tuple[npc.Array, float, float]:
@@ -91,6 +94,11 @@ def basis_rotation(
     form:
         Whether the basis rotation is to be used for a left ("A")
         or a right ("B", default) canonical MPS tensor.
+    numerical_tol:
+        Highest allowed negative value of the square of the unitary error 
+        (tested using :func:`~temfpy.testing.assert_array_less`).
+        The value should be larger then machine precision (:math:`\sim 1e^{-16}` 
+        for float64) but atleast ``unitary_tol`` squared.
     unitary_tol:
         Highest allowed deviation from unitarity (weighted with Schmidt values)
         in the overlaps before a warning is raised.
@@ -131,15 +139,15 @@ def basis_rotation(
     unitary_error_square = np.sum(Schmidt_ket**2) - npc.inner(C_Sk, C_Sk, do_conj=True)
 
     if unitary_error_square < 0:
-        assert abs(unitary_error_square) < _NUMERICAL_TOL, (
-            f"{mode.capitalize()} devitation from unitary: The square of the "
-            f"unitary error {unitary_error_square} is negative and beyond "
-            f"the numerical tolerance {_NUMERICAL_TOL:.1e}"
+        err_mssg = (
+            f"{mode.capitalize()} deviation from unitary: The square of the "
+            f"unitary error {unitary_error_square} is negative and exceeds "
+            f"the numerical tolerance {numerical_tol:.1e}."
         )
+        assert_array_less(abs(unitary_error_square), numerical_tol, err_mssg)
         logging.info(
             f"{mode.capitalize()} devitation from unitary: The square of the "
-            f"unitary error {unitary_error_square:.4e} is negative but within "
-            f"the numerical tolerance {_NUMERICAL_TOL:.1e}, setting it to zero."
+            f"unitary error {unitary_error_square:.4e} is negative, setting it to zero."
         )
         unitary_error = 0.0
     else:
