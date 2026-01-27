@@ -12,6 +12,7 @@ from tenpy import networks as nw
 
 logger = logging.getLogger(__name__)
 
+_NUMERICAL_TOL = 1e-14
 _UNITARY_TOL = 1e-6
 _SCHMIDT_TOL = 1e-6
 
@@ -127,10 +128,24 @@ def basis_rotation(
     # C @ S_ket
     C_Sk = overlap.scale_axis(Schmidt_ket, v_ket)
     # unitary_error^2 = tr(S_ket^2 - S_ket @ C^dagger @ C @ S_ket)
-    unitary_error = np.abs(
-        np.sum(Schmidt_ket**2) - npc.inner(C_Sk, C_Sk, do_conj=True)
-    ) ** 0.5
-    logging.info(f"{mode.capitalize()} deviation from unitary: {unitary_error:.4e}")
+    unitary_error_square = np.sum(Schmidt_ket**2) - npc.inner(C_Sk, C_Sk, do_conj=True)
+
+    if unitary_error_square < 0:
+        assert abs(unitary_error_square) < _NUMERICAL_TOL, (
+            f"{mode.capitalize()} devitation from unitary: The square of the "
+            f"unitary error {unitary_error_square} is negative and beyond "
+            f"the numerical tolerance {_NUMERICAL_TOL:.1e}"
+        )
+        logging.info(
+            f"{mode.capitalize()} devitation from unitary: The square of the "
+            f"unitary error {unitary_error_square:.4e} is negative but within "
+            f"the numerical tolerance {_NUMERICAL_TOL:.1e}, setting it to zero."
+        )
+        unitary_error = 0.0
+    else:
+        unitary_error = np.sqrt(unitary_error_square)
+        logging.info(f"{mode.capitalize()} deviation from unitary: {unitary_error:.4e}")
+
     if unitary_error > unitary_tol:
         warnings.warn(
             f"\n{mode.capitalize()} overlap matrix deviates from unitarity by "
@@ -170,14 +185,16 @@ def basis_rotation(
 
 
 class iMPSError(NamedTuple):
-    """Container of the approximation errors accrued by :func:`MPS_to_iMPS`."""
+    """Container of the approximation errors accrued by :func:`MPS_to_iMPS`.
 
+    If printed, all non-zero approximation errors are displayed.
+    """
     left_unitary: float
     """Deviation of left environment from unitarity."""
     left_schmidt: float
     """Mixing between unequal Schmidt values by the left environment."""
     right_unitary: float
-    """Deviation of left environment from unitarity."""
+    """Deviation of right environment from unitarity."""
     right_schmidt: float
     """Mixing between unequal Schmidt values by the right environment."""
 
@@ -266,7 +283,7 @@ def MPS_to_iMPS(
     assert all(x is not None for x in mps_short.form), "mps_short is not canonical"
     assert all(x is not None for x in mps_long.form), "mps_long is not canonical"
 
-    # TODO: In TenPy unit_cell_width for a segment is 
+    # TODO: In TenPy unit_cell_width for a segment is
     # TODO: not set correctly. If this is fixed by TenPy, remove workaround
     # ------------------------
     mps_short.unit_cell_width = mps_short.L
@@ -279,7 +296,7 @@ def MPS_to_iMPS(
     # Left gauge fixing matrix C
     bra = mps_short.extract_segment(0, cut - 1)
     ket = mps_long.extract_segment(0, cut - 1)
-    # TODO: In TenPy unit_cell_width for a segment is 
+    # TODO: In TenPy unit_cell_width for a segment is
     # TODO: not set correctly. If this is fixed by TenPy, remove workaround
     # ------------------------
     bra.unit_cell_width = bra.L
@@ -294,7 +311,7 @@ def MPS_to_iMPS(
     # Right gauge fixing matrix D
     bra = mps_short.extract_segment(cut, L_short - 1)
     ket = mps_long.extract_segment(cut + sites_per_cell, L_long - 1)
-    # TODO: In TenPy unit_cell_width for a segment is 
+    # TODO: In TenPy unit_cell_width for a segment is
     # TODO: not set correctly. If this is fixed by TenPy, remove workaround
     # ------------------------
     bra.unit_cell_width = bra.L
