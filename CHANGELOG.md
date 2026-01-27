@@ -8,6 +8,7 @@
 
 ### Bug fixes
 
+* Fix ill-defined unitary errors during iMPS conversion. [#14](https://github.com/temfpy/temfpy/pull/14)
 * Improved the documentation and fixed typos. [#13](https://github.com/temfpy/temfpy/pull/13)
 
 ## TeMFpy 0.2 (23 January 2026)
