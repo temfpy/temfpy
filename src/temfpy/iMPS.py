@@ -95,10 +95,10 @@ def basis_rotation(
         Whether the basis rotation is to be used for a left ("A")
         or a right ("B", default) canonical MPS tensor.
     numerical_tol:
-        Highest allowed negative value of the square of the unitary error 
-        (tested using :func:`~temfpy.testing.assert_array_less`).
-        The value should be larger then machine precision (:math:`\sim 1e^{-16}` 
-        for float64) but atleast ``unitary_tol`` squared.
+        Highest allowed negative value of the square of the unitary error.
+        
+        Should be more than machine precision (:math:`\sim 10^{-16}` 
+        for ``float64``) but less than ``unitary_tol`` squared.
     unitary_tol:
         Highest allowed deviation from unitarity (weighted with Schmidt values)
         in the overlaps before a warning is raised.
