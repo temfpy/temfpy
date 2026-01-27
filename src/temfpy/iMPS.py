@@ -195,7 +195,7 @@ def basis_rotation(
 class iMPSError(NamedTuple):
     """Container of the approximation errors accrued by :func:`MPS_to_iMPS`.
 
-    If printed, all non-zero approximation errors are displayed.
+    If printed, only non-zero approximation errors are displayed.
     """
     left_unitary: float
     """Deviation of left environment from unitarity."""
