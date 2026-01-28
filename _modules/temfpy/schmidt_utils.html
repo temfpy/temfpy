@@ -1,0 +1,700 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>temfpy.schmidt_utils &mdash; TeMFpy 2025 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=b9ceff23" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.svg"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=cb975c41"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            TeMFpy
+              <img src="../../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/contribute.html">Contributors’ guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting_started/contribute.html#best-practices">Best practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../getting_started/contribute.html#discuss-before-you-contribute">Discuss before you contribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting_started/contribute.html#no-giant-prs">No giant PRs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting_started/contribute.html#document-your-changes">Document your changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting_started/contribute.html#coding-style">Coding style</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting_started/contribute.html#how-to-submit-a-pr">How to submit a PR</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/citing.html">Citing TeMFpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/examples.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/gutzwiller.html">gutzwiller.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/iMPS.html">iMPS.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/iMPS_pfaffian.html">iMPS_pfaffian.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/iMPS_slater.html">iMPS_slater.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/pfaffian.html">pfaffian.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/slater.html">slater.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#temfpy-0-3-in-development">TeMFpy 0.3 (In development)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../changelog.html#api-breaking-changes">API breaking changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../changelog.html#new-features">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../changelog.html#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#temfpy-0-2-1-28-january-2026">TeMFpy 0.2.1 (28 January 2026)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../changelog.html#id1">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#temfpy-0-2-23-january-2026">TeMFpy 0.2 (23 January 2026)</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/slater.html">slater</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/slater.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes"><code class="docutils literal notranslate"><span class="pre">SchmidtModes</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.e"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.e</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.vL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.vR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.ixL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.ixL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.ixR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.ixR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.nL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.nL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.nR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.nR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.n_fermion"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.n_fermion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.n_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.n_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.size"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.n_filled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.n_filled()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.vL_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vL_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.vR_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vR_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.mode_vectors"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.mode_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.eigenvalues"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.eigenvalues()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.singular_values"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.singular_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.from_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.from_correlation_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.e_ratio"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.e_ratio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.embed_subsets"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.embed_subsets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.schmidt_values"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.schmidt_values()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.modes"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.modes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.left_sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.left_sets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.right_sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.right_sets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.schmidt_values"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.schmidt_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.idx_L"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.idx_L</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.n_schmidt"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_schmidt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.n_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.nL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.nL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.nR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.nR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.n_fermion"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_fermion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.size"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.vL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.vL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.vR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.vR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.mode_vectors"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.mode_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.sets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.from_schmidt_modes"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.from_schmidt_modes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.from_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.from_correlation_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData"><code class="docutils literal notranslate"><span class="pre">MPSTensorData</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.mode"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.mode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.physical_leg"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.physical_leg</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.det_always"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.det_always</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.sometimes_matrix"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.sometimes_matrix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.idx_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.idx_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.new_sets_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.new_sets_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.new_sets_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.new_sets_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.qtotal"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.qtotal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.idx_physical"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_physical</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.from_schmidt_vectors"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.from_schmidt_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.to_npc_array"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.to_npc_array()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/slater.html#functions">Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.correlation_matrix"><code class="docutils literal notranslate"><span class="pre">correlation_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.spinful_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">spinful_correlation_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.C_to_MPS"><code class="docutils literal notranslate"><span class="pre">C_to_MPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.C_to_iMPS"><code class="docutils literal notranslate"><span class="pre">C_to_iMPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.H_to_MPS"><code class="docutils literal notranslate"><span class="pre">H_to_MPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.H_to_iMPS"><code class="docutils literal notranslate"><span class="pre">H_to_iMPS()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/pfaffian.html">pfaffian</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/pfaffian.html#representing-nambu-correlation-matrices">Representing Nambu correlation matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/pfaffian.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes"><code class="docutils literal notranslate"><span class="pre">SchmidtModes</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.nL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.nL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.nR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.nR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.e"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.e</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.vL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.vR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.pL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.pL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.pR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.pR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.parity"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.parity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.n_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.n_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.size"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.vL_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vL_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.vR_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vR_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.mode_vectors"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.mode_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.eigenvalues"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.eigenvalues()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.singular_values"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.singular_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.from_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.from_correlation_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.e_ratio"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.e_ratio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.embed_subsets"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.embed_subsets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.schmidt_values"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.schmidt_values()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.modes"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.modes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.left_sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.left_sets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.right_sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.right_sets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.schmidt_values"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.schmidt_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.idx_n"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.idx_n</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.idx_parity"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.idx_parity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.n_schmidt"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_schmidt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.n_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.nL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.nL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.nR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.nR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.size"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.vL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.vL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.vR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.vR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.mode_vectors"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.mode_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.pL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.pL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.pR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.pR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.parity"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.parity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.sets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.from_schmidt_modes"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.from_schmidt_modes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.from_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.from_correlation_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData"><code class="docutils literal notranslate"><span class="pre">MPSTensorData</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.mode"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.mode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.norm"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.norm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.pfaffian_matrix"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.pfaffian_matrix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.labels"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.qtotal"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.qtotal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.leg_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.leg_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.new_sets_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.new_sets_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.idx_n_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_n_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.leg_idx_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.leg_idx_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.leg_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.leg_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.new_sets_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.new_sets_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.idx_n_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_n_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.from_schmidt_vectors"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.from_schmidt_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.to_npc_array"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.to_npc_array()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/pfaffian.html#high-level-functions">High-level functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.correlation_matrix"><code class="docutils literal notranslate"><span class="pre">correlation_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.parity"><code class="docutils literal notranslate"><span class="pre">parity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.C_to_MPS"><code class="docutils literal notranslate"><span class="pre">C_to_MPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.C_to_iMPS"><code class="docutils literal notranslate"><span class="pre">C_to_iMPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.H_to_MPS"><code class="docutils literal notranslate"><span class="pre">H_to_MPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.H_to_iMPS"><code class="docutils literal notranslate"><span class="pre">H_to_iMPS()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/pfaffian.html#helper-functions">Helper functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.vector_C2M"><code class="docutils literal notranslate"><span class="pre">vector_C2M()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.vector_M2C"><code class="docutils literal notranslate"><span class="pre">vector_M2C()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.matrix_C2M"><code class="docutils literal notranslate"><span class="pre">matrix_C2M()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.matrix_M2C"><code class="docutils literal notranslate"><span class="pre">matrix_M2C()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.assert_nambu"><code class="docutils literal notranslate"><span class="pre">assert_nambu()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.assert_nambu_hamiltonian"><code class="docutils literal notranslate"><span class="pre">assert_nambu_hamiltonian()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.assert_nambu_correlation"><code class="docutils literal notranslate"><span class="pre">assert_nambu_correlation()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/iMPS.html">iMPS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.MPS_to_iMPS"><code class="docutils literal notranslate"><span class="pre">MPS_to_iMPS()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.overlap_schmidt"><code class="docutils literal notranslate"><span class="pre">overlap_schmidt()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.basis_rotation"><code class="docutils literal notranslate"><span class="pre">basis_rotation()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.iMPSError"><code class="docutils literal notranslate"><span class="pre">iMPSError</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.iMPSError.left_unitary"><code class="docutils literal notranslate"><span class="pre">iMPSError.left_unitary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.iMPSError.left_schmidt"><code class="docutils literal notranslate"><span class="pre">iMPSError.left_schmidt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.iMPSError.right_unitary"><code class="docutils literal notranslate"><span class="pre">iMPSError.right_unitary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.iMPSError.right_schmidt"><code class="docutils literal notranslate"><span class="pre">iMPSError.right_schmidt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.iMPSError.left_total"><code class="docutils literal notranslate"><span class="pre">iMPSError.left_total</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.iMPSError.right_total"><code class="docutils literal notranslate"><span class="pre">iMPSError.right_total</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.iMPSError.total_error"><code class="docutils literal notranslate"><span class="pre">iMPSError.total_error</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/gutzwiller.html">gutzwiller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/gutzwiller.html#gutzwiller-projections-of-abrikosov-fermions">Gutzwiller projections of Abrikosov fermions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/gutzwiller.html#temfpy.gutzwiller.abrikosov"><code class="docutils literal notranslate"><span class="pre">abrikosov()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/gutzwiller.html#temfpy.gutzwiller.abrikosov_ph"><code class="docutils literal notranslate"><span class="pre">abrikosov_ph()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/gutzwiller.html#helper-functions">Helper functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/gutzwiller.html#temfpy.gutzwiller.parity_mask"><code class="docutils literal notranslate"><span class="pre">parity_mask()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/gutzwiller.html#temfpy.gutzwiller.number_mask"><code class="docutils literal notranslate"><span class="pre">number_mask()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/testing.html">testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/testing.html#temfpy.testing.TEST_ACTION"><code class="docutils literal notranslate"><span class="pre">TEST_ACTION</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/testing.html#testing-functions">Testing functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/testing.html#temfpy.testing.assert_allclose"><code class="docutils literal notranslate"><span class="pre">assert_allclose()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/testing.html#temfpy.testing.assert_array_less"><code class="docutils literal notranslate"><span class="pre">assert_array_less()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/testing.html#temfpy.testing.check_schmidt_decomposition"><code class="docutils literal notranslate"><span class="pre">check_schmidt_decomposition()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/testing.html#temfpy.testing.ComparisonWarning"><code class="docutils literal notranslate"><span class="pre">ComparisonWarning</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/schmidt_utils.html">schmidt_utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition"><code class="docutils literal notranslate"><span class="pre">StoppingCondition</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.sectors"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.sectors</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.chi_max"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.chi_max</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.svd_min"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.svd_min</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.degeneracy_tol"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.degeneracy_tol</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.__call__"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.__call__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.truncate"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.truncate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.lowest_sums"><code class="docutils literal notranslate"><span class="pre">lowest_sums()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/utils.html">utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/utils.html#temfpy.utils.HT"><code class="docutils literal notranslate"><span class="pre">HT()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/utils.html#temfpy.utils.n_slice"><code class="docutils literal notranslate"><span class="pre">n_slice()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/utils.html#temfpy.utils.block_svd"><code class="docutils literal notranslate"><span class="pre">block_svd()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/utils.html#temfpy.utils.normalize_SV"><code class="docutils literal notranslate"><span class="pre">normalize_SV()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">TeMFpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">temfpy.schmidt_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for temfpy.schmidt_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) TeMFPy Developers, MIT license</span>
+<span class="sa">r</span><span class="sd">&quot;&quot;&quot;Utilities for generating the most significant Schmidt states.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">heapq</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Number</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">_DEFAULT_SVD_MIN</span> <span class="o">=</span> <span class="mf">1e-6</span>
+<span class="n">_DEFAULT_DEG_TOL</span> <span class="o">=</span> <span class="mf">1e-12</span>
+
+
+<div class="viewcode-block" id="StoppingCondition">
+<a class="viewcode-back" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">StoppingCondition</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Describes a stopping condition for enumerating Schmidt states.&quot;&quot;&quot;</span>
+
+    <span class="n">sectors</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Specifies which charge sectors to retain in one of the following ways:</span>
+
+<span class="sd">    * An :obj:`int` → :class:`bool` function that returns whether a given</span>
+<span class="sd">      charge value should be kept or not.</span>
+<span class="sd">    * A list of integer charge values to be kept</span>
+<span class="sd">    * A single integer charge value to be kept</span>
+<span class="sd">    * :obj:`None` if all charge sectors should be kept (default).</span>
+
+<span class="sd">    Internally, all options are converted to an :obj:`int` → :class:`bool` </span>
+<span class="sd">    function :func:`is_sector`.</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">        Does not affect methods :func:`__call__` and :func:`truncate` directly, </span>
+<span class="sd">        but :func:`is_sector` is used in :func:`lowest_sums` to filter the subsets on the fly.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">chi_max</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Maximum number of Schmidt states to keep.&quot;&quot;&quot;</span>
+    <span class="n">svd_min</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Lowest Schmidt value to be kept, as a fraction of the largest one.</span>
+<span class="sd">    </span>
+<span class="sd">    Defaults to 1e-6 if not supplied.&quot;&quot;&quot;</span>
+    <span class="n">degeneracy_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Don&#39;t cut between neighboring Schmidt values with </span>
+<span class="sd">    :math:`|\log(S_i/S_j)|` below :attr:`degeneracy_tol`.</span>
+
+<span class="sd">    In other words, keep either both :math:`i` and :math:`j` or neither</span>
+<span class="sd">    if the Schmidt values are degenerate with a relative error smaller than</span>
+<span class="sd">    :attr:`degeneracy_tol`.</span>
+
+<span class="sd">    Defaults to 1e-12 if not supplied.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Set default svd_min</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">svd_min</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;trunc_par.svd_min set to default </span><span class="si">{</span><span class="n">_DEFAULT_SVD_MIN</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;svd_min&quot;</span><span class="p">,</span> <span class="n">_DEFAULT_SVD_MIN</span><span class="p">)</span>
+
+        <span class="c1"># set default degeneracy_tol</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">degeneracy_tol</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;trunc_par.degeneracy_tol set to default </span><span class="si">{</span><span class="n">_DEFAULT_DEG_TOL</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;degeneracy_tol&quot;</span><span class="p">,</span> <span class="n">_DEFAULT_DEG_TOL</span><span class="p">)</span>
+
+        <span class="c1"># Normalise `sectors` to a function</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sectors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">is_sector</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sectors</span><span class="p">,</span> <span class="n">Number</span><span class="p">):</span>
+            <span class="n">is_sector</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">sectors</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sectors</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+            <span class="n">is_sector</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sectors</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sectors</span><span class="p">,</span> <span class="n">Callable</span><span class="p">):</span>
+            <span class="n">is_sector</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sectors</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected `sectors` parameter </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sectors</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;is_sector&quot;</span><span class="p">,</span> <span class="n">is_sector</span><span class="p">)</span>
+
+        <span class="c1"># sanitise chi_max</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">chi_max</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">chi_max</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;`chi_max` must be a positive integer or None, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">chi_max</span><span class="si">!r}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># sanitise svd_min</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="mi">0</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">svd_min</span> <span class="o">&lt;</span> <span class="mi">1</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;`svd_min` must be between 0 and 1, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">svd_min</span><span class="si">!r}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># sanitise degeneracy_tol</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">degeneracy_tol</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;`degeneracy_tol` must be positive, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">degeneracy_tol</span><span class="si">!r}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># Find stopping criterion for negative logarithm including degeneracy_tol</span>
+        <span class="n">max_logval</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">svd_min</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">degeneracy_tol</span>
+        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;max_logval&quot;</span><span class="p">,</span> <span class="n">max_logval</span><span class="p">)</span>
+
+<div class="viewcode-block" id="StoppingCondition.__call__">
+<a class="viewcode-back" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.__call__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logvals</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if any of the stopping conditions had been satisfied.</span>
+
+<span class="sd">        Allows for generating slightly more states than the</span>
+<span class="sd">        stopping conditions require, to make sure degeneracy</span>
+<span class="sd">        requirements are satisfied:</span>
+
+<span class="sd">        - :attr:`chi_max` + 1 states</span>
+<span class="sd">        - Schmidt values down to :attr:`svd_min` / exp(:attr:`degeneracy_tol`)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        logvals:</span>
+<span class="sd">            Negative logarithms of Schmidt values.</span>
+<span class="sd">            Must be sorted in increasing order.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            whether more sets need to be generated (:obj:`True`) or we have</span>
+<span class="sd">            enough (:obj:`False`)</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">            Results generated using this function must be passed through</span>
+<span class="sd">            :func:`~StoppingCondition.truncate` to finish the truncation</span>
+<span class="sd">            considering every stopping condition.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">logvals</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">logvals</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;`logvals` must be a 1D array, got </span><span class="si">{</span><span class="n">logvals</span><span class="o">.</span><span class="n">ndim</span><span class="si">!r}</span><span class="s2">&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chi_max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">logvals</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">chi_max</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_logval</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">logvals</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">logvals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_logval</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="StoppingCondition.truncate">
+<a class="viewcode-back" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.truncate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">truncate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logvals</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Finds number of Schmidt states to retain to be consistent with every</span>
+<span class="sd">        constraint (including near-degeneracy).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        logvals:</span>
+<span class="sd">            Negative logarithms of Schmidt values.</span>
+<span class="sd">            Must be sorted in increasing order.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            Number of Schmidt states to keep</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        The logic used within the function is based on</span>
+<span class="sd">        the TeNpy function :func:`~tenpy.linalg.truncation.truncate`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">logvals</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">logvals</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;`logvals` must be a 1D array, got </span><span class="si">{</span><span class="n">logvals</span><span class="o">.</span><span class="n">ndim</span><span class="si">!r}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># good[i] is True if cutting between i and i+1 is OK</span>
+        <span class="n">good</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">logvals</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chi_max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">good2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">logvals</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)</span>
+            <span class="n">good2</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">chi_max</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">good</span> <span class="o">=</span> <span class="n">good</span> <span class="o">&amp;</span> <span class="n">good2</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">svd_min</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">good2</span> <span class="o">=</span> <span class="n">logvals</span> <span class="o">-</span> <span class="n">logvals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">svd_min</span><span class="p">)</span>
+            <span class="n">good</span> <span class="o">=</span> <span class="n">good</span> <span class="o">&amp;</span> <span class="n">good2</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">degeneracy_tol</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># don&#39;t cut between i and i+1 if logvals differ by less than degeneracy_tol</span>
+            <span class="n">good2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">logvals</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)</span>
+            <span class="n">good2</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">logvals</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">logvals</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">degeneracy_tol</span>
+            <span class="n">good2</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">good</span> <span class="o">=</span> <span class="n">good</span> <span class="o">&amp;</span> <span class="n">good2</span>
+
+        <span class="c1"># keep as many states as allowed by all constraints</span>
+        <span class="n">cut</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">good</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">cut</span> <span class="o">+</span> <span class="mi">1</span></div>
+</div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">to_stopping_condition</span><span class="p">(</span><span class="n">trunc_par</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="n">StoppingCondition</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StoppingCondition</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Standardises stopping conditions.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        trunc_par:</span>
+<span class="sd">            a :class:`StoppingCondition` object or a dictionary with entries</span>
+<span class="sd">            that can be used to construct one.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        The given stopping conditions as a :class:`StoppingCondition` object.&quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">trunc_par</span><span class="p">,</span> <span class="n">StoppingCondition</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">trunc_par</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">trunc_par</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">StoppingCondition</span><span class="p">(</span><span class="o">**</span><span class="n">trunc_par</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Expected a dictionary or a `StoppingCondition` object, got </span><span class="si">{</span><span class="n">trunc_par</span><span class="si">!r}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+
+<div class="viewcode-block" id="lowest_sums">
+<a class="viewcode-back" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.lowest_sums">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">lowest_sums</span><span class="p">(</span>
+    <span class="n">a</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+    <span class="n">trunc_par</span><span class="p">:</span> <span class="n">StoppingCondition</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">filled_left</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">filled_right</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Generates subsets of a given set with the lowest sums.</span>
+
+<span class="sd">    This functions generates all possible subsets of ``a`` in order of</span>
+<span class="sd">    increasing sum, until ``trunc_par`` is satisfied.</span>
+<span class="sd">    The subsets are then truncated according to ``trunc_par.truncate``.</span>
+
+<span class="sd">    For generating the leading Schmidt values, ``a`` should be</span>
+<span class="sd">    :math:`\log(\lambda_R / \lambda_L)` for the entangled orbitals.</span>
+
+<span class="sd">    Uses the algorithm laid out in</span>
+<span class="sd">    https://stackoverflow.com/a/72117947/27202449.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    a:</span>
+<span class="sd">        The set whose subsets with the lowest sums are to be generated.</span>
+<span class="sd">    trunc_par:</span>
+<span class="sd">        Condition to stop generating more subsets and truncate the generated.</span>
+<span class="sd">    filled_left:</span>
+<span class="sd">        Number of filled orbitals on the left side,</span>
+<span class="sd">        used to offset sector labels in the stopping condition.</span>
+<span class="sd">    filled_right:</span>
+<span class="sd">        Number of filled orbitals on the right side,</span>
+<span class="sd">        used to offset sector labels in the stopping condition.</span>
+
+<span class="sd">        ``filled_right`` is ignored if ``filled_left`` is given too.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    sums:</span>
+<span class="sd">        The lowest subset sums of ``a``, sorted, cut off according to</span>
+<span class="sd">        ``trunc_par``.</span>
+<span class="sd">    sets:</span>
+<span class="sd">        The subsets of ``a`` that realise these sums as a boolean array.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">a</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;`a` must be a 1D array, got </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">ndim</span><span class="si">!r}</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">N</span><span class="p">(</span><span class="nb">set</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Number of particles on left/right side of cut in state set.&quot;&quot;&quot;</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">set</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">filled_left</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">filled_right</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">n</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">filled_right</span> <span class="o">+</span> <span class="nb">set</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="n">n</span>  <span class="c1"># number of particles to the right</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">filled_left</span> <span class="o">+</span> <span class="n">n</span>  <span class="c1"># number of particles to the left</span>
+
+    <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># edge case of the empty array</span>
+        <span class="c1"># whether to return the empty set</span>
+        <span class="n">n_set</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">trunc_par</span><span class="o">.</span><span class="n">is_sector</span><span class="p">(</span><span class="n">N</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">0</span><span class="p">))))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_set</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_set</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="nb">bool</span><span class="p">)</span>
+
+    <span class="c1"># Find smallest sum</span>
+    <span class="n">min_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">a</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">min_set</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">a</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">trunc_par</span><span class="o">.</span><span class="n">is_sector</span><span class="p">(</span><span class="n">N</span><span class="p">(</span><span class="n">min_set</span><span class="p">)):</span>
+        <span class="n">sums</span> <span class="o">=</span> <span class="p">[</span><span class="n">min_sum</span><span class="p">]</span>
+        <span class="n">sets</span> <span class="o">=</span> <span class="p">[</span><span class="n">min_set</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sums</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">sets</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Sort absolute values</span>
+    <span class="n">av</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">av</span><span class="p">)</span>
+
+    <span class="c1"># Find next smallest sum, initialise heap</span>
+    <span class="c1"># Add seq. no to break degeneracies</span>
+    <span class="n">seq</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="nb">set</span> <span class="o">=</span> <span class="n">min_set</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="nb">set</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">heap</span> <span class="o">=</span> <span class="p">[(</span><span class="n">min_sum</span> <span class="o">+</span> <span class="n">av</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">seq</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">set</span><span class="p">)]</span>
+
+    <span class="n">n_checked</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># including the one with the lowest sum</span>
+    <span class="c1"># Loop to generate subsets in order of increasing sum</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">heap</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">trunc_par</span><span class="p">(</span><span class="n">sums</span><span class="p">):</span>
+        <span class="n">n_checked</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="nb">sum</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="nb">set</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">heap</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">trunc_par</span><span class="o">.</span><span class="n">is_sector</span><span class="p">(</span><span class="n">N</span><span class="p">(</span><span class="nb">set</span><span class="p">)):</span>
+            <span class="n">sums</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
+            <span class="n">sets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">c1</span> <span class="o">=</span> <span class="nb">set</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">c1</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">c1</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]]</span>
+            <span class="nb">sum</span> <span class="o">+=</span> <span class="n">av</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]]</span>
+            <span class="n">seq</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">heap</span><span class="p">,</span> <span class="p">(</span><span class="nb">sum</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">c1</span><span class="p">))</span>
+
+            <span class="n">c2</span> <span class="o">=</span> <span class="n">c1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">c2</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">c2</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+            <span class="nb">sum</span> <span class="o">-=</span> <span class="n">av</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+            <span class="n">seq</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">heap</span><span class="p">,</span> <span class="p">(</span><span class="nb">sum</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">c2</span><span class="p">))</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Checked </span><span class="si">%d</span><span class="s2"> subsets&quot;</span><span class="p">,</span> <span class="n">n_checked</span><span class="p">)</span>
+
+    <span class="n">sums</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sums</span><span class="p">)</span>
+    <span class="n">sets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sets</span><span class="p">)</span>
+    <span class="n">cut</span> <span class="o">=</span> <span class="n">trunc_par</span><span class="o">.</span><span class="n">truncate</span><span class="p">(</span><span class="n">sums</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Kept </span><span class="si">%d</span><span class="s2"> subsets in charge sectors of interest&quot;</span><span class="p">,</span> <span class="n">cut</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sums</span><span class="p">[:</span><span class="n">cut</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sets</span><span class="p">[:</span><span class="n">cut</span><span class="p">])</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Simon Hans Hille, Attila Szabó.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

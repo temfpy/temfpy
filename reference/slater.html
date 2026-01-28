@@ -1,0 +1,1381 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>slater &mdash; TeMFpy 2025 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=b9ceff23" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.svg"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=cb975c41"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pfaffian" href="pfaffian.html" />
+    <link rel="prev" title="Changelog" href="../changelog.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            TeMFpy
+              <img src="../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/contribute.html">Contributors’ guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/contribute.html#best-practices">Best practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/contribute.html#discuss-before-you-contribute">Discuss before you contribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/contribute.html#no-giant-prs">No giant PRs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/contribute.html#document-your-changes">Document your changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/contribute.html#coding-style">Coding style</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/contribute.html#how-to-submit-a-pr">How to submit a PR</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/citing.html">Citing TeMFpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/examples.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/gutzwiller.html">gutzwiller.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/iMPS.html">iMPS.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/iMPS_pfaffian.html">iMPS_pfaffian.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/iMPS_slater.html">iMPS_slater.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/pfaffian.html">pfaffian.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/slater.html">slater.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#temfpy-0-3-in-development">TeMFpy 0.3 (In development)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#api-breaking-changes">API breaking changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#new-features">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#temfpy-0-2-1-28-january-2026">TeMFpy 0.2.1 (28 January 2026)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id1">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#temfpy-0-2-23-january-2026">TeMFpy 0.2 (23 January 2026)</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">slater</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#temfpy.slater.SchmidtModes"><code class="docutils literal notranslate"><span class="pre">SchmidtModes</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.e"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.e</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.vL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.vR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.ixL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.ixL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.ixR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.ixR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.nL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.nL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.nR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.nR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.n_fermion"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.n_fermion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.n_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.n_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.size"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.n_filled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.n_filled()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.vL_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vL_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.vR_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vR_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.mode_vectors"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.mode_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.eigenvalues"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.eigenvalues()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.singular_values"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.singular_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.from_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.from_correlation_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.e_ratio"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.e_ratio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.embed_subsets"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.embed_subsets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtModes.schmidt_values"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.schmidt_values()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#temfpy.slater.SchmidtVectors"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtVectors.modes"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.modes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtVectors.left_sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.left_sets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtVectors.right_sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.right_sets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtVectors.schmidt_values"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.schmidt_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtVectors.idx_L"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.idx_L</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtVectors.n_schmidt"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_schmidt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtVectors.n_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtVectors.nL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.nL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtVectors.nR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.nR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtVectors.n_fermion"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_fermion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtVectors.size"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtVectors.vL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.vL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtVectors.vR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.vR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtVectors.mode_vectors"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.mode_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtVectors.sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.sets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtVectors.from_schmidt_modes"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.from_schmidt_modes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.SchmidtVectors.from_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.from_correlation_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#temfpy.slater.MPSTensorData"><code class="docutils literal notranslate"><span class="pre">MPSTensorData</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.MPSTensorData.mode"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.mode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.MPSTensorData.physical_leg"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.physical_leg</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.MPSTensorData.det_always"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.det_always</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.MPSTensorData.sometimes_matrix"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.sometimes_matrix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.MPSTensorData.idx_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.MPSTensorData.idx_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.MPSTensorData.new_sets_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.new_sets_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.MPSTensorData.new_sets_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.new_sets_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.MPSTensorData.qtotal"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.qtotal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.MPSTensorData.idx_physical"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_physical</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.MPSTensorData.from_schmidt_vectors"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.from_schmidt_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temfpy.slater.MPSTensorData.to_npc_array"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.to_npc_array()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#functions">Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#temfpy.slater.correlation_matrix"><code class="docutils literal notranslate"><span class="pre">correlation_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#temfpy.slater.spinful_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">spinful_correlation_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#temfpy.slater.C_to_MPS"><code class="docutils literal notranslate"><span class="pre">C_to_MPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#temfpy.slater.C_to_iMPS"><code class="docutils literal notranslate"><span class="pre">C_to_iMPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#temfpy.slater.H_to_MPS"><code class="docutils literal notranslate"><span class="pre">H_to_MPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#temfpy.slater.H_to_iMPS"><code class="docutils literal notranslate"><span class="pre">H_to_iMPS()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pfaffian.html">pfaffian</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pfaffian.html#representing-nambu-correlation-matrices">Representing Nambu correlation matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pfaffian.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes"><code class="docutils literal notranslate"><span class="pre">SchmidtModes</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.nL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.nL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.nR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.nR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.e"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.e</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.vL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.vR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.pL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.pL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.pR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.pR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.parity"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.parity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.n_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.n_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.size"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.vL_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vL_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.vR_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vR_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.mode_vectors"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.mode_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.eigenvalues"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.eigenvalues()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.singular_values"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.singular_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.from_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.from_correlation_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.e_ratio"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.e_ratio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.embed_subsets"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.embed_subsets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtModes.schmidt_values"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.schmidt_values()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.modes"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.modes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.left_sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.left_sets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.right_sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.right_sets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.schmidt_values"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.schmidt_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.idx_n"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.idx_n</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.idx_parity"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.idx_parity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.n_schmidt"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_schmidt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.n_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.nL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.nL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.nR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.nR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.size"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.vL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.vL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.vR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.vR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.mode_vectors"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.mode_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.pL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.pL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.pR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.pR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.parity"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.parity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.sets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.from_schmidt_modes"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.from_schmidt_modes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.SchmidtVectors.from_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.from_correlation_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.MPSTensorData"><code class="docutils literal notranslate"><span class="pre">MPSTensorData</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.MPSTensorData.mode"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.mode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.MPSTensorData.norm"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.norm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.MPSTensorData.pfaffian_matrix"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.pfaffian_matrix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.MPSTensorData.labels"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.MPSTensorData.qtotal"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.qtotal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.MPSTensorData.leg_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.leg_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.MPSTensorData.new_sets_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.new_sets_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.MPSTensorData.idx_n_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_n_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.MPSTensorData.leg_idx_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.leg_idx_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.MPSTensorData.leg_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.leg_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.MPSTensorData.new_sets_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.new_sets_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.MPSTensorData.idx_n_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_n_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.MPSTensorData.from_schmidt_vectors"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.from_schmidt_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.MPSTensorData.to_npc_array"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.to_npc_array()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pfaffian.html#high-level-functions">High-level functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.correlation_matrix"><code class="docutils literal notranslate"><span class="pre">correlation_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.parity"><code class="docutils literal notranslate"><span class="pre">parity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.C_to_MPS"><code class="docutils literal notranslate"><span class="pre">C_to_MPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.C_to_iMPS"><code class="docutils literal notranslate"><span class="pre">C_to_iMPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.H_to_MPS"><code class="docutils literal notranslate"><span class="pre">H_to_MPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.H_to_iMPS"><code class="docutils literal notranslate"><span class="pre">H_to_iMPS()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pfaffian.html#helper-functions">Helper functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.vector_C2M"><code class="docutils literal notranslate"><span class="pre">vector_C2M()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.vector_M2C"><code class="docutils literal notranslate"><span class="pre">vector_M2C()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.matrix_C2M"><code class="docutils literal notranslate"><span class="pre">matrix_C2M()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.matrix_M2C"><code class="docutils literal notranslate"><span class="pre">matrix_M2C()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.assert_nambu"><code class="docutils literal notranslate"><span class="pre">assert_nambu()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.assert_nambu_hamiltonian"><code class="docutils literal notranslate"><span class="pre">assert_nambu_hamiltonian()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pfaffian.html#temfpy.pfaffian.assert_nambu_correlation"><code class="docutils literal notranslate"><span class="pre">assert_nambu_correlation()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="iMPS.html">iMPS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="iMPS.html#temfpy.iMPS.MPS_to_iMPS"><code class="docutils literal notranslate"><span class="pre">MPS_to_iMPS()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="iMPS.html#temfpy.iMPS.overlap_schmidt"><code class="docutils literal notranslate"><span class="pre">overlap_schmidt()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="iMPS.html#temfpy.iMPS.basis_rotation"><code class="docutils literal notranslate"><span class="pre">basis_rotation()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="iMPS.html#temfpy.iMPS.iMPSError"><code class="docutils literal notranslate"><span class="pre">iMPSError</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="iMPS.html#temfpy.iMPS.iMPSError.left_unitary"><code class="docutils literal notranslate"><span class="pre">iMPSError.left_unitary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iMPS.html#temfpy.iMPS.iMPSError.left_schmidt"><code class="docutils literal notranslate"><span class="pre">iMPSError.left_schmidt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iMPS.html#temfpy.iMPS.iMPSError.right_unitary"><code class="docutils literal notranslate"><span class="pre">iMPSError.right_unitary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iMPS.html#temfpy.iMPS.iMPSError.right_schmidt"><code class="docutils literal notranslate"><span class="pre">iMPSError.right_schmidt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iMPS.html#temfpy.iMPS.iMPSError.left_total"><code class="docutils literal notranslate"><span class="pre">iMPSError.left_total</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iMPS.html#temfpy.iMPS.iMPSError.right_total"><code class="docutils literal notranslate"><span class="pre">iMPSError.right_total</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iMPS.html#temfpy.iMPS.iMPSError.total_error"><code class="docutils literal notranslate"><span class="pre">iMPSError.total_error</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gutzwiller.html">gutzwiller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gutzwiller.html#gutzwiller-projections-of-abrikosov-fermions">Gutzwiller projections of Abrikosov fermions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gutzwiller.html#temfpy.gutzwiller.abrikosov"><code class="docutils literal notranslate"><span class="pre">abrikosov()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gutzwiller.html#temfpy.gutzwiller.abrikosov_ph"><code class="docutils literal notranslate"><span class="pre">abrikosov_ph()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gutzwiller.html#helper-functions">Helper functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gutzwiller.html#temfpy.gutzwiller.parity_mask"><code class="docutils literal notranslate"><span class="pre">parity_mask()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gutzwiller.html#temfpy.gutzwiller.number_mask"><code class="docutils literal notranslate"><span class="pre">number_mask()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#temfpy.testing.TEST_ACTION"><code class="docutils literal notranslate"><span class="pre">TEST_ACTION</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#testing-functions">Testing functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#temfpy.testing.assert_allclose"><code class="docutils literal notranslate"><span class="pre">assert_allclose()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#temfpy.testing.assert_array_less"><code class="docutils literal notranslate"><span class="pre">assert_array_less()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#temfpy.testing.check_schmidt_decomposition"><code class="docutils literal notranslate"><span class="pre">check_schmidt_decomposition()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#temfpy.testing.ComparisonWarning"><code class="docutils literal notranslate"><span class="pre">ComparisonWarning</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="schmidt_utils.html">schmidt_utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition"><code class="docutils literal notranslate"><span class="pre">StoppingCondition</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.sectors"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.sectors</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.chi_max"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.chi_max</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.svd_min"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.svd_min</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.degeneracy_tol"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.degeneracy_tol</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.__call__"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.__call__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.truncate"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.truncate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.lowest_sums"><code class="docutils literal notranslate"><span class="pre">lowest_sums()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#temfpy.utils.HT"><code class="docutils literal notranslate"><span class="pre">HT()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#temfpy.utils.n_slice"><code class="docutils literal notranslate"><span class="pre">n_slice()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#temfpy.utils.block_svd"><code class="docutils literal notranslate"><span class="pre">block_svd()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#temfpy.utils.normalize_SV"><code class="docutils literal notranslate"><span class="pre">normalize_SV()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TeMFpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">slater</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/slater.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-temfpy.slater">
+<span id="slater"></span><h1>slater<a class="headerlink" href="#module-temfpy.slater" title="Link to this heading"></a></h1>
+<p>Tools for converting Slater determinants into matrix product states (MPS).</p>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#temfpy.slater.SchmidtModes" title="temfpy.slater.SchmidtModes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SchmidtModes</span></code></a></p></td>
+<td><p>Mean-field orbitals that generate the Schmidt vectors of a Slater determinant.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#temfpy.slater.SchmidtVectors" title="temfpy.slater.SchmidtVectors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SchmidtVectors</span></code></a></p></td>
+<td><p>Schmidt vectors of a Slater determinant.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#temfpy.slater.MPSTensorData" title="temfpy.slater.MPSTensorData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MPSTensorData</span></code></a></p></td>
+<td><p>Data for computing one MPS tensor of a Slater determinant.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#temfpy.slater.correlation_matrix" title="temfpy.slater.correlation_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">correlation_matrix</span></code></a></p></td>
+<td><p>Ground-state correlation matrix of a mean-field Hamiltonian.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#temfpy.slater.spinful_correlation_matrix" title="temfpy.slater.spinful_correlation_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spinful_correlation_matrix</span></code></a></p></td>
+<td><p>Enlarged correlation matrix for spinful fermions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#temfpy.slater.C_to_MPS" title="temfpy.slater.C_to_MPS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">C_to_MPS</span></code></a></p></td>
+<td><p>MPS representation of a Slater determinant from its correlation matrix.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#temfpy.slater.C_to_iMPS" title="temfpy.slater.C_to_iMPS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">C_to_iMPS</span></code></a></p></td>
+<td><p>iMPS representation of a Slater determinant from correlation matrices.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#temfpy.slater.H_to_MPS" title="temfpy.slater.H_to_MPS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">H_to_MPS</span></code></a></p></td>
+<td><p>MPS representation of a Slater determinant from its single body Hamiltonian.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#temfpy.slater.H_to_iMPS" title="temfpy.slater.H_to_iMPS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">H_to_iMPS</span></code></a></p></td>
+<td><p>iMPS representation of a Slater determinant from single particle Hamiltonians.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Static variables</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fermion_site</span></code></p></td>
+<td><p>Lattice site prototype for the number-conserving fermion MPS.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fermion_leg</span></code></p></td>
+<td><p><a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.linalg.charges.LegCharge.html#tenpy.linalg.charges.LegCharge" title="(in TeNPy v1.1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">LegCharge</span></code></a> for the single-site Hilbert space of the number-conserving fermion MPS.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">chinfo</span></code></p></td>
+<td><p><a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.linalg.charges.ChargeInfo.html#tenpy.linalg.charges.ChargeInfo" title="(in TeNPy v1.1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChargeInfo</span></code></a> for fermion number conservation.</p></td>
+</tr>
+</tbody>
+</table>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">temfpy.slater.</span></span><span class="sig-name descname"><span class="pre">SchmidtModes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">e</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vR</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ixL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ixR</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nR</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_fermion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#SchmidtModes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.SchmidtModes" title="Link to this definition"></a></dt>
+<dd><p>Mean-field orbitals that generate the Schmidt vectors of a Slater determinant.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.e">
+<span class="sig-name descname"><span class="pre">e</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtModes.e" title="Link to this definition"></a></dt>
+<dd><p>array (<a class="reference internal" href="#temfpy.slater.SchmidtModes.n_entangled" title="temfpy.slater.SchmidtModes.n_entangled"><code class="xref py py-attr docutils literal notranslate"><span class="pre">n_entangled</span></code></a>,) –
+Entangled eigenvalues of the left-left block of the correlation matrix,
+in decreasing order.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.vL">
+<span class="sig-name descname"><span class="pre">vL</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtModes.vL" title="Link to this definition"></a></dt>
+<dd><p>array (<a class="reference internal" href="#temfpy.slater.SchmidtModes.nL" title="temfpy.slater.SchmidtModes.nL"><code class="xref py py-attr docutils literal notranslate"><span class="pre">nL</span></code></a>, <a class="reference internal" href="#temfpy.slater.SchmidtModes.nL" title="temfpy.slater.SchmidtModes.nL"><code class="xref py py-attr docutils literal notranslate"><span class="pre">nL</span></code></a>) –
+Eigenvectors of the left-left block of the correlation matrix, if computed.</p>
+<p>The eigenvectors are the columns of the matrix in the order</p>
+<ul class="simple">
+<li><p>filled orbitals (eigenvalue 1);</p></li>
+<li><p>entangled orbitals (eigenvalue between 0 and 1, decreasing order);</p></li>
+<li><p>empty orbitals (eigenvalue 0).</p></li>
+</ul>
+<p>In particular, the eigenvalues corresponding to
+<code class="docutils literal notranslate"><span class="pre">v_LE</span> <span class="pre">=</span> <span class="pre">vL[:,</span> <span class="pre">ixL[&quot;entangled&quot;]]</span></code> are given in order by <code class="docutils literal notranslate"><span class="pre">e</span></code>.</p>
+<p>Note that the entangled orbital vectors <code class="docutils literal notranslate"><span class="pre">v_LE</span></code> are also left singular vectors
+of the offdiagonal block <span class="math notranslate nohighlight">\(C^{LR}\)</span> of the correlation matrix.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.vR">
+<span class="sig-name descname"><span class="pre">vR</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtModes.vR" title="Link to this definition"></a></dt>
+<dd><p>array (<a class="reference internal" href="#temfpy.slater.SchmidtModes.nR" title="temfpy.slater.SchmidtModes.nR"><code class="xref py py-attr docutils literal notranslate"><span class="pre">nR</span></code></a>, <a class="reference internal" href="#temfpy.slater.SchmidtModes.nR" title="temfpy.slater.SchmidtModes.nR"><code class="xref py py-attr docutils literal notranslate"><span class="pre">nR</span></code></a>) –
+Eigenvectors of the right-right block of the correlation matrix, if computed.</p>
+<p>The eigenvectors are the columns of the matrix in the order</p>
+<ul class="simple">
+<li><p>empty orbitals (eigenvalue 0);</p></li>
+<li><p>entangled orbitals (eigenvalue between 0 and 1, decreasing order);</p></li>
+<li><p>filled orbitals (eigenvalue 1).</p></li>
+</ul>
+<p>In particular, the eigenvalues corresponding to
+<code class="docutils literal notranslate"><span class="pre">v_RE</span> <span class="pre">=</span> <span class="pre">vR[:,</span> <span class="pre">ixR[&quot;entangled&quot;]]</span></code> are given in order by <code class="docutils literal notranslate"><span class="pre">1-e[::-1]</span></code>.</p>
+<p>Note that the entangled orbital vectors <code class="docutils literal notranslate"><span class="pre">v_RE</span></code> are also right singular
+vectors of the offdiagonal block <span class="math notranslate nohighlight">\(C^{LR}\)</span> of the correlation matrix.</p>
+<p>If both <a class="reference internal" href="#temfpy.slater.SchmidtModes.vL" title="temfpy.slater.SchmidtModes.vL"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vL</span></code></a> and <a class="reference internal" href="#temfpy.slater.SchmidtModes.vR" title="temfpy.slater.SchmidtModes.vR"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vR</span></code></a> are computed, the singular vectors
+<code class="docutils literal notranslate"><span class="pre">v_LE[:,</span> <span class="pre">i]</span></code> and <code class="docutils literal notranslate"><span class="pre">v_RE[:,</span> <span class="pre">n_entangled-1-i]</span></code> correspond to each other,
+with eigenvalues <span class="math notranslate nohighlight">\(\lambda_i\)</span> and <span class="math notranslate nohighlight">\(1-\lambda_i\)</span>, so that the
+SVD of <span class="math notranslate nohighlight">\(C^{LR}\)</span> is</p>
+<div class="math notranslate nohighlight">
+\[C^{LR} = \sum_{i=0}^{n_E-1} \sqrt{\lambda_i (1-\lambda_i)} \;
+                            v_{L,E,i} \; v_{R,E,n_E-1-i}^\dagger.\]</div>
+<p>However, to better handle fermion anticommutation, the entangled orbitals
+at odd indices include an additional negative sign.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.ixL">
+<span class="sig-name descname"><span class="pre">ixL</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.14)"><span class="pre">slice</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtModes.ixL" title="Link to this definition"></a></dt>
+<dd><p>Maps the labels <code class="docutils literal notranslate"><span class="pre">&quot;empty&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;filled&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;entangled&quot;</span></code> to column
+slices of the corresponding orbitals in <a class="reference internal" href="#temfpy.slater.SchmidtModes.vL" title="temfpy.slater.SchmidtModes.vL"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vL</span></code></a>, if that is computed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.ixR">
+<span class="sig-name descname"><span class="pre">ixR</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.14)"><span class="pre">slice</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtModes.ixR" title="Link to this definition"></a></dt>
+<dd><p>Maps the labels <code class="docutils literal notranslate"><span class="pre">&quot;empty&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;filled&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;entangled&quot;</span></code> to column
+slices of the corresponding orbitals in <a class="reference internal" href="#temfpy.slater.SchmidtModes.vR" title="temfpy.slater.SchmidtModes.vR"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vR</span></code></a>, if that is computed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.nL">
+<span class="sig-name descname"><span class="pre">nL</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtModes.nL" title="Link to this definition"></a></dt>
+<dd><p>Size of the left half of the system.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.nR">
+<span class="sig-name descname"><span class="pre">nR</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtModes.nR" title="Link to this definition"></a></dt>
+<dd><p>Size of the right half of the system.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.n_fermion">
+<span class="sig-name descname"><span class="pre">n_fermion</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtModes.n_fermion" title="Link to this definition"></a></dt>
+<dd><p>Number of fermions in the mean-field state.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.n_entangled">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">n_entangled</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtModes.n_entangled" title="Link to this definition"></a></dt>
+<dd><p>Number of entangled orbitals.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.size">
+<span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">which</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'T'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#SchmidtModes.size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.SchmidtModes.size" title="Link to this definition"></a></dt>
+<dd><p>Size of the specified half or the whole of the system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>which</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Either “L” for left or “R” for right side
+or “T” (default) for total size.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#temfpy.slater.SchmidtModes.nL" title="temfpy.slater.SchmidtModes.nL"><code class="xref py py-attr docutils literal notranslate"><span class="pre">nL</span></code></a>, <a class="reference internal" href="#temfpy.slater.SchmidtModes.nR" title="temfpy.slater.SchmidtModes.nR"><code class="xref py py-attr docutils literal notranslate"><span class="pre">nR</span></code></a>, or their sum, depending on <code class="docutils literal notranslate"><span class="pre">which</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.n_filled">
+<span class="sig-name descname"><span class="pre">n_filled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">which</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#SchmidtModes.n_filled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.SchmidtModes.n_filled" title="Link to this definition"></a></dt>
+<dd><p>Number of filled orbitals on the specified half of the system.</p>
+<p>Based on <a class="reference internal" href="#temfpy.slater.SchmidtModes.vL" title="temfpy.slater.SchmidtModes.vL"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vL</span></code></a> or <a class="reference internal" href="#temfpy.slater.SchmidtModes.vR" title="temfpy.slater.SchmidtModes.vR"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vR</span></code></a> if they exist, otherwise inferred from
+<a class="reference internal" href="#temfpy.slater.SchmidtModes.n_fermion" title="temfpy.slater.SchmidtModes.n_fermion"><code class="xref py py-attr docutils literal notranslate"><span class="pre">n_fermion</span></code></a> and the number of entangled and filled orbitals
+on the other side.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>which</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Whether to return the number of filled orbitals
+to the left (“L”) or the right (“R”).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Number of filled orbitals on the specified side.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.vL_entangled">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">vL_entangled</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtModes.vL_entangled" title="Link to this definition"></a></dt>
+<dd><p>Entangled left Schmidt mode orbitals, if computed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.vR_entangled">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">vR_entangled</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtModes.vR_entangled" title="Link to this definition"></a></dt>
+<dd><p>Entangled right Schmidt mode orbitals, if computed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.mode_vectors">
+<span class="sig-name descname"><span class="pre">mode_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">which</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entangled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#SchmidtModes.mode_vectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.SchmidtModes.mode_vectors" title="Link to this definition"></a></dt>
+<dd><p>Returns the Schmidt mode orbitals on the specified side.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>which</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Either “L” for left or “R” for right side.</p></li>
+<li><p><strong>entangled</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to return the entangled (<a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) or
+all (<a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a>, default) eigenvectors.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Either <a class="reference internal" href="#temfpy.slater.SchmidtModes.vL" title="temfpy.slater.SchmidtModes.vL"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vL</span></code></a> or <a class="reference internal" href="#temfpy.slater.SchmidtModes.vR" title="temfpy.slater.SchmidtModes.vR"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vR</span></code></a>, depending on <code class="docutils literal notranslate"><span class="pre">which</span></code>,
+truncated to entangled modes if <code class="docutils literal notranslate"><span class="pre">entangled</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.eigenvalues">
+<span class="sig-name descname"><span class="pre">eigenvalues</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">which</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entangled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#SchmidtModes.eigenvalues"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.SchmidtModes.eigenvalues" title="Link to this definition"></a></dt>
+<dd><p>Returns the Schmidt mode eigenvalues on the specified side.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>which</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Either “L” for left or “R” for right side.</p></li>
+<li><p><strong>entangled</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to return the entangled (<a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) or
+all (<a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a>, default) eigenvalues.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The eigenvalues corresponding to <a class="reference internal" href="#temfpy.slater.SchmidtModes.mode_vectors" title="temfpy.slater.SchmidtModes.mode_vectors"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mode_vectors()</span></code></a>
+with the same parameters.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.singular_values">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">singular_values</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtModes.singular_values" title="Link to this definition"></a></dt>
+<dd><p>Singular values of the offdiagonal correlation matrix blocks.</p>
+<p>If <a class="reference internal" href="#temfpy.slater.SchmidtModes.vL_entangled" title="temfpy.slater.SchmidtModes.vL_entangled"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vL_entangled</span></code></a> and <a class="reference internal" href="#temfpy.slater.SchmidtModes.vR_entangled" title="temfpy.slater.SchmidtModes.vR_entangled"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vR_entangled</span></code></a> are both known, satisfies</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C_LR</span> <span class="o">==</span> <span class="n">vL_entangled</span> <span class="o">@</span> <span class="n">diag</span><span class="p">(</span><span class="n">S</span><span class="p">)</span> <span class="o">@</span> <span class="n">vR_entangled</span><span class="p">[:,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Otherwise, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.from_correlation_matrix">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_correlation_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trunc_par</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">which</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'LR'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diag_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#SchmidtModes.from_correlation_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.SchmidtModes.from_correlation_matrix" title="Link to this definition"></a></dt>
+<dd><p><a class="reference internal" href="#temfpy.slater.SchmidtModes" title="temfpy.slater.SchmidtModes"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchmidtModes</span></code></a> of a mean-field state with correlation matrix <code class="docutils literal notranslate"><span class="pre">C</span></code>
+for an entanglement cut between sites <code class="docutils literal notranslate"><span class="pre">x-1</span></code> and <code class="docutils literal notranslate"><span class="pre">x</span></code> (zero-indexed).</p>
+<p>We start by diagonalising the respective diagonal blocks.
+The eigenvectors give the Schmidt modes, the eigenvalues their
+relative weight in the entangled mode. We only treat modes with
+eigenvalues away from 0 or 1 by at least <code class="xref py py-attr docutils literal notranslate"><span class="pre">trunc_par.svd_min</span></code>
+<cite>squared</cite> as entangled, as only these can contribute to a Schmidt value
+less than <code class="xref py py-attr docutils literal notranslate"><span class="pre">trunc_par.svd_min</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>C</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – The correlation matrix, <span class="math notranslate nohighlight">\(C_{ij} = \langle c_j^\dagger c_i\rangle\)</span>.</p></li>
+<li><p><strong>x</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Position of the entanglement cut.</p></li>
+<li><p><strong>trunc_par</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition" title="temfpy.schmidt_utils.StoppingCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">StoppingCondition</span></code></a></span>) – <p>Which Schmidt modes should be kept as entangled.</p>
+<p>Must be either a <a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition" title="temfpy.schmidt_utils.StoppingCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">StoppingCondition</span></code></a> object
+or a dictionary with matching keys.</p>
+</p></li>
+<li><p><strong>which</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – <p>Whether to return left and/or right Schmidt modes.</p>
+<p>Must be a combination of <code class="docutils literal notranslate"><span class="pre">&quot;L&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;R&quot;</span></code>.</p>
+</p></li>
+<li><p><strong>diag_tol</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – If <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">==</span> <span class="pre">&quot;LR&quot;</span></code>, largest allowed offdiagonal matrix element in
+diagonalised / SVD correlation submatrices before an error is
+raised.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#temfpy.slater.SchmidtModes" title="temfpy.slater.SchmidtModes"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchmidtModes</span></code></a></span></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">trunc_par.svd_min</span></code> is not provided, a default of 1e-6
+(i.e., a truncation threshold of 1e-12) is used.</p></li>
+<li><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">trunc_par.degeneracy_tol</span></code> is not provided, the degeneracy tolerance
+defaults to 1e-12.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.e_ratio">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">e_ratio</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtModes.e_ratio" title="Link to this definition"></a></dt>
+<dd><p><span class="math notranslate nohighlight">\(\log((1-\lambda)/\lambda\)</span> for all eigenvalues in <a class="reference internal" href="#temfpy.slater.SchmidtModes.e" title="temfpy.slater.SchmidtModes.e"><code class="xref py py-attr docutils literal notranslate"><span class="pre">e</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.embed_subsets">
+<span class="sig-name descname"><span class="pre">embed_subsets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sets</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#SchmidtModes.embed_subsets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.SchmidtModes.embed_subsets" title="Link to this definition"></a></dt>
+<dd><p>Given an array of subsets of entangled orbitals occupied on the left
+side, generates the full sets of occupied orbitals on either side.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sets</strong> (bool <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> (n, <a class="reference internal" href="#temfpy.slater.SchmidtModes.n_entangled" title="temfpy.slater.SchmidtModes.n_entangled"><code class="xref py py-attr docutils literal notranslate"><span class="pre">n_entangled</span></code></a>)) – <p>Array of occupation numbers.</p>
+<p>Each row specifies one Schmidt state by listing on which side of the
+entanglement cut each entangled orbital is filled:
+True if on the left side, False if on the right side.</p>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul>
+<li><p><strong>left_sets</strong> (bool <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> (n, <a class="reference internal" href="#temfpy.slater.SchmidtModes.size" title="temfpy.slater.SchmidtModes.size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">size</span></code></a>[0]) | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>) – Occupation of every left orbital in the input Schmidt states.</p>
+<p>Returned if <a class="reference internal" href="#temfpy.slater.SchmidtModes.vL" title="temfpy.slater.SchmidtModes.vL"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vL</span></code></a> is not <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>.</p>
+</li>
+<li><p><strong>right_sets</strong> (bool <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> (n, <a class="reference internal" href="#temfpy.slater.SchmidtModes.size" title="temfpy.slater.SchmidtModes.size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">size</span></code></a>[1]) | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>) – Occupation of every right orbital in the input Schmidt states.</p>
+<p>Returned if <a class="reference internal" href="#temfpy.slater.SchmidtModes.vR" title="temfpy.slater.SchmidtModes.vR"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vR</span></code></a> is not <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>.</p>
+</li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtModes.schmidt_values">
+<span class="sig-name descname"><span class="pre">schmidt_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sets</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#SchmidtModes.schmidt_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.SchmidtModes.schmidt_values" title="Link to this definition"></a></dt>
+<dd><p>Schmidt values of the Schmidt vectors with given occupation numbers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sets</strong> (bool <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> (n, <a class="reference internal" href="#temfpy.slater.SchmidtModes.n_entangled" title="temfpy.slater.SchmidtModes.n_entangled"><code class="xref py py-attr docutils literal notranslate"><span class="pre">n_entangled</span></code></a>)) – <p>Array of occupation numbers.</p>
+<p>Each row specifies one Schmidt state by listing on which side of the
+entanglement cut each entangled orbital is filled:
+True if on the left side, False if on the right side.</p>
+</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>λ</strong> – Schmidt values corresponding to the input Schmidt states.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> (n,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtVectors">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">temfpy.slater.</span></span><span class="sig-name descname"><span class="pre">SchmidtVectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_sets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_sets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schmidt_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx_L</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#SchmidtVectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.SchmidtVectors" title="Link to this definition"></a></dt>
+<dd><p>Schmidt vectors of a Slater determinant.</p>
+<p>The Schmidt decomposition of the state <span class="math notranslate nohighlight">\(|\psi\rangle\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}|\psi\rangle &amp;= \sum_\alpha \lambda_\alpha |L_\alpha\rangle \otimes_g
+                                           |R_\alpha\rangle\\|L_\alpha\rangle &amp;= \prod_a (d^\dagger_{L,a})^{n^L_{\alpha a}} |0\rangle\\|R_\alpha\rangle &amp;= \prod_a (d^\dagger_{R,a})^{n^R_{\alpha a}} |0\rangle,\end{aligned}\end{align} \]</div>
+<p>where <span class="math notranslate nohighlight">\(\lambda_\alpha\)</span> are the Schmidt values,
+<span class="math notranslate nohighlight">\(d^\dagger_{L,a}\)</span> and <span class="math notranslate nohighlight">\(d^\dagger_{L,a}\)</span> are the creation operators
+of the left and right Schmidt mode orbitals, and
+<span class="math notranslate nohighlight">\(n^L_{\alpha a}\)</span> and <span class="math notranslate nohighlight">\(n^R_{\alpha a}\)</span> are the occupation numbers
+of these orbitals in the Schmidt vectors.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtVectors.modes">
+<span class="sig-name descname"><span class="pre">modes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#temfpy.slater.SchmidtModes" title="temfpy.slater.SchmidtModes"><span class="pre">SchmidtModes</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtVectors.modes" title="Link to this definition"></a></dt>
+<dd><p>The mean-field orbitals underlying the Schmidt vectors.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtVectors.left_sets">
+<span class="sig-name descname"><span class="pre">left_sets</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtVectors.left_sets" title="Link to this definition"></a></dt>
+<dd><p>bool (<a class="reference internal" href="#temfpy.slater.SchmidtVectors.n_schmidt" title="temfpy.slater.SchmidtVectors.n_schmidt"><code class="xref py py-attr docutils literal notranslate"><span class="pre">n_schmidt</span></code></a>, <a class="reference internal" href="#temfpy.slater.SchmidtVectors.nL" title="temfpy.slater.SchmidtVectors.nL"><code class="xref py py-attr docutils literal notranslate"><span class="pre">nL</span></code></a>) –
+Left Schmidt vectors.</p>
+<p>Each row contains the occupation <span class="math notranslate nohighlight">\(n^L_{\alpha a}\)</span> of all left
+Schmidt modes in one left Schmidt vector <span class="math notranslate nohighlight">\(|L_\alpha\rangle\)</span>,
+if <a class="reference internal" href="#temfpy.slater.SchmidtVectors.vL" title="temfpy.slater.SchmidtVectors.vL"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vL</span></code></a> is not <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtVectors.right_sets">
+<span class="sig-name descname"><span class="pre">right_sets</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtVectors.right_sets" title="Link to this definition"></a></dt>
+<dd><p>bool (<a class="reference internal" href="#temfpy.slater.SchmidtVectors.n_schmidt" title="temfpy.slater.SchmidtVectors.n_schmidt"><code class="xref py py-attr docutils literal notranslate"><span class="pre">n_schmidt</span></code></a>, <a class="reference internal" href="#temfpy.slater.SchmidtVectors.nR" title="temfpy.slater.SchmidtVectors.nR"><code class="xref py py-attr docutils literal notranslate"><span class="pre">nR</span></code></a>) –
+Right Schmidt vectors.</p>
+<p>Each row contains the occupation <span class="math notranslate nohighlight">\(n^R_{\alpha a}\)</span> of all left
+Schmidt modes in one left Schmidt vector <span class="math notranslate nohighlight">\(|R_\alpha\rangle\)</span>,
+if <a class="reference internal" href="#temfpy.slater.SchmidtVectors.vR" title="temfpy.slater.SchmidtVectors.vR"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vR</span></code></a> is not <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtVectors.schmidt_values">
+<span class="sig-name descname"><span class="pre">schmidt_values</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtVectors.schmidt_values" title="Link to this definition"></a></dt>
+<dd><p>(<a class="reference internal" href="#temfpy.slater.SchmidtVectors.n_schmidt" title="temfpy.slater.SchmidtVectors.n_schmidt"><code class="xref py py-attr docutils literal notranslate"><span class="pre">n_schmidt</span></code></a>,) –
+Schmidt values <span class="math notranslate nohighlight">\(\lambda_\alpha\)</span> corresponding to each Schmidt vector.</p>
+<p>Sorted in increasing order of charge of the left Schmidt vector and
+in decreasing order within each charge sector.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtVectors.idx_L">
+<span class="sig-name descname"><span class="pre">idx_L</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.14)"><span class="pre">slice</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#temfpy.slater.SchmidtVectors.idx_L" title="Link to this definition"></a></dt>
+<dd><p>Maps the total charge to the left of the entanglement cut to the
+slice of sets/singular values with that charge.</p>
+<p>That is, all Schmidt vectors in <code class="docutils literal notranslate"><span class="pre">left_sets[idx_L[n]]</span></code> contain n particles.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtVectors.n_schmidt">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">n_schmidt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtVectors.n_schmidt" title="Link to this definition"></a></dt>
+<dd><p>The number of Schmidt vectors.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtVectors.n_entangled">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">n_entangled</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtVectors.n_entangled" title="Link to this definition"></a></dt>
+<dd><p>Number of entangled orbitals.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtVectors.nL">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">nL</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtVectors.nL" title="Link to this definition"></a></dt>
+<dd><p>Size of the left half of the system.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtVectors.nR">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">nR</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtVectors.nR" title="Link to this definition"></a></dt>
+<dd><p>Size of the right half of the system.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtVectors.n_fermion">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">n_fermion</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtVectors.n_fermion" title="Link to this definition"></a></dt>
+<dd><p>Number of fermions in the mean-field state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtVectors.size">
+<span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">which</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'T'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#SchmidtVectors.size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.SchmidtVectors.size" title="Link to this definition"></a></dt>
+<dd><p>Size of the specified half or the whole of the system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>which</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Either “L” for left or “R” for right side
+or “T” (default) for total size.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the appropriate system size.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtVectors.vL">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">vL</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtVectors.vL" title="Link to this definition"></a></dt>
+<dd><p>Left Schmidt mode orbitals <a class="reference internal" href="#temfpy.slater.SchmidtModes.vL" title="temfpy.slater.SchmidtModes.vL"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vL</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtVectors.vR">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">vR</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#temfpy.slater.SchmidtVectors.vR" title="Link to this definition"></a></dt>
+<dd><p>Right Schmidt mode orbitals <a class="reference internal" href="#temfpy.slater.SchmidtModes.vR" title="temfpy.slater.SchmidtModes.vR"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vR</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtVectors.mode_vectors">
+<span class="sig-name descname"><span class="pre">mode_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">which</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entangled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#SchmidtVectors.mode_vectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.SchmidtVectors.mode_vectors" title="Link to this definition"></a></dt>
+<dd><p>Returns the Schmidt mode orbitals on the specified side.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>which</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Either “L” for left or “R” for right side.</p></li>
+<li><p><strong>entangled</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to return the entangled (<a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) or
+all (<a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a>, default) eigenvectors.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Either <a class="reference internal" href="#temfpy.slater.SchmidtVectors.vL" title="temfpy.slater.SchmidtVectors.vL"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vL</span></code></a> or <a class="reference internal" href="#temfpy.slater.SchmidtVectors.vR" title="temfpy.slater.SchmidtVectors.vR"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vR</span></code></a>, depending on <code class="docutils literal notranslate"><span class="pre">which</span></code>,
+truncated to entangled modes if <code class="docutils literal notranslate"><span class="pre">entangled</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtVectors.sets">
+<span class="sig-name descname"><span class="pre">sets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">which</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#SchmidtVectors.sets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.SchmidtVectors.sets" title="Link to this definition"></a></dt>
+<dd><p>Returns the sets of occupied orbitals on the specified side.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>which</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Either “L” for left or “R” for right side.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Either <a class="reference internal" href="#temfpy.slater.SchmidtVectors.left_sets" title="temfpy.slater.SchmidtVectors.left_sets"><code class="xref py py-attr docutils literal notranslate"><span class="pre">left_sets</span></code></a> or <a class="reference internal" href="#temfpy.slater.SchmidtVectors.right_sets" title="temfpy.slater.SchmidtVectors.right_sets"><code class="xref py py-attr docutils literal notranslate"><span class="pre">right_sets</span></code></a>, depending on <code class="docutils literal notranslate"><span class="pre">which</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtVectors.from_schmidt_modes">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_schmidt_modes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trunc_par</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#SchmidtVectors.from_schmidt_modes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.SchmidtVectors.from_schmidt_modes" title="Link to this definition"></a></dt>
+<dd><p>The most significant <a class="reference internal" href="#temfpy.slater.SchmidtVectors" title="temfpy.slater.SchmidtVectors"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchmidtVectors</span></code></a> from the given
+<a class="reference internal" href="#temfpy.slater.SchmidtModes" title="temfpy.slater.SchmidtModes"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchmidtModes</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>modes</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#temfpy.slater.SchmidtModes" title="temfpy.slater.SchmidtModes"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchmidtModes</span></code></a></span>) – The Schmidt modes.</p></li>
+<li><p><strong>trunc_par</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition" title="temfpy.schmidt_utils.StoppingCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">StoppingCondition</span></code></a></span>) – <p>Specifies which Schmidt states should be kept.</p>
+<p>Must be either a <a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition" title="temfpy.schmidt_utils.StoppingCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">StoppingCondition</span></code></a> object
+or a dictionary with matching keys.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">modes</span></code> contains left modes,
+the filtering function <code class="xref py py-attr docutils literal notranslate"><span class="pre">sectors</span></code>
+is applied to the total number of particles to the left,
+otherwise, to the total number of particles to the right.</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#temfpy.slater.SchmidtVectors" title="temfpy.slater.SchmidtVectors"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchmidtVectors</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="temfpy.slater.SchmidtVectors.from_correlation_matrix">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_correlation_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trunc_par</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">which</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'LR'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diag_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#SchmidtVectors.from_correlation_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.SchmidtVectors.from_correlation_matrix" title="Link to this definition"></a></dt>
+<dd><p>Most significant <a class="reference internal" href="#temfpy.slater.SchmidtVectors" title="temfpy.slater.SchmidtVectors"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchmidtVectors</span></code></a> of a Slater determinant with
+correlation matrix <code class="docutils literal notranslate"><span class="pre">C</span></code> for an entanglement cut between sites
+<code class="docutils literal notranslate"><span class="pre">x-1</span></code> and <code class="docutils literal notranslate"><span class="pre">x</span></code> (zero-indexed).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>C</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – The correlation matrix, <span class="math notranslate nohighlight">\(C_{ij} = \langle c_j^\dagger c_i\rangle\)</span>.</p></li>
+<li><p><strong>x</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Position of the entanglement cut.</p></li>
+<li><p><strong>trunc_par</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition" title="temfpy.schmidt_utils.StoppingCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">StoppingCondition</span></code></a></span>) – <p>Specifies which Schmidt states should be kept.</p>
+<p>Must be either a <a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition" title="temfpy.schmidt_utils.StoppingCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">StoppingCondition</span></code></a> object
+or a dictionary with matching keys.</p>
+<p>If left Schmidt modes are calculated,
+the filtering function <code class="xref py py-attr docutils literal notranslate"><span class="pre">sectors</span></code>
+is applied to the total number of particles to the left,
+otherwise, to the total number of particles to the right.</p>
+</p></li>
+<li><p><strong>which</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – <p>Whether to return left and/or right Schmidt modes.</p>
+<p>Must be a combination of <code class="docutils literal notranslate"><span class="pre">&quot;L&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;R&quot;</span></code>.</p>
+</p></li>
+<li><p><strong>diag_tol</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – If <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">==</span> <span class="pre">&quot;LR&quot;</span></code>, largest allowed offdiagonal matrix element in
+diagonalised / SVD correlation submatrices before an error is
+raised.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#temfpy.slater.SchmidtVectors" title="temfpy.slater.SchmidtVectors"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchmidtVectors</span></code></a></span></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">trunc_par.svd_min</span></code> is not provided, the truncation threshold
+defaults to 1e-6.</p></li>
+<li><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">trunc_par.degeneracy_tol</span></code> is not provided, the degeneracy tolerance
+defaults to 1e-12.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="temfpy.slater.MPSTensorData">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">temfpy.slater.</span></span><span class="sig-name descname"><span class="pre">MPSTensorData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">physical_leg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">det_always</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sometimes_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx_bra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx_ket</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_sets_bra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_sets_ket</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qtotal</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#MPSTensorData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.MPSTensorData" title="Link to this definition"></a></dt>
+<dd><p>Data for computing one MPS tensor of a Slater determinant.</p>
+<ul>
+<li><p>If <a class="reference internal" href="#temfpy.slater.MPSTensorData.mode" title="temfpy.slater.MPSTensorData.mode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mode</span></code></a> is <code class="docutils literal notranslate"><span class="pre">&quot;left&quot;</span></code>, contains an implicit description of the
+left canonical tensor</p>
+<div class="math notranslate nohighlight">
+\[A^{n_i}_{\alpha\beta} =
+(\langle n_i | \otimes_g \langle L^{(i-1)}_\alpha|)
+| L^{(i)}_\beta \rangle.\]</div>
+</li>
+<li><p>If <a class="reference internal" href="#temfpy.slater.MPSTensorData.mode" title="temfpy.slater.MPSTensorData.mode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mode</span></code></a> is <code class="docutils literal notranslate"><span class="pre">&quot;right&quot;</span></code>, contains an implicit description of the
+right canonical tensor</p>
+<div class="math notranslate nohighlight">
+\[B^{n_i}_{\beta\alpha} =
+(\langle R^{(i)}_\alpha | \otimes_g \langle n_i |)
+| R^{(i-1)}_\beta \rangle.\]</div>
+</li>
+</ul>
+<p>Schmidt vector overlaps for equal-length chains can also be computed:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}A_{\alpha\beta} &amp;= \langle L'_\alpha | L_\beta \rangle\\B_{\beta\alpha} &amp;= \langle R'_\beta | R_\alpha \rangle\end{aligned}\end{align} \]</div>
+<p>For Slater determinants, such overlaps are the determinants of the
+overlaps of the single-particle orbital wave functions. Many of these
+orbitals are shared between every Schmidt vector, so we can compute
+the determinants efficiently using the identity</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\det \begin{bmatrix}A &amp; B \\ C &amp; D\end{bmatrix} =
+\det(A) \det\left(D - C A^{-1} B\right) =
+\det(D) \det\left(A - B D^{-1} C\right).\end{split}\]</div>
+<p>Namely, if the block <span class="math notranslate nohighlight">\(A\)</span> or block <span class="math notranslate nohighlight">\(D\)</span> contains the overlaps
+of the always occupied orbitals, its determinant is only computed once.
+Furthermore, each determinant entry <span class="math notranslate nohighlight">\(\left(D - C A^{-1} B\right)_{ij}\)</span> /
+<span class="math notranslate nohighlight">\(\left(A - B D^{-1} C\right)_{ij}\)</span> depends only on “bra” orbital <cite>i</cite>
+and “ket” orbital <cite>j</cite>, so they can be precomputed for all pairs of
+sometimes-occupied orbitals.</p>
+<ul class="simple">
+<li><p>For left Schmidt vectors, the always occupied orbitals are listed before
+the entangled ones (cf. <a class="reference internal" href="#temfpy.slater.SchmidtModes.vL" title="temfpy.slater.SchmidtModes.vL"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SchmidtModes.vL</span></code></a>).
+Therefore, we use the first form of the identity if <code class="docutils literal notranslate"><span class="pre">mode</span> <span class="pre">==</span> <span class="pre">&quot;left&quot;</span></code>.</p></li>
+<li><p>For right Schmidt vectors, the always occupied orbitals are listed after
+the entangled ones (cf. <a class="reference internal" href="#temfpy.slater.SchmidtModes.vR" title="temfpy.slater.SchmidtModes.vR"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SchmidtModes.vR</span></code></a>).
+Therefore, we use the second form of the identity if <code class="docutils literal notranslate"><span class="pre">mode</span> <span class="pre">==</span> <span class="pre">&quot;right&quot;</span></code>.</p></li>
+</ul>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.MPSTensorData.mode">
+<span class="sig-name descname"><span class="pre">mode</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#temfpy.slater.MPSTensorData.mode" title="Link to this definition"></a></dt>
+<dd><p>Whether the overlap is between <code class="docutils literal notranslate"><span class="pre">&quot;left&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;right&quot;</span></code> Schmidt vectors.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.MPSTensorData.physical_leg">
+<span class="sig-name descname"><span class="pre">physical_leg</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><a class="headerlink" href="#temfpy.slater.MPSTensorData.physical_leg" title="Link to this definition"></a></dt>
+<dd><p>Whether an MPS tensor with a physical leg (<a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>) or an array of
+overlaps (<a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a>) is to be computed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.MPSTensorData.det_always">
+<span class="sig-name descname"><span class="pre">det_always</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#complex" title="(in Python v3.14)"><span class="pre">complex</span></a></span><a class="headerlink" href="#temfpy.slater.MPSTensorData.det_always" title="Link to this definition"></a></dt>
+<dd><p>Overlap determinant of the always occupied orbitals,
+<span class="math notranslate nohighlight">\(\det(A)\)</span> or <span class="math notranslate nohighlight">\(\det(D)\)</span>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.MPSTensorData.sometimes_matrix">
+<span class="sig-name descname"><span class="pre">sometimes_matrix</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#temfpy.slater.MPSTensorData.sometimes_matrix" title="Link to this definition"></a></dt>
+<dd><p>Entries of the matrix <span class="math notranslate nohighlight">\(\left(D - C A^{-1} B\right)\)</span> or
+<span class="math notranslate nohighlight">\(\left(A - B D^{-1} C\right)\)</span> for all pairs of sometimes-occupied orbitals.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.MPSTensorData.idx_bra">
+<span class="sig-name descname"><span class="pre">idx_bra</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.14)"><span class="pre">slice</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#temfpy.slater.MPSTensorData.idx_bra" title="Link to this definition"></a></dt>
+<dd><p><a class="reference internal" href="#temfpy.slater.SchmidtVectors.idx_L" title="temfpy.slater.SchmidtVectors.idx_L"><code class="xref py py-attr docutils literal notranslate"><span class="pre">idx_L</span></code></a> of the bra Schmidt vector.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.MPSTensorData.idx_ket">
+<span class="sig-name descname"><span class="pre">idx_ket</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.14)"><span class="pre">slice</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#temfpy.slater.MPSTensorData.idx_ket" title="Link to this definition"></a></dt>
+<dd><p><a class="reference internal" href="#temfpy.slater.SchmidtVectors.idx_L" title="temfpy.slater.SchmidtVectors.idx_L"><code class="xref py py-attr docutils literal notranslate"><span class="pre">idx_L</span></code></a> of the ket Schmidt vector.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.MPSTensorData.new_sets_bra">
+<span class="sig-name descname"><span class="pre">new_sets_bra</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#temfpy.slater.MPSTensorData.new_sets_bra" title="Link to this definition"></a></dt>
+<dd><p>Bra Schmidt vectors as occupation numbers of the sometimes-occupied orbitals.</p>
+<p>Used to index the rows of <a class="reference internal" href="#temfpy.slater.MPSTensorData.sometimes_matrix" title="temfpy.slater.MPSTensorData.sometimes_matrix"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sometimes_matrix</span></code></a>.</p>
+<p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">physical</span></code> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>, it is double the length of
+<a class="reference internal" href="#temfpy.slater.SchmidtVectors.sets" title="temfpy.slater.SchmidtVectors.sets"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sets</span></code></a> and contains all Schmidt vectors with the on-site
+degree of freedom once empty, one filled. The overall array is still sorted
+by total charge to the left; within each sector, we first take the “Schmidt
+vectors” with empty on-site orbital.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.MPSTensorData.new_sets_ket">
+<span class="sig-name descname"><span class="pre">new_sets_ket</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#temfpy.slater.MPSTensorData.new_sets_ket" title="Link to this definition"></a></dt>
+<dd><p>Ket Schmidt vectors as occupation numbers of the sometimes-occupied orbitals.</p>
+<p>Used to index the columns of <a class="reference internal" href="#temfpy.slater.MPSTensorData.sometimes_matrix" title="temfpy.slater.MPSTensorData.sometimes_matrix"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sometimes_matrix</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="temfpy.slater.MPSTensorData.qtotal">
+<span class="sig-name descname"><span class="pre">qtotal</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#temfpy.slater.MPSTensorData.qtotal" title="Link to this definition"></a></dt>
+<dd><p>Total charge of the tensor to ensure matching fermion numbers in
+Schmidt vectors.</p>
+<ul class="simple">
+<li><p>For <code class="docutils literal notranslate"><span class="pre">mode</span> <span class="pre">==</span> <span class="pre">&quot;left&quot;</span></code>, always 0.</p></li>
+<li><p>For <code class="docutils literal notranslate"><span class="pre">mode</span> <span class="pre">==</span> <span class="pre">&quot;right&quot;</span></code>, equals the difference of <a class="reference internal" href="#temfpy.slater.SchmidtVectors.n_fermion" title="temfpy.slater.SchmidtVectors.n_fermion"><code class="xref py py-attr docutils literal notranslate"><span class="pre">n_fermion</span></code></a>
+between the ket and bra Schmidt vectors.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="temfpy.slater.MPSTensorData.idx_physical">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">idx_physical</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#temfpy.slater.MPSTensorData.idx_physical" title="Link to this definition"></a></dt>
+<dd><p>Row index of the onsite degree of freedom in <a class="reference internal" href="#temfpy.slater.MPSTensorData.sometimes_matrix" title="temfpy.slater.MPSTensorData.sometimes_matrix"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sometimes_matrix</span></code></a>
+or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a> if there is no such degree of freedom.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="temfpy.slater.MPSTensorData.from_schmidt_vectors">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_schmidt_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Schmidt_bra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Schmidt_ket</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#MPSTensorData.from_schmidt_vectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.MPSTensorData.from_schmidt_vectors" title="Link to this definition"></a></dt>
+<dd><p>Constructs <a class="reference internal" href="#temfpy.slater.MPSTensorData" title="temfpy.slater.MPSTensorData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPSTensorData</span></code></a> from Schmidt vectors on the two
+entanglement cuts next to a site.</p>
+<p>Depending on the value of <code class="docutils literal notranslate"><span class="pre">mode</span></code>, it uses either “left” or “right”
+Schmidt vectors, resulting in a left or right canonical MPS tensor,
+respectively.
+In both cases, <code class="docutils literal notranslate"><span class="pre">Schmidt_bra</span></code> corresponds to Schmidt vectors on the
+shorter chain.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Schmidt_bra</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#temfpy.slater.SchmidtVectors" title="temfpy.slater.SchmidtVectors"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchmidtVectors</span></code></a></span>) – <p>Schmidt vectors corresponding to the bra states in the overlap.</p>
+<p>That is, for the entanglement cut to the left if <code class="docutils literal notranslate"><span class="pre">mode==&quot;left&quot;</span></code>
+or to the right if <code class="docutils literal notranslate"><span class="pre">mode=&quot;right&quot;</span></code>.</p>
+</p></li>
+<li><p><strong>Schmidt_ket</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#temfpy.slater.SchmidtVectors" title="temfpy.slater.SchmidtVectors"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchmidtVectors</span></code></a></span>) – <p>Schmidt vectors corresponding to the ket states in the overlap.</p>
+<p>That is, for the entanglement cut to the right if <code class="docutils literal notranslate"><span class="pre">mode==&quot;left&quot;</span></code>
+or to the left if <code class="docutils literal notranslate"><span class="pre">mode=&quot;right&quot;</span></code>.</p>
+</p></li>
+<li><p><strong>mode</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – <p>Whether to construct the tensor from left or right Schmidt vectors.</p>
+<p>Must be either “left” or “right”.</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#temfpy.slater.MPSTensorData" title="temfpy.slater.MPSTensorData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPSTensorData</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="temfpy.slater.MPSTensorData.to_npc_array">
+<span class="sig-name descname"><span class="pre">to_npc_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#MPSTensorData.to_npc_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.MPSTensorData.to_npc_array" title="Link to this definition"></a></dt>
+<dd><p>The MPS tensor as a TeNPy <a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.linalg.np_conserved.Array.html#tenpy.linalg.np_conserved.Array" title="(in TeNPy v1.1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></a> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.linalg.np_conserved.Array.html#tenpy.linalg.np_conserved.Array" title="(in TeNPy v1.1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="temfpy.slater.correlation_matrix">
+<span class="sig-prename descclassname"><span class="pre">temfpy.slater.</span></span><span class="sig-name descname"><span class="pre">correlation_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#correlation_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.correlation_matrix" title="Link to this definition"></a></dt>
+<dd><p>Ground-state correlation matrix of a mean-field Hamiltonian.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>H</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Real-space mean-field Hamiltonian.</p></li>
+<li><p><strong>N</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – <p>Number of occupied orbitals.</p>
+<p>If not specified (default), all orbitals with negative energy are filled.</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>C: <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></dt><dd><p>The correlation matrix, <span class="math notranslate nohighlight">\(C_{ij} = \langle c_j^\dagger c_i\rangle\)</span>.</p>
+</dd>
+<dt>N: <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></dt><dd><p>The number of occupied orbitals.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="temfpy.slater.spinful_correlation_matrix">
+<span class="sig-prename descclassname"><span class="pre">temfpy.slater.</span></span><span class="sig-name descname"><span class="pre">spinful_correlation_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#spinful_correlation_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.spinful_correlation_matrix" title="Link to this definition"></a></dt>
+<dd><p>Enlarged correlation matrix for spinful fermions.</p>
+<p>Doubles the size of the correlation matrix: even and odd sites
+in the new matrix correspond to up- and down-spin orbitals correlated
+among themselves like the input correlation matrix, and uncorrelated
+between up and down spins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>C</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – The correlation matrix, <span class="math notranslate nohighlight">\(C_{ij} = \langle c_j^\dagger c_i\rangle\)</span>.</p></li>
+<li><p><strong>ph</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether the down-spin (odd index) orbitals should be particle-hole
+transformed (<span class="math notranslate nohighlight">\(c_{i\downarrow} \leftrightarrow c_{i\downarrow}^\dagger\)</span>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The enlarged spinful correlation matrix.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="temfpy.slater.C_to_MPS">
+<span class="sig-prename descclassname"><span class="pre">temfpy.slater.</span></span><span class="sig-name descname"><span class="pre">C_to_MPS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trunc_par</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">diag_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ortho_center</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spinful</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#C_to_MPS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.C_to_MPS" title="Link to this definition"></a></dt>
+<dd><p>MPS representation of a Slater determinant from its correlation matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>C</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – The correlation matrix, <span class="math notranslate nohighlight">\(C_{ij} = \langle c_j^\dagger c_i\rangle\)</span>.</p></li>
+<li><p><strong>trunc_par</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition" title="temfpy.schmidt_utils.StoppingCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">StoppingCondition</span></code></a></span>) – <p>Specifies which Schmidt states should be kept.</p>
+<p>Must be either a <a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition" title="temfpy.schmidt_utils.StoppingCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">StoppingCondition</span></code></a> object
+or a dictionary with matching keys.</p>
+<p>Only specify the field <cite>sectors</cite> if you know what you are doing!!</p>
+</p></li>
+<li><p><strong>diag_tol</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Largest allowed offdiagonal matrix element in diagonalised / SVD
+correlation submatrices before an error is raised.</p></li>
+<li><p><strong>ortho_center</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Orthogonality centre of the mixed canonical MPS.
+Midpoint of the chain by default.</p></li>
+<li><p><strong>spinful</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">'simple'</span></code>, <code class="docutils literal notranslate"><span class="pre">'PH'</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code>]</span>) – Whether to treat the input correlation matrix as describing a
+spin-rotation symmetric state of spinful fermions or not (<code class="docutils literal notranslate"><span class="pre">None</span></code>),
+either with (<code class="docutils literal notranslate"><span class="pre">&quot;PH&quot;</span></code>) or without (<code class="docutils literal notranslate"><span class="pre">&quot;simple&quot;</span></code>) particle-hole
+rotation in the down-spin sector.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.networks.mps.MPS.html#tenpy.networks.mps.MPS" title="(in TeNPy v1.1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPS</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The wave function as a TeNPy <a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.networks.mps.MPS.html#tenpy.networks.mps.MPS" title="(in TeNPy v1.1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPS</span></code></a> object.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">trunc_par.svd_min</span></code> is not provided, the truncation threshold
+defaults to 1e-6.</p></li>
+<li><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">trunc_par.degeneracy_tol</span></code> is not provided, the degeneracy tolerance
+defaults to 1e-12.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="temfpy.slater.C_to_iMPS">
+<span class="sig-prename descclassname"><span class="pre">temfpy.slater.</span></span><span class="sig-name descname"><span class="pre">C_to_iMPS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C_short</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C_long</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trunc_par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sites_per_cell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cut</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">diag_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unitary_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schmidt_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spinful</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#C_to_iMPS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.C_to_iMPS" title="Link to this definition"></a></dt>
+<dd><p>iMPS representation of a Slater determinant from correlation matrices.</p>
+<p>The two correlation matrices are expected to represent the ground states
+of a gapped, translation invariant Hamiltonian on two system sizes that
+differ by one repeating unit cell.</p>
+<p>The method is analogous to <a class="reference internal" href="iMPS.html#temfpy.iMPS.MPS_to_iMPS" title="temfpy.iMPS.MPS_to_iMPS"><code class="xref py py-func docutils literal notranslate"><span class="pre">iMPS.MPS_to_iMPS()</span></code></a>, with two differences:</p>
+<ul class="simple">
+<li><p>No explicit MPS tensors are computed for the environment of the iMPS unit
+cell. Instead, the Schmidt vector overlaps needed for gauge fixing are
+computed using the Slater determinant overlap formulas implemented in
+<a class="reference internal" href="#temfpy.slater.MPSTensorData" title="temfpy.slater.MPSTensorData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPSTensorData</span></code></a>.</p></li>
+<li><p>The rightmost tensor is computed directly using the right Schmidt vectors
+of the shorter chain. This means that no separate <a class="reference internal" href="iMPS.html#temfpy.iMPS.iMPSError" title="temfpy.iMPS.iMPSError"><code class="xref py py-class docutils literal notranslate"><span class="pre">iMPSError</span></code></a>s
+are returned for the right side.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>C_short</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – The correlation matrix, <span class="math notranslate nohighlight">\(C_{ij} = \langle c_j^\dagger c_i\rangle\)</span>,
+for the shorter chain.</p></li>
+<li><p><strong>C_long</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – The correlation matrix for the longer chain.</p></li>
+<li><p><strong>trunc_par</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition" title="temfpy.schmidt_utils.StoppingCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">StoppingCondition</span></code></a></span>) – <p>Specifies which Schmidt states should be kept.</p>
+<p>Must be either a <a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition" title="temfpy.schmidt_utils.StoppingCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">StoppingCondition</span></code></a> object
+or a dictionary with matching keys.</p>
+<p>Only specify the field <code class="docutils literal notranslate"><span class="pre">sectors</span></code> if you know what you are doing!!</p>
+</p></li>
+<li><p><strong>sites_per_cell</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Size of the iMPS unit cell.</p></li>
+<li><p><strong>cut</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – First site of the repeating unit cell in <code class="docutils literal notranslate"><span class="pre">C_long</span></code>.</p></li>
+<li><p><strong>diag_tol</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Largest allowed offdiagonal matrix element in diagonalised / SVD
+correlation submatrices before an error is raised.</p></li>
+<li><p><strong>unitary_tol</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Maximum deviation of the gauge rotation matrices from unitarity
+before a warning is raised.</p></li>
+<li><p><strong>schmidt_tol</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Maximum mixing of unequal Schmidt values by the gauge rotation matrices
+before a warning is raised.</p></li>
+<li><p><strong>spinful</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">'simple'</span></code>, <code class="docutils literal notranslate"><span class="pre">'PH'</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code>]</span>) – Whether to treat the input correlation matrices as describing a
+spin-rotation symmetric state of spinful fermions or not (<code class="docutils literal notranslate"><span class="pre">None</span></code>),
+either with (<code class="docutils literal notranslate"><span class="pre">&quot;PH&quot;</span></code>) or without (<code class="docutils literal notranslate"><span class="pre">&quot;simple&quot;</span></code>) particle-hole
+rotation in the down-spin sector.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.networks.mps.MPS.html#tenpy.networks.mps.MPS" title="(in TeNPy v1.1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPS</span></code></a>, <a class="reference internal" href="iMPS.html#temfpy.iMPS.iMPSError" title="temfpy.iMPS.iMPSError"><code class="xref py py-class docutils literal notranslate"><span class="pre">iMPSError</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>iMPS</strong> (<a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.networks.mps.MPS.html#tenpy.networks.mps.MPS" title="(in TeNPy v1.1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPS</span></code></a>) – iMPS with unit cell size <code class="docutils literal notranslate"><span class="pre">sites_per_cell</span></code>, constructed from the
+additional unit cell of <code class="docutils literal notranslate"><span class="pre">mps_long</span></code>.</p></li>
+<li><p><strong>validation_metric</strong> (<a class="reference internal" href="iMPS.html#temfpy.iMPS.iMPSError" title="temfpy.iMPS.iMPSError"><code class="xref py py-class docutils literal notranslate"><span class="pre">iMPSError</span></code></a>) – Errors introduced during the conversion.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">trunc_par.svd_min</span></code> is not provided, the truncation threshold
+defaults to 1e-6.</p></li>
+<li><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">trunc_par.degeneracy_tol</span></code> is not provided, the degeneracy tolerance
+defaults to 1e-12.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">spinful</span></code> fermions are requested, <code class="docutils literal notranslate"><span class="pre">sites_per_cell</span></code> and <code class="docutils literal notranslate"><span class="pre">cut</span></code> still
+refer to indices in the original correlation matrices.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="temfpy.slater.H_to_MPS">
+<span class="sig-prename descclassname"><span class="pre">temfpy.slater.</span></span><span class="sig-name descname"><span class="pre">H_to_MPS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trunc_par</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">diag_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ortho_center</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spinful</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#H_to_MPS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.H_to_MPS" title="Link to this definition"></a></dt>
+<dd><p>MPS representation of a Slater determinant from its single body Hamiltonian.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>H</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – The single body Hamiltonian <span class="math notranslate nohighlight">\(H_{ij}\)</span>.</p></li>
+<li><p><strong>trunc_par</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition" title="temfpy.schmidt_utils.StoppingCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">StoppingCondition</span></code></a></span>) – <p>Specifies which Schmidt states should be kept.</p>
+<p>Must be either a <a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition" title="temfpy.schmidt_utils.StoppingCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">StoppingCondition</span></code></a> object
+or a dictionary with matching keys.</p>
+<p>Only specify the field <cite>sectors</cite> if you know what you are doing!!</p>
+</p></li>
+<li><p><strong>diag_tol</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Largest allowed offdiagonal matrix element in diagonalised / SVD
+correlation submatrices before an error is raised.</p></li>
+<li><p><strong>ortho_center</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Orthogonality centre of the mixed canonical MPS.
+Midpoint of the chain by default.</p></li>
+<li><p><strong>spinful</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">'simple'</span></code>, <code class="docutils literal notranslate"><span class="pre">'PH'</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code>]</span>) – Whether to treat the input single particle Hamiltonian as describing a
+spin-rotation symmetric state of spinful fermions or not (<code class="docutils literal notranslate"><span class="pre">None</span></code>),
+either with (<code class="docutils literal notranslate"><span class="pre">&quot;PH&quot;</span></code>) or without (<code class="docutils literal notranslate"><span class="pre">&quot;simple&quot;</span></code>) particle-hole
+rotation in the down-spin sector.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>The wave function as a TeNPy <a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.networks.mps.MPS.html#tenpy.networks.mps.MPS" title="(in TeNPy v1.1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPS</span></code></a> object.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">trunc_par.svd_min</span></code> is not provided, the truncation threshold
+defaults to 1e-6.</p></li>
+<li><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">trunc_par.degeneracy_tol</span></code> is not provided, the degeneracy tolerance
+defaults to 1e-12.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="temfpy.slater.H_to_iMPS">
+<span class="sig-prename descclassname"><span class="pre">temfpy.slater.</span></span><span class="sig-name descname"><span class="pre">H_to_iMPS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H_short</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">H_long</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trunc_par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sites_per_cell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cut</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">diag_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unitary_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schmidt_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spinful</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/temfpy/slater.html#H_to_iMPS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#temfpy.slater.H_to_iMPS" title="Link to this definition"></a></dt>
+<dd><p>iMPS representation of a Slater determinant from single particle Hamiltonians.</p>
+<p>It is expected that the two single-particle Hamiltonians describe two
+translation-invariant systems that differ by one repeating unit cell.</p>
+<p>The method is analogous to <a class="reference internal" href="iMPS.html#temfpy.iMPS.MPS_to_iMPS" title="temfpy.iMPS.MPS_to_iMPS"><code class="xref py py-func docutils literal notranslate"><span class="pre">iMPS.MPS_to_iMPS()</span></code></a>, with two differences:</p>
+<ul class="simple">
+<li><p>No explicit MPS tensors are computed for the environment of the iMPS unit
+cell. Instead, the Schmidt vector overlaps needed for gauge fixing are
+computed using the Slater determinant overlap formulas implemented in
+<a class="reference internal" href="#temfpy.slater.MPSTensorData" title="temfpy.slater.MPSTensorData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPSTensorData</span></code></a>.</p></li>
+<li><p>The rightmost tensor is computed directly using the right Schmidt vectors
+of the shorter chain. This means that no separate <a class="reference internal" href="iMPS.html#temfpy.iMPS.iMPSError" title="temfpy.iMPS.iMPSError"><code class="xref py py-class docutils literal notranslate"><span class="pre">iMPSError</span></code></a>s
+are returned for the right side.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>H_short</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – The single particle Hamiltonian <span class="math notranslate nohighlight">\(H_{ij}\)</span> for the shorter chain.</p></li>
+<li><p><strong>H_long</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – The single particle Hamiltonian for the longer chain.</p></li>
+<li><p><strong>trunc_par</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition" title="temfpy.schmidt_utils.StoppingCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">StoppingCondition</span></code></a></span>) – <p>Specifies which Schmidt states should be kept.</p>
+<p>Must be either a <a class="reference internal" href="schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition" title="temfpy.schmidt_utils.StoppingCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">StoppingCondition</span></code></a> object
+or a dictionary with matching keys.</p>
+<p>Only specify the field <code class="docutils literal notranslate"><span class="pre">sectors</span></code> if you know what you are doing!!</p>
+</p></li>
+<li><p><strong>sites_per_cell</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Size of the iMPS unit cell.</p></li>
+<li><p><strong>cut</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – First site of the repeating unit cell in <code class="docutils literal notranslate"><span class="pre">H_long</span></code>.</p></li>
+<li><p><strong>diag_tol</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Largest allowed offdiagonal matrix element in diagonalised / SVD
+correlation submatrices before an error is raised.</p></li>
+<li><p><strong>unitary_tol</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Maximum deviation of the gauge rotation matrices from unitarity
+before a warning is raised.</p></li>
+<li><p><strong>schmidt_tol</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Maximum mixing of unequal Schmidt values by the gauge rotation matrices
+before a warning is raised.</p></li>
+<li><p><strong>spinful</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">'simple'</span></code>, <code class="docutils literal notranslate"><span class="pre">'PH'</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code>]</span>) – Whether to treat the input single particle Hamiltonians as describing a
+spin-rotation symmetric state of spinful fermions or not (<code class="docutils literal notranslate"><span class="pre">None</span></code>),
+either with (<code class="docutils literal notranslate"><span class="pre">&quot;PH&quot;</span></code>) or without (<code class="docutils literal notranslate"><span class="pre">&quot;simple&quot;</span></code>) particle-hole
+rotation in the down-spin sector.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.networks.mps.MPS.html#tenpy.networks.mps.MPS" title="(in TeNPy v1.1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPS</span></code></a>, <a class="reference internal" href="iMPS.html#temfpy.iMPS.iMPSError" title="temfpy.iMPS.iMPSError"><code class="xref py py-class docutils literal notranslate"><span class="pre">iMPSError</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>iMPS</strong> (<a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.networks.mps.MPS.html#tenpy.networks.mps.MPS" title="(in TeNPy v1.1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPS</span></code></a>) – iMPS with unit cell size <code class="docutils literal notranslate"><span class="pre">sites_per_cell</span></code>, constructed from the
+additional unit cell of <code class="docutils literal notranslate"><span class="pre">mps_long</span></code>.</p></li>
+<li><p><strong>validation_metric</strong> (<a class="reference internal" href="iMPS.html#temfpy.iMPS.iMPSError" title="temfpy.iMPS.iMPSError"><code class="xref py py-class docutils literal notranslate"><span class="pre">iMPSError</span></code></a>) – Errors introduced during the conversion.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">trunc_par.svd_min</span></code> is not provided, the truncation threshold
+defaults to 1e-6.</p></li>
+<li><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">trunc_par.degeneracy_tol</span></code> is not provided, the degeneracy tolerance
+defaults to 1e-12.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">spinful</span></code> fermions are requested, <code class="docutils literal notranslate"><span class="pre">sites_per_cell</span></code> and <code class="docutils literal notranslate"><span class="pre">cut</span></code> still
+refer to indices in the original correlation matrices.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../changelog.html" class="btn btn-neutral float-left" title="Changelog" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pfaffian.html" class="btn btn-neutral float-right" title="pfaffian" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Simon Hans Hille, Attila Szabó.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

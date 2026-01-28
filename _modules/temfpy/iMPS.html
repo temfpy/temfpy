@@ -1,0 +1,725 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>temfpy.iMPS &mdash; TeMFpy 2025 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=b9ceff23" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.svg"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=cb975c41"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            TeMFpy
+              <img src="../../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/contribute.html">Contributors’ guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting_started/contribute.html#best-practices">Best practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../getting_started/contribute.html#discuss-before-you-contribute">Discuss before you contribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting_started/contribute.html#no-giant-prs">No giant PRs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting_started/contribute.html#document-your-changes">Document your changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting_started/contribute.html#coding-style">Coding style</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting_started/contribute.html#how-to-submit-a-pr">How to submit a PR</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/citing.html">Citing TeMFpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/examples.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/gutzwiller.html">gutzwiller.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/iMPS.html">iMPS.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/iMPS_pfaffian.html">iMPS_pfaffian.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/iMPS_slater.html">iMPS_slater.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/pfaffian.html">pfaffian.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/slater.html">slater.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#temfpy-0-3-in-development">TeMFpy 0.3 (In development)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../changelog.html#api-breaking-changes">API breaking changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../changelog.html#new-features">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../changelog.html#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#temfpy-0-2-1-28-january-2026">TeMFpy 0.2.1 (28 January 2026)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../changelog.html#id1">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#temfpy-0-2-23-january-2026">TeMFpy 0.2 (23 January 2026)</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/slater.html">slater</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/slater.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes"><code class="docutils literal notranslate"><span class="pre">SchmidtModes</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.e"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.e</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.vL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.vR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.ixL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.ixL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.ixR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.ixR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.nL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.nL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.nR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.nR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.n_fermion"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.n_fermion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.n_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.n_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.size"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.n_filled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.n_filled()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.vL_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vL_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.vR_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vR_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.mode_vectors"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.mode_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.eigenvalues"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.eigenvalues()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.singular_values"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.singular_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.from_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.from_correlation_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.e_ratio"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.e_ratio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.embed_subsets"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.embed_subsets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtModes.schmidt_values"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.schmidt_values()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.modes"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.modes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.left_sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.left_sets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.right_sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.right_sets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.schmidt_values"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.schmidt_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.idx_L"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.idx_L</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.n_schmidt"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_schmidt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.n_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.nL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.nL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.nR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.nR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.n_fermion"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_fermion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.size"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.vL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.vL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.vR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.vR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.mode_vectors"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.mode_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.sets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.from_schmidt_modes"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.from_schmidt_modes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.SchmidtVectors.from_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.from_correlation_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData"><code class="docutils literal notranslate"><span class="pre">MPSTensorData</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.mode"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.mode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.physical_leg"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.physical_leg</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.det_always"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.det_always</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.sometimes_matrix"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.sometimes_matrix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.idx_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.idx_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.new_sets_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.new_sets_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.new_sets_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.new_sets_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.qtotal"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.qtotal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.idx_physical"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_physical</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.from_schmidt_vectors"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.from_schmidt_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.MPSTensorData.to_npc_array"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.to_npc_array()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/slater.html#functions">Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.correlation_matrix"><code class="docutils literal notranslate"><span class="pre">correlation_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.spinful_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">spinful_correlation_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.C_to_MPS"><code class="docutils literal notranslate"><span class="pre">C_to_MPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.C_to_iMPS"><code class="docutils literal notranslate"><span class="pre">C_to_iMPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.H_to_MPS"><code class="docutils literal notranslate"><span class="pre">H_to_MPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/slater.html#temfpy.slater.H_to_iMPS"><code class="docutils literal notranslate"><span class="pre">H_to_iMPS()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/pfaffian.html">pfaffian</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/pfaffian.html#representing-nambu-correlation-matrices">Representing Nambu correlation matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/pfaffian.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes"><code class="docutils literal notranslate"><span class="pre">SchmidtModes</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.nL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.nL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.nR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.nR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.e"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.e</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.vL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.vR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.pL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.pL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.pR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.pR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.parity"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.parity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.n_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.n_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.size"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.vL_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vL_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.vR_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vR_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.mode_vectors"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.mode_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.eigenvalues"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.eigenvalues()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.singular_values"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.singular_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.from_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.from_correlation_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.e_ratio"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.e_ratio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.embed_subsets"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.embed_subsets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.schmidt_values"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.schmidt_values()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.modes"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.modes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.left_sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.left_sets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.right_sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.right_sets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.schmidt_values"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.schmidt_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.idx_n"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.idx_n</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.idx_parity"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.idx_parity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.n_schmidt"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_schmidt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.n_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.nL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.nL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.nR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.nR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.size"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.vL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.vL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.vR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.vR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.mode_vectors"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.mode_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.pL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.pL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.pR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.pR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.parity"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.parity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.sets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.from_schmidt_modes"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.from_schmidt_modes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.from_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.from_correlation_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData"><code class="docutils literal notranslate"><span class="pre">MPSTensorData</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.mode"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.mode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.norm"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.norm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.pfaffian_matrix"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.pfaffian_matrix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.labels"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.qtotal"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.qtotal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.leg_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.leg_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.new_sets_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.new_sets_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.idx_n_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_n_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.leg_idx_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.leg_idx_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.leg_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.leg_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.new_sets_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.new_sets_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.idx_n_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_n_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.from_schmidt_vectors"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.from_schmidt_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.to_npc_array"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.to_npc_array()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/pfaffian.html#high-level-functions">High-level functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.correlation_matrix"><code class="docutils literal notranslate"><span class="pre">correlation_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.parity"><code class="docutils literal notranslate"><span class="pre">parity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.C_to_MPS"><code class="docutils literal notranslate"><span class="pre">C_to_MPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.C_to_iMPS"><code class="docutils literal notranslate"><span class="pre">C_to_iMPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.H_to_MPS"><code class="docutils literal notranslate"><span class="pre">H_to_MPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.H_to_iMPS"><code class="docutils literal notranslate"><span class="pre">H_to_iMPS()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/pfaffian.html#helper-functions">Helper functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.vector_C2M"><code class="docutils literal notranslate"><span class="pre">vector_C2M()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.vector_M2C"><code class="docutils literal notranslate"><span class="pre">vector_M2C()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.matrix_C2M"><code class="docutils literal notranslate"><span class="pre">matrix_C2M()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.matrix_M2C"><code class="docutils literal notranslate"><span class="pre">matrix_M2C()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.assert_nambu"><code class="docutils literal notranslate"><span class="pre">assert_nambu()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.assert_nambu_hamiltonian"><code class="docutils literal notranslate"><span class="pre">assert_nambu_hamiltonian()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/pfaffian.html#temfpy.pfaffian.assert_nambu_correlation"><code class="docutils literal notranslate"><span class="pre">assert_nambu_correlation()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/iMPS.html">iMPS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.MPS_to_iMPS"><code class="docutils literal notranslate"><span class="pre">MPS_to_iMPS()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.overlap_schmidt"><code class="docutils literal notranslate"><span class="pre">overlap_schmidt()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.basis_rotation"><code class="docutils literal notranslate"><span class="pre">basis_rotation()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.iMPSError"><code class="docutils literal notranslate"><span class="pre">iMPSError</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.iMPSError.left_unitary"><code class="docutils literal notranslate"><span class="pre">iMPSError.left_unitary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.iMPSError.left_schmidt"><code class="docutils literal notranslate"><span class="pre">iMPSError.left_schmidt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.iMPSError.right_unitary"><code class="docutils literal notranslate"><span class="pre">iMPSError.right_unitary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.iMPSError.right_schmidt"><code class="docutils literal notranslate"><span class="pre">iMPSError.right_schmidt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.iMPSError.left_total"><code class="docutils literal notranslate"><span class="pre">iMPSError.left_total</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.iMPSError.right_total"><code class="docutils literal notranslate"><span class="pre">iMPSError.right_total</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/iMPS.html#temfpy.iMPS.iMPSError.total_error"><code class="docutils literal notranslate"><span class="pre">iMPSError.total_error</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/gutzwiller.html">gutzwiller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/gutzwiller.html#gutzwiller-projections-of-abrikosov-fermions">Gutzwiller projections of Abrikosov fermions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/gutzwiller.html#temfpy.gutzwiller.abrikosov"><code class="docutils literal notranslate"><span class="pre">abrikosov()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/gutzwiller.html#temfpy.gutzwiller.abrikosov_ph"><code class="docutils literal notranslate"><span class="pre">abrikosov_ph()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/gutzwiller.html#helper-functions">Helper functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/gutzwiller.html#temfpy.gutzwiller.parity_mask"><code class="docutils literal notranslate"><span class="pre">parity_mask()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/gutzwiller.html#temfpy.gutzwiller.number_mask"><code class="docutils literal notranslate"><span class="pre">number_mask()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/testing.html">testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/testing.html#temfpy.testing.TEST_ACTION"><code class="docutils literal notranslate"><span class="pre">TEST_ACTION</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/testing.html#testing-functions">Testing functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/testing.html#temfpy.testing.assert_allclose"><code class="docutils literal notranslate"><span class="pre">assert_allclose()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/testing.html#temfpy.testing.assert_array_less"><code class="docutils literal notranslate"><span class="pre">assert_array_less()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/testing.html#temfpy.testing.check_schmidt_decomposition"><code class="docutils literal notranslate"><span class="pre">check_schmidt_decomposition()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/testing.html#temfpy.testing.ComparisonWarning"><code class="docutils literal notranslate"><span class="pre">ComparisonWarning</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/schmidt_utils.html">schmidt_utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition"><code class="docutils literal notranslate"><span class="pre">StoppingCondition</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.sectors"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.sectors</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.chi_max"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.chi_max</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.svd_min"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.svd_min</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.degeneracy_tol"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.degeneracy_tol</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.__call__"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.__call__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.truncate"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.truncate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/schmidt_utils.html#temfpy.schmidt_utils.lowest_sums"><code class="docutils literal notranslate"><span class="pre">lowest_sums()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/utils.html">utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/utils.html#temfpy.utils.HT"><code class="docutils literal notranslate"><span class="pre">HT()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/utils.html#temfpy.utils.n_slice"><code class="docutils literal notranslate"><span class="pre">n_slice()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/utils.html#temfpy.utils.block_svd"><code class="docutils literal notranslate"><span class="pre">block_svd()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/utils.html#temfpy.utils.normalize_SV"><code class="docutils literal notranslate"><span class="pre">normalize_SV()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">TeMFpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">temfpy.iMPS</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for temfpy.iMPS</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) TeMFPy Developers, MIT license</span>
+<span class="sa">r</span><span class="sd">&quot;&quot;&quot;Tools for converting finite to infinite MPS.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NamedTuple</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tenpy.linalg.np_conserved</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">npc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tenpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">networks</span> <span class="k">as</span> <span class="n">nw</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.testing</span><span class="w"> </span><span class="kn">import</span> <span class="n">assert_array_less</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">_NUMERICAL_TOL</span> <span class="o">=</span> <span class="mf">1e-14</span>
+<span class="n">_UNITARY_TOL</span> <span class="o">=</span> <span class="mf">1e-6</span>
+<span class="n">_SCHMIDT_TOL</span> <span class="o">=</span> <span class="mf">1e-6</span>
+
+
+<div class="viewcode-block" id="overlap_schmidt">
+<a class="viewcode-back" href="../../reference/iMPS.html#temfpy.iMPS.overlap_schmidt">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">overlap_schmidt</span><span class="p">(</span><span class="n">bra</span><span class="p">:</span> <span class="n">nw</span><span class="o">.</span><span class="n">mps</span><span class="o">.</span><span class="n">MPS</span><span class="p">,</span> <span class="n">ket</span><span class="p">:</span> <span class="n">nw</span><span class="o">.</span><span class="n">mps</span><span class="o">.</span><span class="n">MPS</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">npc</span><span class="o">.</span><span class="n">Array</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Overlap or optimal basis rotation between two sets of Schmidt vectors.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    bra:</span>
+<span class="sd">        Bra Schmidt vectors.</span>
+<span class="sd">    ket:</span>
+<span class="sd">        Ket Schmidt vectors.</span>
+<span class="sd">    mode:</span>
+<span class="sd">        If the overlap is between &quot;left&quot; or &quot;right&quot; Schmidt vectors.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    overlap: :class:`~tenpy.linalg.np_conserved.Array`</span>
+<span class="sd">        The overlaps :math:`(C_0)_{\alpha\beta} = \langle L_\alpha&#39;|L_\beta \rangle`</span>
+<span class="sd">        or :math:`(D_0)_{\alpha\beta} = \langle R_\beta&#39;|R_\alpha \rangle`,</span>
+<span class="sd">        depending on ``mode``.</span>
+
+<span class="sd">        Legs are labelled ``&quot;vL&quot;`` (incoming) and ``&quot;vR&quot;`` (outgoing).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">bra</span><span class="o">.</span><span class="n">L</span> <span class="o">==</span> <span class="n">ket</span><span class="o">.</span><span class="n">L</span><span class="p">,</span> <span class="s2">&quot;The two MPS have different lengths.&quot;</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="c1"># ---- Compute overlap ----</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;left&quot;</span><span class="p">:</span>
+        <span class="n">TM</span> <span class="o">=</span> <span class="n">nw</span><span class="o">.</span><span class="n">TransferMatrix</span><span class="p">(</span><span class="n">bra</span><span class="p">,</span> <span class="n">ket</span><span class="p">,</span> <span class="n">transpose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;A&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;right&quot;</span><span class="p">:</span>
+        <span class="n">TM</span> <span class="o">=</span> <span class="n">nw</span><span class="o">.</span><span class="n">TransferMatrix</span><span class="p">(</span><span class="n">bra</span><span class="p">,</span> <span class="n">ket</span><span class="p">,</span> <span class="n">transpose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">charge_sector</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`mode` must be either &#39;left&#39; or &#39;right&#39;, got &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">mode</span><span class="p">))</span>
+
+    <span class="c1"># Identity matrix with legs matching the input legs of the transfer matrix</span>
+    <span class="n">Id</span> <span class="o">=</span> <span class="n">npc</span><span class="o">.</span><span class="n">Array</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">]],</span> <span class="n">TM</span><span class="o">.</span><span class="n">pipe</span><span class="o">.</span><span class="n">legs</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">TM</span><span class="o">.</span><span class="n">label_split</span><span class="p">)</span>
+
+    <span class="c1"># nw.TransferMatrix makes sure that the first legtwo_leg is always ingoing and</span>
+    <span class="c1"># the second leg is always outgoing.</span>
+    <span class="c1"># Therefore, it is safe to just set the labels here instead of using</span>
+    <span class="c1"># ireplace_labels.</span>
+    <span class="n">overlap</span> <span class="o">=</span> <span class="n">TM</span><span class="o">.</span><span class="n">matvec</span><span class="p">(</span><span class="n">Id</span><span class="p">)</span><span class="o">.</span><span class="n">iset_leg_labels</span><span class="p">([</span><span class="s2">&quot;vL&quot;</span><span class="p">,</span> <span class="s2">&quot;vR&quot;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">overlap</span></div>
+
+
+
+<div class="viewcode-block" id="basis_rotation">
+<a class="viewcode-back" href="../../reference/iMPS.html#temfpy.iMPS.basis_rotation">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">basis_rotation</span><span class="p">(</span>
+    <span class="n">overlap</span><span class="p">:</span> <span class="n">npc</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
+    <span class="n">Schmidt_bra</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">Schmidt_ket</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">form</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span>
+    <span class="n">numerical_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">_NUMERICAL_TOL</span><span class="p">,</span>
+    <span class="n">unitary_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">_UNITARY_TOL</span><span class="p">,</span>
+    <span class="n">schmidt_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">_SCHMIDT_TOL</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">npc</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Overlap or optimal basis rotation between two sets of Schmidt vectors.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    overlap:</span>
+<span class="sd">        The overlaps :math:`(C_0)_{\alpha\beta} = \langle L_\alpha&#39;|L_\beta \rangle`</span>
+<span class="sd">        or :math:`(D_0)_{\alpha\beta} = \langle R_\beta&#39;|R_\alpha \rangle`,</span>
+<span class="sd">        depending on ``mode``.</span>
+
+<span class="sd">        Legs should be labelled ``&quot;vL&quot;`` (incoming) and ``&quot;vR&quot;`` (outgoing).</span>
+<span class="sd">    Schmidt_bra:</span>
+<span class="sd">        Schmidt values corresponding to the bra Schmidt vectors :math:`\langle L&#39;|`</span>
+<span class="sd">        or :math:`\langle R&#39;|`.</span>
+<span class="sd">    Schmidt_ket:</span>
+<span class="sd">        Schmidt values corresponding to the ket Schmidt vectors :math:`|L \rangle`</span>
+<span class="sd">        or :math:`|R \rangle`.</span>
+<span class="sd">    mode:</span>
+<span class="sd">        If the overlap is between &quot;left&quot; or &quot;right&quot; Schmidt vectors.</span>
+<span class="sd">    form:</span>
+<span class="sd">        Whether the basis rotation is to be used for a left (&quot;A&quot;)</span>
+<span class="sd">        or a right (&quot;B&quot;, default) canonical MPS tensor.</span>
+<span class="sd">    numerical_tol:</span>
+<span class="sd">        Highest allowed negative value of the square of the unitary error.</span>
+<span class="sd">        </span>
+<span class="sd">        Should be more than machine precision (:math:`\sim 10^{-16}` </span>
+<span class="sd">        for ``float64``) but less than ``unitary_tol`` squared.</span>
+<span class="sd">    unitary_tol:</span>
+<span class="sd">        Highest allowed deviation from unitarity (weighted with Schmidt values)</span>
+<span class="sd">        in the overlaps before a warning is raised.</span>
+<span class="sd">    schmidt_tol:</span>
+<span class="sd">        Highest allowed mixing between unequal Schmidt value sectors</span>
+<span class="sd">        before a warning is raised.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    rotation_matrix: :class:`~tenpy.linalg.np_conserved.Array`</span>
+<span class="sd">        If :obj:`True`, the optimal unitary basis rotation matrix :math:`C` that</span>
+<span class="sd">        minimises the iMPS conversion error.</span>
+
+<span class="sd">        Legs are labelled ``&quot;vL&quot;`` (incoming) and ``&quot;vR&quot;`` (outgoing).</span>
+<span class="sd">    unitary_error: float</span>
+<span class="sd">        Deviation of the overlap matrix from unitarity,</span>
+<span class="sd">        measured as the square root of the trace of</span>
+<span class="sd">        :math:`S_{\rm ket} (C_0^\dagger C_0 - \mathbb{I}) S_{\rm ket}`.</span>
+<span class="sd">    schmidt_error: float</span>
+<span class="sd">        Degree of mixing of Schmidt vectors with unequal Schmidt values,</span>
+<span class="sd">        measured as the norm of either :math:`S_{\rm bra} C - C_0 S_{\rm ket}`</span>
+<span class="sd">        or :math:`(C - C_0) S_{\rm ket}`, depending on ``mode`` and ``form``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;`mode` must be either &#39;left&#39; or &#39;right&#39;, got </span><span class="si">{</span><span class="n">mode</span><span class="si">!r}</span><span class="s2">&quot;</span>
+    <span class="k">assert</span> <span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">],</span> <span class="n">err</span>
+
+    <span class="n">form</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">form</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;`form` must be either &#39;A&#39; or &#39;B&#39;, got </span><span class="si">{</span><span class="n">form</span><span class="si">!r}</span><span class="s2">&quot;</span>
+
+    <span class="c1"># make what follows independent of mode</span>
+    <span class="n">v_bra</span><span class="p">,</span> <span class="n">v_ket</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;vL&quot;</span><span class="p">,</span> <span class="s2">&quot;vR&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;left&quot;</span> <span class="k">else</span> <span class="p">(</span><span class="s2">&quot;vR&quot;</span><span class="p">,</span> <span class="s2">&quot;vL&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ---- Test unitarity ----</span>
+    <span class="c1"># C @ S_ket</span>
+    <span class="n">C_Sk</span> <span class="o">=</span> <span class="n">overlap</span><span class="o">.</span><span class="n">scale_axis</span><span class="p">(</span><span class="n">Schmidt_ket</span><span class="p">,</span> <span class="n">v_ket</span><span class="p">)</span>
+    <span class="c1"># unitary_error^2 = tr(S_ket^2 - S_ket @ C^dagger @ C @ S_ket)</span>
+    <span class="n">unitary_error_square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Schmidt_ket</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">npc</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span><span class="n">C_Sk</span><span class="p">,</span> <span class="n">C_Sk</span><span class="p">,</span> <span class="n">do_conj</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">unitary_error_square</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">err_mssg</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mode</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2"> deviation from unitary: The square of the &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;unitary error </span><span class="si">{</span><span class="n">unitary_error_square</span><span class="si">}</span><span class="s2"> is negative and exceeds &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;the numerical tolerance </span><span class="si">{</span><span class="n">numerical_tol</span><span class="si">:</span><span class="s2">.1e</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">assert_array_less</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">unitary_error_square</span><span class="p">),</span> <span class="n">numerical_tol</span><span class="p">,</span> <span class="n">err_mssg</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mode</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2"> devitation from unitary: The square of the &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;unitary error </span><span class="si">{</span><span class="n">unitary_error_square</span><span class="si">:</span><span class="s2">.4e</span><span class="si">}</span><span class="s2"> is negative, setting it to zero.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">unitary_error</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">unitary_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">unitary_error_square</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mode</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2"> deviation from unitary: </span><span class="si">{</span><span class="n">unitary_error</span><span class="si">:</span><span class="s2">.4e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">unitary_error</span> <span class="o">&gt;</span> <span class="n">unitary_tol</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">mode</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2"> overlap matrix deviates from unitarity by &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">unitary_error</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;Increasing the bond dimension may be useful.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># ---- Convert to unitary rotation matrix ----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">)]:</span>
+        <span class="c1"># Schmidt values are inserted into the mixed canonical form</span>
+        <span class="c1"># at this entanglement cut. =&gt; Orthogonal Procustes for S_bra @ C @ S_ket</span>
+        <span class="n">U</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">npc</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">C_Sk</span><span class="o">.</span><span class="n">scale_axis</span><span class="p">(</span><span class="n">Schmidt_bra</span><span class="p">,</span> <span class="n">v_bra</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Schmidt values are inserted into the mixed canonical form</span>
+        <span class="c1"># far from this entanglement cut. =&gt; Orthogonal Procustes for C @ S_ket^2</span>
+        <span class="n">U</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">npc</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">C_Sk</span><span class="o">.</span><span class="n">scale_axis</span><span class="p">(</span><span class="n">Schmidt_ket</span><span class="p">,</span> <span class="n">v_ket</span><span class="p">))</span>
+    <span class="n">overlap</span> <span class="o">=</span> <span class="n">npc</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># ---- Test Schmidt value deviations ----</span>
+    <span class="c1"># As above, the difference is due to whether Schmidt values appear in</span>
+    <span class="c1"># the mixed canonical form at this cut or far away</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">)]:</span>
+        <span class="n">Sb_C</span> <span class="o">=</span> <span class="n">overlap</span><span class="o">.</span><span class="n">scale_axis</span><span class="p">(</span><span class="n">Schmidt_bra</span><span class="p">,</span> <span class="n">v_bra</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># not just C_Sk bc `overlap` has changed</span>
+        <span class="n">Sb_C</span> <span class="o">=</span> <span class="n">overlap</span><span class="o">.</span><span class="n">scale_axis</span><span class="p">(</span><span class="n">Schmidt_ket</span><span class="p">,</span> <span class="n">v_ket</span><span class="p">)</span>
+
+    <span class="n">schmidt_error</span> <span class="o">=</span> <span class="n">npc</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Sb_C</span> <span class="o">-</span> <span class="n">C_Sk</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mode</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2"> Schmidt value mixing:   </span><span class="si">{</span><span class="n">schmidt_error</span><span class="si">:</span><span class="s2">.4e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">schmidt_error</span> <span class="o">&gt;</span> <span class="n">schmidt_tol</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Mixing between unequal Schmidt value sectors on the </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2"> side is</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">schmidt_error</span><span class="si">}</span><span class="s2">. Increasing the number of sites may help.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">overlap</span><span class="p">,</span> <span class="n">unitary_error</span><span class="p">,</span> <span class="n">schmidt_error</span></div>
+
+
+
+<div class="viewcode-block" id="iMPSError">
+<a class="viewcode-back" href="../../reference/iMPS.html#temfpy.iMPS.iMPSError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">iMPSError</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Container of the approximation errors accrued by :func:`MPS_to_iMPS`.</span>
+
+<span class="sd">    If printed, only non-zero approximation errors are displayed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">left_unitary</span><span class="p">:</span> <span class="nb">float</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Deviation of left environment from unitarity.&quot;&quot;&quot;</span>
+    <span class="n">left_schmidt</span><span class="p">:</span> <span class="nb">float</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mixing between unequal Schmidt values by the left environment.&quot;&quot;&quot;</span>
+    <span class="n">right_unitary</span><span class="p">:</span> <span class="nb">float</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Deviation of right environment from unitarity.&quot;&quot;&quot;</span>
+    <span class="n">right_schmidt</span><span class="p">:</span> <span class="nb">float</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mixing between unequal Schmidt values by the right environment.&quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">left_total</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total approximation error of the left environment.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_schmidt</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_unitary</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">right_total</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total approximation error of the right environment.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_schmidt</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_unitary</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">total_error</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total approximation error.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;    </span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">.8e</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fields</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;iMPSError()&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;iMPSError(</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;,</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fields</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">)&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="MPS_to_iMPS">
+<a class="viewcode-back" href="../../reference/iMPS.html#temfpy.iMPS.MPS_to_iMPS">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">MPS_to_iMPS</span><span class="p">(</span>
+    <span class="n">mps_short</span><span class="p">:</span> <span class="n">nw</span><span class="o">.</span><span class="n">MPS</span><span class="p">,</span>
+    <span class="n">mps_long</span><span class="p">:</span> <span class="n">nw</span><span class="o">.</span><span class="n">MPS</span><span class="p">,</span>
+    <span class="n">sites_per_cell</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">cut</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">unitary_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">_UNITARY_TOL</span><span class="p">,</span>
+    <span class="n">schmidt_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">_SCHMIDT_TOL</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">nw</span><span class="o">.</span><span class="n">MPS</span><span class="p">,</span> <span class="n">iMPSError</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Constructs an iMPS by comparing two finite MPS.</span>
+
+<span class="sd">    The two MPS are expected to represent the ground states of a gapped,</span>
+<span class="sd">    translation invariant Hamiltonian on two system sizes that differ by</span>
+<span class="sd">    one repeating unit cell.</span>
+
+<span class="sd">    For sufficiently large systems, therefore, they are of the form</span>
+
+<span class="sd">    .. code::</span>
+
+<span class="sd">        ...(A...B)(A...B)...</span>
+<span class="sd">        ...(A...B)(A...B)(A...B)...</span>
+
+<span class="sd">    up to gauge transformations. The repeating unit cell ``(A...B)`` is</span>
+<span class="sd">    extracted from the longer chain, and its gauge is fixed by comparing its</span>
+<span class="sd">    left and right environments to the Schmidt vectors of the shorter chain.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mps_short:</span>
+<span class="sd">        MPS of the shorter chain.</span>
+<span class="sd">    mps_long:</span>
+<span class="sd">        MPS of the longer chain.</span>
+<span class="sd">    sites_per_cell:</span>
+<span class="sd">        Size of the iMPS unit cell.</span>
+<span class="sd">    cut:</span>
+<span class="sd">        First site of the repeating unit cell in ``mps_long``.</span>
+<span class="sd">    unitary_tol:</span>
+<span class="sd">        Maximum deviation of the gauge rotation matrices from unitarity</span>
+<span class="sd">        before a warning is raised.</span>
+<span class="sd">    schmidt_tol:</span>
+<span class="sd">        Maximum mixing of unequal Schmidt values by the gauge rotation matrices</span>
+<span class="sd">        before a warning is raised.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iMPS: :class:`~tenpy.networks.mps.MPS`</span>
+<span class="sd">        iMPS with unit cell size ``sites_per_cell``, constructed from the</span>
+<span class="sd">        additional unit cell of ``mps_long``.</span>
+<span class="sd">    validation_metric: :class:`iMPSError`</span>
+<span class="sd">        Errors introduced during the conversion.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># preliminary checks</span>
+    <span class="n">L_short</span><span class="p">,</span> <span class="n">L_long</span> <span class="o">=</span> <span class="n">mps_short</span><span class="o">.</span><span class="n">L</span><span class="p">,</span> <span class="n">mps_long</span><span class="o">.</span><span class="n">L</span>
+    <span class="k">if</span> <span class="n">L_short</span> <span class="o">+</span> <span class="n">sites_per_cell</span> <span class="o">!=</span> <span class="n">L_long</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;The given two MPS must differ by one unit cell, got &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">L_long</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">L_short</span><span class="si">}</span><span class="s2"> != </span><span class="si">{</span><span class="n">sites_per_cell</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">mps_short</span><span class="o">.</span><span class="n">chinfo</span> <span class="o">!=</span> <span class="n">mps_long</span><span class="o">.</span><span class="n">chinfo</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Incompatible ChargeInfo in the two MPS&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">mps_short</span><span class="o">.</span><span class="n">form</span><span class="p">),</span> <span class="s2">&quot;mps_short is not canonical&quot;</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">mps_long</span><span class="o">.</span><span class="n">form</span><span class="p">),</span> <span class="s2">&quot;mps_long is not canonical&quot;</span>
+
+    <span class="c1"># TODO: In TenPy unit_cell_width for a segment is</span>
+    <span class="c1"># TODO: not set correctly. If this is fixed by TenPy, remove workaround</span>
+    <span class="c1"># ------------------------</span>
+    <span class="n">mps_short</span><span class="o">.</span><span class="n">unit_cell_width</span> <span class="o">=</span> <span class="n">mps_short</span><span class="o">.</span><span class="n">L</span>
+    <span class="n">mps_long</span><span class="o">.</span><span class="n">unit_cell_width</span> <span class="o">=</span> <span class="n">mps_long</span><span class="o">.</span><span class="n">L</span>
+    <span class="c1"># ------------------------</span>
+
+    <span class="c1"># Schmidt values in the short chain at the reference cut</span>
+    <span class="n">S0</span> <span class="o">=</span> <span class="n">mps_short</span><span class="o">.</span><span class="n">get_SL</span><span class="p">(</span><span class="n">cut</span><span class="p">)</span>
+
+    <span class="c1"># Left gauge fixing matrix C</span>
+    <span class="n">bra</span> <span class="o">=</span> <span class="n">mps_short</span><span class="o">.</span><span class="n">extract_segment</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">cut</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">ket</span> <span class="o">=</span> <span class="n">mps_long</span><span class="o">.</span><span class="n">extract_segment</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">cut</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># TODO: In TenPy unit_cell_width for a segment is</span>
+    <span class="c1"># TODO: not set correctly. If this is fixed by TenPy, remove workaround</span>
+    <span class="c1"># ------------------------</span>
+    <span class="n">bra</span><span class="o">.</span><span class="n">unit_cell_width</span> <span class="o">=</span> <span class="n">bra</span><span class="o">.</span><span class="n">L</span>
+    <span class="n">ket</span><span class="o">.</span><span class="n">unit_cell_width</span> <span class="o">=</span> <span class="n">ket</span><span class="o">.</span><span class="n">L</span>
+    <span class="c1"># ------------------------</span>
+    <span class="n">S_ket</span> <span class="o">=</span> <span class="n">mps_long</span><span class="o">.</span><span class="n">get_SL</span><span class="p">(</span><span class="n">cut</span><span class="p">)</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="n">overlap_schmidt</span><span class="p">(</span><span class="n">bra</span><span class="p">,</span> <span class="n">ket</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+    <span class="n">C</span><span class="p">,</span> <span class="n">left_unitary</span><span class="p">,</span> <span class="n">left_schmidt</span> <span class="o">=</span> <span class="n">basis_rotation</span><span class="p">(</span>
+        <span class="n">C</span><span class="p">,</span> <span class="n">S0</span><span class="p">,</span> <span class="n">S_ket</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">unitary_tol</span><span class="o">=</span><span class="n">unitary_tol</span><span class="p">,</span> <span class="n">schmidt_tol</span><span class="o">=</span><span class="n">schmidt_tol</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Right gauge fixing matrix D</span>
+    <span class="n">bra</span> <span class="o">=</span> <span class="n">mps_short</span><span class="o">.</span><span class="n">extract_segment</span><span class="p">(</span><span class="n">cut</span><span class="p">,</span> <span class="n">L_short</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">ket</span> <span class="o">=</span> <span class="n">mps_long</span><span class="o">.</span><span class="n">extract_segment</span><span class="p">(</span><span class="n">cut</span> <span class="o">+</span> <span class="n">sites_per_cell</span><span class="p">,</span> <span class="n">L_long</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># TODO: In TenPy unit_cell_width for a segment is</span>
+    <span class="c1"># TODO: not set correctly. If this is fixed by TenPy, remove workaround</span>
+    <span class="c1"># ------------------------</span>
+    <span class="n">bra</span><span class="o">.</span><span class="n">unit_cell_width</span> <span class="o">=</span> <span class="n">bra</span><span class="o">.</span><span class="n">L</span>
+    <span class="n">ket</span><span class="o">.</span><span class="n">unit_cell_width</span> <span class="o">=</span> <span class="n">ket</span><span class="o">.</span><span class="n">L</span>
+    <span class="c1"># ------------------------</span>
+
+    <span class="n">S_ket</span> <span class="o">=</span> <span class="n">mps_long</span><span class="o">.</span><span class="n">get_SL</span><span class="p">(</span><span class="n">cut</span> <span class="o">+</span> <span class="n">sites_per_cell</span><span class="p">)</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="n">overlap_schmidt</span><span class="p">(</span><span class="n">bra</span><span class="p">,</span> <span class="n">ket</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
+    <span class="n">D</span><span class="p">,</span> <span class="n">right_unitary</span><span class="p">,</span> <span class="n">right_schmidt</span> <span class="o">=</span> <span class="n">basis_rotation</span><span class="p">(</span>
+        <span class="n">D</span><span class="p">,</span> <span class="n">S0</span><span class="p">,</span> <span class="n">S_ket</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">unitary_tol</span><span class="o">=</span><span class="n">unitary_tol</span><span class="p">,</span> <span class="n">schmidt_tol</span><span class="o">=</span><span class="n">schmidt_tol</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Extract middle section of MPS in right canonical form</span>
+    <span class="n">sites</span> <span class="o">=</span> <span class="n">mps_long</span><span class="o">.</span><span class="n">sites</span><span class="p">[</span><span class="n">cut</span> <span class="p">:</span> <span class="n">cut</span> <span class="o">+</span> <span class="n">sites_per_cell</span><span class="p">]</span>
+    <span class="n">tensors</span> <span class="o">=</span> <span class="p">[</span><span class="n">mps_long</span><span class="o">.</span><span class="n">get_B</span><span class="p">(</span><span class="n">cut</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;B&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sites_per_cell</span><span class="p">)]</span>
+    <span class="n">schmidt_values</span> <span class="o">=</span> <span class="n">mps_long</span><span class="o">.</span><span class="n">_S</span><span class="p">[</span><span class="n">cut</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">cut</span> <span class="o">+</span> <span class="n">sites_per_cell</span><span class="p">]</span>
+
+    <span class="c1"># Apply gauge unitaries to first and last tensor</span>
+    <span class="n">tensors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">npc</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">tensors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;vR&quot;</span><span class="p">,</span> <span class="s2">&quot;vL&quot;</span><span class="p">])</span>
+    <span class="n">tensors</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">npc</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">tensors</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">D</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;vR&quot;</span><span class="p">,</span> <span class="s2">&quot;vL&quot;</span><span class="p">])</span>
+
+    <span class="c1"># Set Schmidt values on both ends to that of the reference MPS</span>
+    <span class="n">schmidt_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">S0</span><span class="p">]</span> <span class="o">+</span> <span class="n">schmidt_values</span> <span class="o">+</span> <span class="p">[</span><span class="n">S0</span><span class="p">]</span>
+
+    <span class="n">iMPS</span> <span class="o">=</span> <span class="n">nw</span><span class="o">.</span><span class="n">MPS</span><span class="p">(</span><span class="n">sites</span><span class="p">,</span> <span class="n">tensors</span><span class="p">,</span> <span class="n">schmidt_values</span><span class="p">,</span> <span class="n">bc</span><span class="o">=</span><span class="s2">&quot;infinite&quot;</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;B&quot;</span><span class="p">)</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="n">iMPSError</span><span class="p">(</span><span class="n">left_unitary</span><span class="p">,</span> <span class="n">left_schmidt</span><span class="p">,</span> <span class="n">right_unitary</span><span class="p">,</span> <span class="n">right_schmidt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">iMPS</span><span class="p">,</span> <span class="n">error</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Simon Hans Hille, Attila Szabó.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

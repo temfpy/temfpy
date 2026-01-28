@@ -1,0 +1,6 @@
+gutzwiller.py
+=============
+
+`on github <https://github.com/temfpy/temfpy/blob/master/src/examples/gutzwiller.py>`_ (`download <https://github.com/temfpy/temfpy/raw/master/src/examples/gutzwiller.py>`_).
+
+.. literalinclude:: /../../src/examples/gutzwiller.py
