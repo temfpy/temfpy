@@ -166,6 +166,9 @@ def abrikosov(
 
         B = B.drop_charge(chinfo=chinfo_s)
 
+    # TODO: This may be a missing feature of TeNPys group_sites 
+    mps.unit_cell_width = mps.L
+
     mps.chinfo = chinfo_s
     mps.grouped = 1
     mps.sites = [spin_site] * mps.L
@@ -176,7 +179,7 @@ def abrikosov(
     logger.info("Completed projection to spin-1/2 space. No conserved charges left.")
 
     if return_canonical:
-        # Transform into right canoncial form
+        # Transform into right canonical form
         mps.canonical_form(cutoff=cutoff)
         logger.info("Transformed MPS to right canonical form")
     else:
@@ -303,6 +306,9 @@ def abrikosov_ph(
         else:  # None
             B = B.drop_charge(charge="parity_N", chinfo=chinfo_s)
 
+    # TODO: This may be a missing feature of TeNPys group_sites 
+    mps.unit_cell_width = mps.L
+
     mps.chinfo = chinfo_s
     mps.grouped = 1
     mps.sites = [spin_site] * mps.L
@@ -316,7 +322,7 @@ def abrikosov_ph(
     )
 
     if return_canonical:
-        # Transform into right canoncial form
+        # Transform into right canonical form
         mps.canonical_form(cutoff=cutoff)
         logger.info("Transformed MPS to right canonical form")
     else:
