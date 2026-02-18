@@ -73,14 +73,14 @@ def number_mask(leg: npc.charges.LegCharge, n: int) -> np.ndarray:
 # ----------------------
 
 
-def abrikosov(
+def abrikosov_finite(
     mps: networks.MPS,
     *,
     inplace: bool = False,
     return_canonical: bool = True,
     cutoff: float = 1e-12,
 ) -> None | networks.MPS:
-    r"""Projection from Abrikosov fermions to a spin-1/2 Hilbert space.
+    r"""Projection from Abrikosov fermions to a spin-1/2 Hilbert space for a finite MPS.
 
     The input MPS must contain an even number of sites, sites :math:`2i` and
     :math:`2i+1` representing modes :math:`f_{i\uparrow}` and
@@ -98,7 +98,7 @@ def abrikosov(
     Parameters
     ----------
     mps:
-        MPS representing the wave function to be projected.
+        Finite MPS representing the wave function to be projected.
         Must be of even length and every site must be an instance
         of :class:`~tenpy.networks.site.FermionSite`.
     inplace:
@@ -114,18 +114,29 @@ def abrikosov(
     
     Note
     ----
-        Currently, no symmetry quantum numbers other than fermion number or parity 
-        can be handled.
+        Currently, 
+        - no symmetry quantum numbers other than fermion number or parity can be handled.
+        - all tensors of the MPS must have trivial :attr:`~tenpy.linalg.np_conserved.Array.qtotal`
     """
 
     assert (
         mps.L % 2 == 0
     ), "Odd-length MPS cannot represent an Abrikosov fermion Hilbert space"
+
     # TODO: allow more general sites with a charge for fermion number/parity
     for i, site in enumerate(mps.sites):
         assert isinstance(
             site, networks.FermionSite
         ), f"All sites must be fermionic, found: {site} at site {i}"
+    
+    assert (
+        mps.bc == "finite"
+    ), f"Only 'finite' MPS are supported as boundary conditions, found '{mps.bc}'"
+
+    # TODO: allow for more general charge structure
+    assert (
+        np.all([tensor.qtotal == 0 for tensor in mps._B])
+    ), "All tensors of a finite MPS must have zero total charge"
 
     if not inplace:
         mps = mps.copy()
@@ -213,6 +224,8 @@ def abrikosov_ph(
     - ``'N'`` (particle number) → even ``'N'`` blocks → ``'S_z'`` conserved
     - ``'parity'`` → even ``'parity'`` blocks → no conserved charge
 
+    For this conversion to work, the total parity of the input MPS has to be even.
+
     Parameters
     ----------
     mps:
@@ -232,18 +245,47 @@ def abrikosov_ph(
     
     Note
     ----
-        Currently, no symmetry quantum numbers other than fermion number or parity 
-        can be handled.
+        Currently, 
+
+        - no symmetry quantum numbers other than fermion number or parity can be handled.
+        - only 'finite' and 'infinite' boundary conditions are supported.
+        - all tensors of a finite MPS must have trivial :attr:`~tenpy.linalg.np_conserved.Array.qtotal`.
+        - only the last tensor of an iMPS can have non-trivial :attr:`~tenpy.linalg.np_conserved.Array.qtotal`.
     """
 
     assert (
         mps.L % 2 == 0
     ), "Odd-length MPS cannot represent an Abrikosov fermion Hilbert space"
+
     # TODO: allow more general sites with a charge for fermion number/parity
     for i, site in enumerate(mps.sites):
         assert isinstance(
             site, networks.FermionSite
         ), f"All sites must be fermionic, found: {site} at site {i}"
+    
+    # TODO: support 'segment' boundary conditions
+    assert (
+        mps.bc in ["finite", "infinite"]
+    ), f"Only 'finite' and 'infinite' MPS are supported as boundary conditions, found '{mps.bc}'"
+
+    # TODO: allow for more general charge structure
+    parity_pn = 0
+    if mps.bc == "finite":
+        assert (
+            np.all([tensor.qtotal == 0 for tensor in mps._B])
+        ), "All tensors of a finite MPS must have zero total charge"
+        parity_pn = mps._B[-1].get_leg("vR").charges[0] % 2
+    else:
+        assert (
+            np.all([tensor.qtotal == 0 for tensor in mps._B[:-1]]) 
+        ), "Except for the last, all tensors of an infinite MPS must have zero total charge"
+        parity_pn = int(mps._B[-1].qtotal[0]) % 2
+
+    error_msg = (
+        "To be able to project a MPS representing particle-hole rotated Abrikosov fermions, "
+        "the total parity of the MPS must be even."
+    )
+    assert (parity_pn % 2 == 0), error_msg
 
     if not inplace:
         mps = mps.copy()
@@ -270,7 +312,7 @@ def abrikosov_ph(
 
     # The mask for the physical leg is independent of the site
     mask_p = parity_mask(mps._B[0].get_leg("p"))
-
+    
     for idx, B in enumerate(mps._B):
         # Remove LegPipe structure
         B.legs[B.get_leg_index("p")] = B.get_leg("p").to_LegCharge()
@@ -286,7 +328,7 @@ def abrikosov_ph(
         # Change the occupation number leg charges to spin charges,
         # if conserved.
         # ------------------------------------------------------------
-        if conserved_spin is "Sz":
+        if conserved_spin == "Sz":
             B.chinfo = chinfo_s
 
             leg_vL, leg_p, leg_vR = [B.get_leg(label) for label in ["vL", "p", "vR"]]
@@ -303,6 +345,13 @@ def abrikosov_ph(
         else:  # None
             B = B.drop_charge(charge="parity_N", chinfo=chinfo_s)
 
+    if (mps.bc == 'infinite' and conserved_spin == "Sz"):
+        last_tensor = mps._B[-1]
+        last_tensor.qtotal = last_tensor.qtotal - mps.L
+
+        last_leg = last_tensor.get_leg("vR")
+        last_leg.charges += mps.L
+        
     mps.chinfo = chinfo_s
     mps.grouped = 1
     mps.sites = [spin_site] * mps.L
