@@ -156,18 +156,18 @@ def abrikosov(
         assert vL_leg.ind_len == 1, "Ends of finite MPS must have chi = 1"
         charges = vL_leg.charges.copy()
         charges[:, 0] = 0
-        vL_leg.charges = charges
+        vL_leg.charges = mps.chinfo.make_valid(charges)
         # want charge L/2 on the right
         assert vR_leg.ind_len == 1, "Ends of finite MPS must have chi = 1"
         charges = vR_leg.charges.copy()
         charges[:, 0] = mps.L // 2
-        vR_leg.charges = charges
+        vR_leg.charges = mps.chinfo.make_valid(charges)
     elif mps.bc == "infinite":
         assert np.all(vL_leg.charges == vR_leg.charges), "Two ends of iMPS incompatible"
         # want to subtract q_left from both left and right end
         charges = vL_leg.charges.copy()
         charges[:, 0] -= q_left
-        vL_leg.charges = vR_leg.charges = charges
+        vL_leg.charges = vR_leg.charges = mps.chinfo.make_valid(charges)
     mps.gauge_total_charge(vL_leg=vL_leg, vR_leg=vR_leg)
 
     conserved_fermion = mps.sites[0].conserve
