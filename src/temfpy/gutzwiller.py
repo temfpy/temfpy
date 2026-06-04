@@ -82,7 +82,7 @@ def abrikosov(
     cutoff: float = 1e-12,
     q_left: int = 0,
 ) -> None | networks.MPS:
-    r"""Projection from Abrikosov fermions to a spin-1/2 Hilbert space for a finite MPS.
+    r"""Projection from Abrikosov fermions to a spin-1/2 Hilbert space.
 
     The input MPS must contain an even number of sites, sites :math:`2i` and
     :math:`2i+1` representing modes :math:`f_{i\uparrow}` and
@@ -120,7 +120,7 @@ def abrikosov(
     ----
         Currently,
         - no symmetry quantum numbers other than fermion number or parity can be handled.
-        - all tensors of the MPS must have trivial :attr:`~tenpy.linalg.np_conserved.Array.qtotal`
+        - only 'finite' and 'infinite' boundary conditions are supported.
     """
 
     assert (
@@ -278,8 +278,6 @@ def abrikosov_ph(
 
         - no symmetry quantum numbers other than fermion number or parity can be handled.
         - only 'finite' and 'infinite' boundary conditions are supported.
-        - all tensors of a finite MPS must have trivial :attr:`~tenpy.linalg.np_conserved.Array.qtotal`.
-        - only the last tensor of an iMPS can have non-trivial :attr:`~tenpy.linalg.np_conserved.Array.qtotal`.
     """
 
     assert (
