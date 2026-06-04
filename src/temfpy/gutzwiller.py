@@ -133,44 +133,6 @@ def abrikosov(
             site, networks.FermionSite
         ), f"All sites must be fermionic, found: {site} at site {i}"
 
-    if mps.bc == "finite":
-        assert mps.get_total_charge(True)[0] == mps.L // 2
-        if q_left != 0:
-            warn(f"`q_left` must be 0 for finite MPS, ignoring {q_left = }")
-            q_left = 0
-    elif mps.bc == "infinite":
-        assert mps.get_total_charge()[0] == mps.L // 2
-    else:
-        raise NotImplementedError(f"Boundary condition {mps.bc!r} not supported")
-
-    if not inplace:
-        mps = mps.copy()
-        logger.debug(f"Deep copied MPS before Gutzwiller projection.")
-
-    # normalise legs and tensor charges
-    vL_leg: npc.LegCharge = mps._B[0].get_leg("vL").copy()
-    vR_leg: npc.LegCharge = mps._B[-1].get_leg("vR").copy()
-    assert vL_leg.qconj == 1
-    assert vR_leg.qconj == -1
-    if mps.bc == "finite":
-        # want charge 0 on the left, and no tensor charges
-        assert vL_leg.ind_len == 1, "Ends of finite MPS must have chi = 1"
-        charges = vL_leg.charges.copy()
-        charges[:, 0] = 0
-        vL_leg.charges = mps.chinfo.make_valid(charges)
-        # want charge L/2 on the right
-        assert vR_leg.ind_len == 1, "Ends of finite MPS must have chi = 1"
-        charges = vR_leg.charges.copy()
-        charges[:, 0] = mps.L // 2
-        vR_leg.charges = mps.chinfo.make_valid(charges)
-    elif mps.bc == "infinite":
-        assert np.all(vL_leg.charges == vR_leg.charges), "Two ends of iMPS incompatible"
-        # want to subtract q_left from both left and right end
-        charges = vL_leg.charges.copy()
-        charges[:, 0] -= q_left
-        vL_leg.charges = vR_leg.charges = mps.chinfo.make_valid(charges)
-    mps.gauge_total_charge(vL_leg=vL_leg, vR_leg=vR_leg)
-
     conserved_fermion = mps.sites[0].conserve
     if conserved_fermion == "N":
         mask = number_mask
@@ -180,6 +142,33 @@ def abrikosov(
         raise ValueError(
             f"FermionSite must conserve either 'N' or 'parity', found {conserved_fermion!r}"
         )
+
+    def check_charge(q: np.ndarray):
+        q = q[0]
+        target = mps.L // 2
+        err = f"Total charge must match number of spin sites, {target}, got {q}"
+        if conserved_fermion == "N":
+            assert q == target, err
+        else:  # parity
+            assert q % 2 == target % 2, err + " (mod 2)"
+
+    if mps.bc == "finite":
+        check_charge(mps.get_total_charge(True))
+        qtotal = None
+        if q_left != 0:
+            warn(f"`q_left` must be 0 for finite MPS, ignoring {q_left = }")
+        q_left = 0
+    elif mps.bc == "infinite":
+        check_charge(qtotal := mps.get_total_charge())
+    else:
+        raise NotImplementedError(f"Boundary condition {mps.bc!r} not supported")
+
+    if not inplace:
+        mps = mps.copy()
+        logger.debug(f"Deep copied MPS before Gutzwiller projection.")
+
+    # normalise legs and tensor charges
+    mps.gauge_total_charge(qtotal=qtotal)
 
     # TeNPy bindings
     spin_site = networks.SpinHalfSite(None)
@@ -197,8 +186,9 @@ def abrikosov(
         # Remove LegPipe structure
         B.legs[B.get_leg_index("p")] = B.get_leg("p").to_LegCharge()
 
-        mask_vL = mask(B.get_leg("vL"), idx)
-        mask_vR = mask(B.get_leg("vR"), idx + 1 if mps.finite else (idx + 1) % mps.L)
+        mask_vL = mask(B.get_leg("vL"), q_left + idx)
+        idx_next = idx + 1 if mps.finite else (idx + 1) % mps.L
+        mask_vR = mask(B.get_leg("vR"), q_left + idx_next)
 
         # Change the occupation number leg charges to spin charges
         # --------------------------------------------------------
@@ -312,11 +302,12 @@ def abrikosov_ph(
             f"FermionSite must conserve either 'N' or 'parity', found {conserved_fermion}"
         )
 
-    def check_parity(n: int):
-        assert n % 2 == 0, f"Total fermion parity of MPS must be even, got charge {n}"
+    def check_parity(q: np.ndarray):
+        q = q[0]
+        assert q % 2 == 0, f"Total fermion parity of MPS must be even, got {q}"
 
     if mps.bc == "finite":
-        check_parity(mps.get_total_charge(True)[0])
+        check_parity(mps.get_total_charge(True))
         if parity != 0:
             warn(f"Must use even parity sector in finite MPS, ignoring {parity = }")
         if offset != 0 and conserved_fermion == "N":
@@ -324,8 +315,7 @@ def abrikosov_ph(
         offset = parity = 0
         qtotal = None
     elif mps.bc == "infinite":
-        qtotal = mps.get_total_charge()
-        check_parity(qtotal[0])
+        check_parity(qtotal := mps.get_total_charge())
     else:
         # TODO: support 'segment' boundary conditions
         raise NotImplementedError(f"Boundary condition {mps.bc!r} not supported")
