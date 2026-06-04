@@ -133,12 +133,12 @@ def abrikosov(
         ), f"All sites must be fermionic, found: {site} at site {i}"
 
     if mps.bc == "finite":
-        assert mps.get_total_charge(True) == mps.L // 2
+        assert mps.get_total_charge(True)[0] == mps.L // 2
         if q_left != 0:
             warnings.warn(f"`q_left` must be 0 for finite MPS, ignoring {q_left = }")
             q_left = 0
     elif mps.bc == "infinite":
-        assert mps.get_total_charge() == mps.L // 2
+        assert mps.get_total_charge()[0] == mps.L // 2
     else:
         raise NotImplementedError(f"Boundary condition {mps.bc!r} not supported")
 
@@ -234,6 +234,7 @@ def abrikosov_ph(
     inplace: bool = False,
     return_canonical: bool = True,
     cutoff: float = 1e-12,
+    offset: int = 0,
 ) -> None | networks.MPS:
     r"""Projection from particle-hole rotated Abrikosov fermions to a spin-1/2 Hilbert space.
 
@@ -266,6 +267,15 @@ def abrikosov_ph(
         Whether to transform the output MPS to right canonical form.
     cutoff:
         Cutoff for Schmidt values to keep in the canonical form.
+    offset:
+        If the input iMPS preserves particle number, adjusts the mapping of
+        fermion number to spin on virtual legs:
+        ``2S^z = number - offset - bond_index``
+
+        Also selects the fermion parity of virtual legs to be kept after
+        projection (also for iMPS conserving fermion parity).
+
+        Can only be specified for infinite MPS!
 
     Returns
     -------
@@ -291,34 +301,26 @@ def abrikosov_ph(
             site, networks.FermionSite
         ), f"All sites must be fermionic, found: {site} at site {i}"
 
-    # TODO: support 'segment' boundary conditions
-    assert mps.bc in [
-        "finite",
-        "infinite",
-    ], f"Only 'finite' and 'infinite' MPS are supported as boundary conditions, found '{mps.bc}'"
-
-    # TODO: allow for more general charge structure
-    parity_pn = 0
     if mps.bc == "finite":
-        assert np.all(
-            [tensor.qtotal == 0 for tensor in mps._B]
-        ), "All tensors of a finite MPS must have zero total charge"
-        parity_pn = mps._B[-1].get_leg("vR").charges[0] % 2
+        assert mps.get_total_charge(True)[0] % 2 == 0
+        if offset != 0:
+            warnings.warn(f"Cannot offset finite MPS, ignoring {offset = }")
+        offset = parity = 0
+        qtotal = None
+    elif mps.bc == "infinite":
+        qtotal = mps.get_total_charge()
+        assert qtotal[0] % 2 == 0
+        parity = offset % 2
     else:
-        assert np.all(
-            [tensor.qtotal == 0 for tensor in mps._B[:-1]]
-        ), "Except for the last, all tensors of an infinite MPS must have zero total charge"
-        parity_pn = int(mps._B[-1].qtotal[0]) % 2
-
-    error_msg = (
-        "To be able to project a MPS representing particle-hole rotated Abrikosov fermions, "
-        "the total parity of the MPS must be even."
-    )
-    assert parity_pn % 2 == 0, error_msg
+        # TODO: support 'segment' boundary conditions
+        raise NotImplementedError(f"Boundary condition {mps.bc!r} not supported")
 
     if not inplace:
         mps = mps.copy()
         logger.debug(f"Deep copied MPS before Gutzwiller projection.")
+
+    # Shift all tensor charges to the end
+    mps.gauge_total_charge(qtotal=qtotal)
 
     conserved_fermion = mps.sites[0].conserve
     if conserved_fermion == "N":
@@ -346,8 +348,8 @@ def abrikosov_ph(
         # Remove LegPipe structure
         B.legs[B.get_leg_index("p")] = B.get_leg("p").to_LegCharge()
 
-        mask_vL = parity_mask(B.get_leg("vL"))
-        mask_vR = parity_mask(B.get_leg("vR"))
+        mask_vL = parity_mask(B.get_leg("vL"), parity)
+        mask_vR = parity_mask(B.get_leg("vR"), parity)
 
         # Change the occupation number leg charges to spin charges
         # --------------------------------------------------------
@@ -366,10 +368,10 @@ def abrikosov_ph(
             leg_p.charges = spin_leg.charges
 
             leg_vL.chinfo = chinfo_s
-            leg_vL.charges -= idx
+            leg_vL.charges -= offset + idx
 
             leg_vR.chinfo = chinfo_s
-            leg_vR.charges -= idx + 1
+            leg_vR.charges -= offset + idx + 1
 
         else:  # None
             B = B.drop_charge(charge="parity_N", chinfo=chinfo_s)
