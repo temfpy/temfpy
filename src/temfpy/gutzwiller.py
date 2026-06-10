@@ -100,7 +100,8 @@ def abrikosov(
     Parameters
     ----------
     mps:
-        Finite MPS representing the wave function to be projected.
+        MPS representing the wave function to be projected.
+
         Must be of even length and every site must be an instance
         of :class:`~tenpy.networks.site.FermionSite`.
     inplace:
@@ -251,6 +252,7 @@ def abrikosov_ph(
     ----------
     mps:
         MPS representing the wave function to be projected.
+        
         Must be of even length and every site must be an instance
         of :class:`~tenpy.networks.site.FermionSite`.
     inplace:
