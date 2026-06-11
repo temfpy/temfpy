@@ -298,7 +298,8 @@ def MPS_to_iMPS(
             "The given two MPS must differ by one unit cell, got "
             f"{L_long} - {L_short} != {sites_per_cell}"
         )
-    if mps_short.chinfo != mps_long.chinfo:
+    chinfo: npc.ChargeInfo = mps_short.chinfo
+    if chinfo != mps_long.chinfo:
         raise ValueError("Incompatible ChargeInfo in the two MPS")
     assert all(x is not None for x in mps_short.form), "mps_short is not canonical"
     assert all(x is not None for x in mps_long.form), "mps_long is not canonical"
@@ -314,7 +315,7 @@ def MPS_to_iMPS(
     S0 = mps_short.get_SL(cut)
 
     # regularise offset
-    qmod = mps_long.chinfo.mod
+    qmod = chinfo.mod
     if not isinstance(offset, Iterable) or isinstance(offset, str):
         offset = [offset] * len(qmod)
     else:
@@ -335,7 +336,7 @@ def MPS_to_iMPS(
     vL_leg: npc.LegCharge = mps_short._B[cut].get_leg("vL").copy()
     offset = [guess_offset(*x) for x in zip(offset, qmod, vL_leg.to_qflat().T)]
     offset = np.asarray(offset, int)
-    vL_leg.charges = vL_leg.charges - offset  # NOT -= so we don't mess up MPS
+    vL_leg.charges = chinfo.make_valid(vL_leg.charges - offset)
 
     # Left gauge fixing matrix C
     bra = mps_short.extract_segment(0, cut - 1)
