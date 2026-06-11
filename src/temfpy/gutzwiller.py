@@ -80,7 +80,7 @@ def abrikosov(
     inplace: bool = False,
     return_canonical: bool = True,
     cutoff: float = 1e-12,
-    q_left: int = 0,
+    q_left: None | int = 0,
 ) -> None | networks.MPS:
     r"""Projection from Abrikosov fermions to a spin-1/2 Hilbert space.
 
@@ -112,6 +112,8 @@ def abrikosov(
         Cutoff for Schmidt values to keep in the canonical form.
     q_left:
         Fermion number/parity sector on the leftmost leg to be kept (only for iMPS).
+        Has to be a charge sector contained within :attr:`~tenpy.linalg.charges.LegCharge.charges` 
+        of the leftmost virtual leg of the iMPS unit cell.
 
     Returns
     -------
@@ -147,7 +149,7 @@ def abrikosov(
     def check_charge(q: np.ndarray):
         q = q[0]
         target = mps.L // 2
-        err = f"Total charge must match number of spin sites, {target}, got {q}"
+        err = f"Total charge must match number of spin sites. Got {q}, expected {target}"
         if conserved_fermion == "N":
             assert q == target, err
         else:  # parity
@@ -156,11 +158,19 @@ def abrikosov(
     if mps.bc == "finite":
         check_charge(mps.get_total_charge(True))
         qtotal = None
-        if q_left != 0:
-            warn(f"`q_left` must be 0 for finite MPS, ignoring {q_left = }")
+        if q_left not in (None, 0):
+            warn(f"`q_left` must be 0 for finite MPS, got {q_left = }, setting it to 0.")
         q_left = 0
     elif mps.bc == "infinite":
         check_charge(qtotal := mps.get_total_charge())
+        if q_left is None:
+            raise ValueError("Must specify `q_left` for infinite MPS.")
+        if q_left not in mps._B[0].get_leg("vL").charge_sectors()[:,0]:
+            raise ValueError(
+                f"`q_left` must be a charge sector of the leftmost virtual leg, got {q_left = }, "
+                f"valid sectors are {mps._B[0].get_leg('vL').charge_sectors()}"
+            )
+
     else:
         raise NotImplementedError(f"Boundary condition {mps.bc!r} not supported")
 
