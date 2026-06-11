@@ -96,8 +96,8 @@ def basis_rotation(
         or a right ("B", default) canonical MPS tensor.
     numerical_tol:
         Highest allowed negative value of the square of the unitary error.
-        
-        Should be more than machine precision (:math:`\sim 10^{-16}` 
+
+        Should be more than machine precision (:math:`\sim 10^{-16}`
         for ``float64``) but less than ``unitary_tol`` squared.
     unitary_tol:
         Highest allowed deviation from unitarity (weighted with Schmidt values)
@@ -145,14 +145,14 @@ def basis_rotation(
             f"the numerical tolerance {numerical_tol:.1e}."
         )
         assert_array_less(abs(unitary_error_square), numerical_tol, err_mssg)
-        logging.info(
+        logger.info(
             f"{mode.capitalize()} devitation from unitary: The square of the "
             f"unitary error {unitary_error_square:.4e} is negative, setting it to zero."
         )
         unitary_error = 0.0
     else:
         unitary_error = np.sqrt(unitary_error_square)
-        logging.info(f"{mode.capitalize()} deviation from unitary: {unitary_error:.4e}")
+        logger.info(f"{mode.capitalize()} deviation from unitary: {unitary_error:.4e}")
 
     if unitary_error > unitary_tol:
         warnings.warn(
@@ -182,7 +182,7 @@ def basis_rotation(
         Sb_C = overlap.scale_axis(Schmidt_ket, v_ket)
 
     schmidt_error = npc.norm(Sb_C - C_Sk)
-    logging.info(f"{mode.capitalize()} Schmidt value mixing:   {schmidt_error:.4e}")
+    logger.info(f"{mode.capitalize()} Schmidt value mixing:   {schmidt_error:.4e}")
     if schmidt_error > schmidt_tol:
         warnings.warn(
             f"\nMixing between unequal Schmidt value sectors on the {mode} side is\n"
@@ -197,6 +197,7 @@ class iMPSError(NamedTuple):
 
     If printed, only non-zero approximation errors are displayed.
     """
+
     left_unitary: float
     """Deviation of left environment from unitarity."""
     left_schmidt: float
