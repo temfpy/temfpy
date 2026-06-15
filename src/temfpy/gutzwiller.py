@@ -111,7 +111,9 @@ def abrikosov(
     cutoff:
         Cutoff for Schmidt values to keep in the canonical form.
     q_left:
-        Fermion number/parity sector on the leftmost leg to be kept (only for iMPS).
+        For infinite MPS **only**, determines which fermion number/parity sector
+        of the leftmost virtual leg to keep.
+        
         Has to be a charge sector contained within :attr:`~tenpy.linalg.charges.LegCharge.charges` 
         of the leftmost virtual leg of the iMPS unit cell.
 
