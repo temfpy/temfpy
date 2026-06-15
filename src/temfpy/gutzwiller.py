@@ -113,8 +113,8 @@ def abrikosov(
     q_left:
         For infinite MPS **only**, determines which fermion number/parity sector
         of the leftmost virtual leg to keep.
-        
-        Has to be a charge sector contained within :attr:`~tenpy.linalg.charges.LegCharge.charges` 
+
+        Has to be a charge sector contained within :attr:`~tenpy.linalg.charges.LegCharge.charges`
         of the leftmost virtual leg of the iMPS unit cell.
 
     Returns
@@ -151,7 +151,9 @@ def abrikosov(
     def check_charge(q: np.ndarray):
         q = q[0]
         target = mps.L // 2
-        err = f"Total charge must match number of spin sites. Got {q}, expected {target}"
+        err = (
+            f"Total charge must match number of spin sites. Got {q}, expected {target}"
+        )
         if conserved_fermion == "N":
             assert q == target, err
         else:  # parity
@@ -161,13 +163,15 @@ def abrikosov(
         check_charge(mps.get_total_charge(True))
         qtotal = None
         if q_left not in (None, 0):
-            warn(f"`q_left` must be 0 for finite MPS, got {q_left = }, setting it to 0.")
+            warn(
+                f"`q_left` must be 0 for finite MPS, got {q_left = }, setting it to 0."
+            )
         q_left = 0
     elif mps.bc == "infinite":
         check_charge(qtotal := mps.get_total_charge())
         if q_left is None:
             raise ValueError("Must specify `q_left` for infinite MPS.")
-        if q_left not in mps._B[0].get_leg("vL").charge_sectors()[:,0]:
+        if q_left not in mps._B[0].get_leg("vL").charge_sectors()[:, 0]:
             raise ValueError(
                 f"`q_left` must be a charge sector of the leftmost virtual leg, got {q_left = }, "
                 f"valid sectors are {mps._B[0].get_leg('vL').charge_sectors()}"
@@ -264,7 +268,7 @@ def abrikosov_ph(
     ----------
     mps:
         MPS representing the wave function to be projected.
-        
+
         Must be of even length and every site must be an instance
         of :class:`~tenpy.networks.site.FermionSite`.
     inplace:
