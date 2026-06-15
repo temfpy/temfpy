@@ -80,7 +80,7 @@ def abrikosov(
     inplace: bool = False,
     return_canonical: bool = True,
     cutoff: float = 1e-12,
-    q_left: None | int = 0,
+    q_left: None | int = None,
 ) -> None | networks.MPS:
     r"""Projection from Abrikosov fermions to a spin-1/2 Hilbert space.
 
