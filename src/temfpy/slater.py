@@ -1350,6 +1350,7 @@ def C_to_iMPS(
     unitary_tol: float = iMPS._UNITARY_TOL,
     schmidt_tol: float = iMPS._SCHMIDT_TOL,
     spinful: Literal["simple", "PH", None] = None,
+    offset: int | Literal["auto"] = "auto",
 ) -> tuple[networks.MPS, iMPS.iMPSError]:
     r"""iMPS representation of a Slater determinant from correlation matrices.
 
@@ -1399,6 +1400,12 @@ def C_to_iMPS(
         spin-rotation symmetric state of spinful fermions or not (``None``),
         either with (``"PH"``) or without (``"simple"``) particle-hole
         rotation in the down-spin sector.
+    offset:
+        Charge quantum number to be subtracted from virtual leg charges of the
+        output iMPS.
+
+        Defaults to expected particle number left of ``cut`` in the shorter chain,
+        rounded to the nearest integer (``"auto"``).
 
     Returns
     -------
@@ -1447,6 +1454,9 @@ def C_to_iMPS(
         f"{L_long} - {L_short} != {sites_per_cell}"
     )
 
+    if offset == "auto":
+        offset = round(np.trace(C_short[:cut, :cut]))
+
     # lists for accumulating the tensors and singular values
     tensors = []
     λs = []
@@ -1476,6 +1486,10 @@ def C_to_iMPS(
         # compute the tensor
         B = MPSTensorData.from_schmidt_vectors(Schmidt_new, Schmidt, "right")
         B = B.to_npc_array()
+        # subtract offset != 0 from virtual legs
+        if offset != 0:
+            B.get_leg("vL").charges -= offset
+            B.get_leg("vR").charges -= offset
         tensors.append(B)
 
         logger.info(f"Tensor norm on site {i}: {npc.norm(B) / len(λs[i]) ** 0.5}")
@@ -1554,9 +1568,11 @@ def H_to_MPS(
     """
 
     C, _ = correlation_matrix(H)
-    return C_to_MPS(C, trunc_par, diag_tol=diag_tol, ortho_center=ortho_center, spinful=spinful)
+    return C_to_MPS(
+        C, trunc_par, diag_tol=diag_tol, ortho_center=ortho_center, spinful=spinful
+    )
 
-    
+
 def H_to_iMPS(
     H_short: np.ndarray,
     H_long: np.ndarray,
@@ -1568,10 +1584,11 @@ def H_to_iMPS(
     unitary_tol: float = iMPS._UNITARY_TOL,
     schmidt_tol: float = iMPS._SCHMIDT_TOL,
     spinful: Literal["simple", "PH", None] = None,
+    offset: int | Literal["auto"] = "auto",
 ) -> tuple[networks.MPS, iMPS.iMPSError]:
     r"""iMPS representation of a Slater determinant from single particle Hamiltonians.
 
-    It is expected that the two single-particle Hamiltonians describe two 
+    It is expected that the two single-particle Hamiltonians describe two
     translation-invariant systems that differ by one repeating unit cell.
 
     The method is analogous to :func:`.iMPS.MPS_to_iMPS`, with two differences:
@@ -1615,6 +1632,12 @@ def H_to_iMPS(
         spin-rotation symmetric state of spinful fermions or not (``None``),
         either with (``"PH"``) or without (``"simple"``) particle-hole
         rotation in the down-spin sector.
+    offset:
+        Charge quantum number to be subtracted from virtual leg charges of the
+        output iMPS.
+
+        Defaults to expected particle number left of ``cut`` in the shorter chain,
+        rounded to the nearest integer (``"auto"``).
 
     Returns
     -------
@@ -1645,4 +1668,5 @@ def H_to_iMPS(
         unitary_tol=unitary_tol,
         schmidt_tol=schmidt_tol,
         spinful=spinful,
+        offset=offset,
     )
