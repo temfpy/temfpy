@@ -125,7 +125,7 @@ def abrikosov(
     ----
         Currently,
         - no symmetry quantum numbers other than fermion number or parity can be handled.
-        - only 'finite' and 'infinite' boundary conditions are supported.
+        - only ``'finite'`` and ``'infinite'`` boundary conditions are supported.
     """
 
     assert (
@@ -295,7 +295,7 @@ def abrikosov_ph(
         Currently,
 
         - no symmetry quantum numbers other than fermion number or parity can be handled.
-        - only 'finite' and 'infinite' boundary conditions are supported.
+        - only ``'finite'`` and ``'infinite'`` boundary conditions are supported.
     """
 
     assert (
