@@ -6,7 +6,11 @@
 
 ### New features
 
+* Gutzwiller projections {func}`temfpy.gutzwiller.abrikosov` and {func}`temfpy.gutzwiller.abrikosov_ph` allow targeting different virtual charge/parity sectors, which may give access to different topological sectors. [#18](https://github.com/temfpy/temfpy/pull/18)
+
 ### Bug fixes
+
+* Gutzwiller projections {func}`temfpy.gutzwiller.abrikosov` and {func}`temfpy.gutzwiller.abrikosov_ph` now handle most infinite fermion MPS correctly. [#18](https://github.com/temfpy/temfpy/pull/18)
 
 ## TeMFpy 0.2.1 (28 January 2026)
 

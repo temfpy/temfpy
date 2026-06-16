@@ -2,7 +2,8 @@
 r"Tools for Gutzwiller projecting MPS to a smaller on-site Hilbert space."
 
 import logging
-import warnings
+from warnings import warn
+from typing import Literal
 
 import numpy as np
 
@@ -79,6 +80,7 @@ def abrikosov(
     inplace: bool = False,
     return_canonical: bool = True,
     cutoff: float = 1e-12,
+    q_left: None | int = None,
 ) -> None | networks.MPS:
     r"""Projection from Abrikosov fermions to a spin-1/2 Hilbert space.
 
@@ -99,6 +101,7 @@ def abrikosov(
     ----------
     mps:
         MPS representing the wave function to be projected.
+
         Must be of even length and every site must be an instance
         of :class:`~tenpy.networks.site.FermionSite`.
     inplace:
@@ -107,29 +110,33 @@ def abrikosov(
         Whether to transform the output MPS to right canonical form.
     cutoff:
         Cutoff for Schmidt values to keep in the canonical form.
+    q_left:
+        For infinite MPS **only**, determines which fermion number/parity sector
+        of the leftmost virtual leg to keep.
+
+        Has to be a charge sector contained within :attr:`~tenpy.linalg.charges.LegCharge.charges`
+        of the leftmost virtual leg of the iMPS unit cell.
 
     Returns
     -------
         The Gutzwiller projected ``mps``, if ``inplace`` is :obj:`False`.
-    
+
     Note
     ----
-        Currently, no symmetry quantum numbers other than fermion number or parity 
-        can be handled.
+        Currently,
+        - no symmetry quantum numbers other than fermion number or parity can be handled.
+        - only ``'finite'`` and ``'infinite'`` boundary conditions are supported.
     """
 
     assert (
         mps.L % 2 == 0
     ), "Odd-length MPS cannot represent an Abrikosov fermion Hilbert space"
+
     # TODO: allow more general sites with a charge for fermion number/parity
     for i, site in enumerate(mps.sites):
         assert isinstance(
             site, networks.FermionSite
         ), f"All sites must be fermionic, found: {site} at site {i}"
-
-    if not inplace:
-        mps = mps.copy()
-        logger.debug(f"Deep copied MPS before Gutzwiller projection.")
 
     conserved_fermion = mps.sites[0].conserve
     if conserved_fermion == "N":
@@ -138,8 +145,47 @@ def abrikosov(
         mask = parity_mask
     else:
         raise ValueError(
-            f"FermionSite must conserve either 'N' or 'parity', found {conserved_fermion}"
+            f"FermionSite must conserve either 'N' or 'parity', found {conserved_fermion!r}"
         )
+
+    def check_charge(q: np.ndarray):
+        q = q[0]
+        target = mps.L // 2
+        err = (
+            f"Total charge must match number of spin sites. Got {q}, expected {target}"
+        )
+        if conserved_fermion == "N":
+            assert q == target, err
+        else:  # parity
+            assert q % 2 == target % 2, err + " (mod 2)"
+
+    if mps.bc == "finite":
+        check_charge(mps.get_total_charge(True))
+        qtotal = None
+        if q_left not in (None, 0):
+            warn(
+                f"`q_left` must be 0 for finite MPS, got {q_left = }, setting it to 0."
+            )
+        q_left = 0
+    elif mps.bc == "infinite":
+        check_charge(qtotal := mps.get_total_charge())
+        if q_left is None:
+            raise ValueError("Must specify `q_left` for infinite MPS.")
+        if q_left not in mps._B[0].get_leg("vL").charge_sectors()[:, 0]:
+            raise ValueError(
+                f"`q_left` must be a charge sector of the leftmost virtual leg, got {q_left = }, "
+                f"valid sectors are {mps._B[0].get_leg('vL').charge_sectors()}"
+            )
+
+    else:
+        raise NotImplementedError(f"Boundary condition {mps.bc!r} not supported")
+
+    if not inplace:
+        mps = mps.copy()
+        logger.debug(f"Deep copied MPS before Gutzwiller projection.")
+
+    # normalise legs and tensor charges
+    mps.gauge_total_charge(qtotal=qtotal)
 
     # TeNPy bindings
     spin_site = networks.SpinHalfSite(None)
@@ -157,8 +203,9 @@ def abrikosov(
         # Remove LegPipe structure
         B.legs[B.get_leg_index("p")] = B.get_leg("p").to_LegCharge()
 
-        mask_vL = mask(B.get_leg("vL"), idx)
-        mask_vR = mask(B.get_leg("vR"), idx + 1)
+        mask_vL = mask(B.get_leg("vL"), q_left + idx)
+        idx_next = idx + 1 if mps.finite else (idx + 1) % mps.L
+        mask_vR = mask(B.get_leg("vR"), q_left + idx_next)
 
         # Change the occupation number leg charges to spin charges
         # --------------------------------------------------------
@@ -171,7 +218,7 @@ def abrikosov(
     mps.sites = [spin_site] * mps.L
 
     mps.form = [None] * mps.L
-    mps._S = [None] * (mps.L + 1)
+    mps._S = [None] * (mps.L + 1 if mps.finite else mps.L)
 
     logger.info("Completed projection to spin-1/2 space. No conserved charges left.")
 
@@ -180,7 +227,7 @@ def abrikosov(
         mps.canonical_form(cutoff=cutoff)
         logger.info("Transformed MPS to right canonical form")
     else:
-        warnings.warn(
+        warn(
             "The MPS is not in canonical form after Gutzwiller projection.\n"
             "Consider setting 'return_canonical=True'",
         )
@@ -195,6 +242,8 @@ def abrikosov_ph(
     inplace: bool = False,
     return_canonical: bool = True,
     cutoff: float = 1e-12,
+    offset: int = 0,
+    parity: Literal[0, 1] = 0,
 ) -> None | networks.MPS:
     r"""Projection from particle-hole rotated Abrikosov fermions to a spin-1/2 Hilbert space.
 
@@ -213,10 +262,13 @@ def abrikosov_ph(
     - ``'N'`` (particle number) → even ``'N'`` blocks → ``'S_z'`` conserved
     - ``'parity'`` → even ``'parity'`` blocks → no conserved charge
 
+    For this conversion to work, the total parity of the input MPS has to be even.
+
     Parameters
     ----------
     mps:
         MPS representing the wave function to be projected.
+
         Must be of even length and every site must be an instance
         of :class:`~tenpy.networks.site.FermionSite`.
     inplace:
@@ -225,29 +277,36 @@ def abrikosov_ph(
         Whether to transform the output MPS to right canonical form.
     cutoff:
         Cutoff for Schmidt values to keep in the canonical form.
+    parity:
+        For infinite MPS **only**, determines which fermion parity sector
+        of the virtual legs to keep in the projected iMPS.
+    offset:
+        For infinite, number-preserving MPS **only**, adjusts the mapping of
+        fermion number to spin on virtual legs:
+
+        ``2S^z = number - offset - bond_index``
 
     Returns
     -------
         The Gutzwiller projected ``mps``, if ``inplace`` is :obj:`False`.
-    
+
     Note
     ----
-        Currently, no symmetry quantum numbers other than fermion number or parity 
-        can be handled.
+        Currently,
+
+        - no symmetry quantum numbers other than fermion number or parity can be handled.
+        - only ``'finite'`` and ``'infinite'`` boundary conditions are supported.
     """
 
     assert (
         mps.L % 2 == 0
     ), "Odd-length MPS cannot represent an Abrikosov fermion Hilbert space"
+
     # TODO: allow more general sites with a charge for fermion number/parity
     for i, site in enumerate(mps.sites):
         assert isinstance(
             site, networks.FermionSite
         ), f"All sites must be fermionic, found: {site} at site {i}"
-
-    if not inplace:
-        mps = mps.copy()
-        logger.debug(f"Deep copied MPS before Gutzwiller projection.")
 
     conserved_fermion = mps.sites[0].conserve
     if conserved_fermion == "N":
@@ -258,6 +317,31 @@ def abrikosov_ph(
         raise ValueError(
             f"FermionSite must conserve either 'N' or 'parity', found {conserved_fermion}"
         )
+
+    def check_parity(q: np.ndarray):
+        q = q[0]
+        assert q % 2 == 0, f"Total fermion parity of MPS must be even, got {q}"
+
+    if mps.bc == "finite":
+        check_parity(mps.get_total_charge(True))
+        if parity != 0:
+            warn(f"Must use even parity sector in finite MPS, ignoring {parity = }")
+        if offset != 0 and conserved_fermion == "N":
+            warn(f"Cannot offset charge of finite MPS, ignoring {offset = }")
+        offset = parity = 0
+        qtotal = None
+    elif mps.bc == "infinite":
+        check_parity(qtotal := mps.get_total_charge())
+    else:
+        # TODO: support 'segment' boundary conditions
+        raise NotImplementedError(f"Boundary condition {mps.bc!r} not supported")
+
+    if not inplace:
+        mps = mps.copy()
+        logger.debug(f"Deep copied MPS before Gutzwiller projection.")
+
+    # Shift all tensor charges to the end
+    mps.gauge_total_charge(qtotal=qtotal)
 
     # TeNPy bindings
     spin_site = networks.SpinHalfSite(conserved_spin)
@@ -275,8 +359,8 @@ def abrikosov_ph(
         # Remove LegPipe structure
         B.legs[B.get_leg_index("p")] = B.get_leg("p").to_LegCharge()
 
-        mask_vL = parity_mask(B.get_leg("vL"))
-        mask_vR = parity_mask(B.get_leg("vR"))
+        mask_vL = parity_mask(B.get_leg("vL"), parity)
+        mask_vR = parity_mask(B.get_leg("vR"), parity)
 
         # Change the occupation number leg charges to spin charges
         # --------------------------------------------------------
@@ -286,7 +370,7 @@ def abrikosov_ph(
         # Change the occupation number leg charges to spin charges,
         # if conserved.
         # ------------------------------------------------------------
-        if conserved_spin is "Sz":
+        if conserved_spin == "Sz":
             B.chinfo = chinfo_s
 
             leg_vL, leg_p, leg_vR = [B.get_leg(label) for label in ["vL", "p", "vR"]]
@@ -295,13 +379,16 @@ def abrikosov_ph(
             leg_p.charges = spin_leg.charges
 
             leg_vL.chinfo = chinfo_s
-            leg_vL.charges -= idx
+            leg_vL.charges -= offset + idx
 
             leg_vR.chinfo = chinfo_s
-            leg_vR.charges -= idx + 1
+            leg_vR.charges -= offset + idx + 1
 
         else:  # None
             B = B.drop_charge(charge="parity_N", chinfo=chinfo_s)
+
+    if mps.bc == "infinite" and conserved_spin == "Sz":
+        mps._B[-1].gauge_total_charge("vR", mps._B[-1].qtotal - mps.L)
 
     mps.chinfo = chinfo_s
     mps.grouped = 1
@@ -320,7 +407,7 @@ def abrikosov_ph(
         mps.canonical_form(cutoff=cutoff)
         logger.info("Transformed MPS to right canonical form")
     else:
-        warnings.warn(
+        warn(
             "The MPS is not in canonical form after Gutzwiller projection.\n"
             "Consider setting 'return_canonical=True'",
         )
