@@ -1456,6 +1456,7 @@ def C_to_iMPS(
 
     if offset == "auto":
         offset = round(np.trace(C_short[:cut, :cut]))
+        logger.info(f"Using offset {offset} for conserved fermion number")
 
     # lists for accumulating the tensors and singular values
     tensors = []

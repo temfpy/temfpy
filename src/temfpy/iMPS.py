@@ -318,6 +318,7 @@ def MPS_to_iMPS(
     qmod = chinfo.mod
     if not isinstance(offset, Iterable) or isinstance(offset, str):
         offset = [offset] * len(qmod)
+        logger.info(f"Using {offset = !r} for all conserved charges")
     else:
         assert len(offset) == len(qmod), f"Expected {len(qmod)} offsets"
 
@@ -336,6 +337,7 @@ def MPS_to_iMPS(
     vL_leg: npc.LegCharge = mps_short._B[cut].get_leg("vL").copy()
     offset = [guess_offset(*x) for x in zip(offset, qmod, vL_leg.to_qflat().T)]
     offset = np.asarray(offset, int)
+    logger.info("Using charge offsets {offset}")
     vL_leg.charges = chinfo.make_valid(vL_leg.charges - offset)
 
     # Left gauge fixing matrix C
