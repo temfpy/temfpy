@@ -1407,6 +1407,10 @@ def C_to_iMPS(
         Defaults to expected particle number left of ``cut`` in the shorter chain,
         rounded to the nearest integer (``"auto"``).
 
+        If ``spinful == "simple"``, it is interpreted *per spin species*, i.e.,
+        the actual offset in particle number is ``2 * offset``. As such, the
+        automatic offset is guaranteed to be even.
+
     Returns
     -------
     iMPS: :class:`~tenpy.networks.mps.MPS`
@@ -1427,6 +1431,12 @@ def C_to_iMPS(
     trunc_par = to_stopping_condition(trunc_par)
 
     if spinful == "simple":
+        if offset == "auto":  # NB C_short and cut not yet doubled
+            offset = 2 * round(np.trace(C_short[:cut, :cut]))
+            logger.info(f"Using total offset {offset} for conserved fermion number")
+        else:
+            offset *= 2
+            logger.debug(f"Offset doubled to {offset} for spinful fermions")
         C_short = spinful_correlation_matrix(C_short, False)
         C_long = spinful_correlation_matrix(C_long, False)
         sites_per_cell *= 2
@@ -1454,7 +1464,7 @@ def C_to_iMPS(
         f"{L_long} - {L_short} != {sites_per_cell}"
     )
 
-    if offset == "auto":
+    if offset == "auto":  # NB took care of spinful="simple" already
         offset = round(np.trace(C_short[:cut, :cut]))
         logger.info(f"Using offset {offset} for conserved fermion number")
 
@@ -1639,6 +1649,10 @@ def H_to_iMPS(
 
         Defaults to expected particle number left of ``cut`` in the shorter chain,
         rounded to the nearest integer (``"auto"``).
+
+        If ``spinful == "simple"``, it is interpreted *per spin species*, i.e.,
+        the actual offset in particle number is ``2 * offset``. As such, the
+        automatic offset is guaranteed to be even.
 
     Returns
     -------
