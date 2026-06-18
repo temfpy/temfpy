@@ -43,6 +43,7 @@ def __getattr__(name):
     """Lazy load modules on first access."""
     if name in _lazy_modules:
         import importlib
+
         module = importlib.import_module(_lazy_modules[name])
         globals()[name] = module
         return module
