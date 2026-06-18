@@ -1970,8 +1970,7 @@ def C_to_iMPS(
         Maximum mixing of unequal Schmidt values by the gauge rotation matrices
         before a warning is raised.
     unit_cell_width:
-        Physical length of the chain or cylinder being simulated.
-        Defaults to ``sites_per_cell``.
+        Physical length of the iMPS unit cell. Defaults to ``sites_per_cell``.
 
     Returns
     -------
@@ -2197,8 +2196,7 @@ def H_to_iMPS(
         Maximum mixing of unequal Schmidt values by the gauge rotation matrices
         before a warning is raised.
     unit_cell_width:
-        Physical length of the chain or cylinder being simulated.
-        Defaults to ``sites_per_cell``.
+        Physical length of the iMPS unit cell. Defaults to ``sites_per_cell``.
 
     Returns
     -------

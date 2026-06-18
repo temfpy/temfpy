@@ -1426,8 +1426,7 @@ def C_to_iMPS(
         the actual offset in particle number is ``2 * offset``. As such, the
         automatic offset is guaranteed to be even.
     unit_cell_width:
-        Physical length of the chain or cylinder being simulated.
-        Defaults to ``sites_per_cell``.
+        Physical length of the iMPS unit cell. Defaults to ``sites_per_cell``.
 
     Returns
     -------
@@ -1695,8 +1694,7 @@ def H_to_iMPS(
         the actual offset in particle number is ``2 * offset``. As such, the
         automatic offset is guaranteed to be even.
     unit_cell_width:
-        Physical length of the chain or cylinder being simulated.
-        Defaults to ``sites_per_cell``.
+        Physical length of the iMPS unit cell. Defaults to ``sites_per_cell``.
 
     Returns
     -------
