@@ -240,7 +240,7 @@ def MPS_to_iMPS(
     offset: Iterable[int | Literal["auto"]] | int | Literal["auto"] = "auto",
     unit_cell_width: int | None = None,
 ) -> tuple[nw.MPS, iMPSError]:
-    """Constructs an iMPS by comparing two finite MPS.
+    r"""Constructs an iMPS by comparing two finite MPS.
 
     The two MPS are expected to represent the ground states of a gapped,
     translation invariant Hamiltonian on two system sizes that differ by
