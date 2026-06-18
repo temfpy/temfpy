@@ -3,7 +3,7 @@ r"""Tools for converting finite to infinite MPS."""
 
 import logging
 import warnings
-from typing import NamedTuple
+from typing import NamedTuple, Literal, Iterable
 
 import numpy as np
 import tenpy.linalg.np_conserved as npc
@@ -96,8 +96,8 @@ def basis_rotation(
         or a right ("B", default) canonical MPS tensor.
     numerical_tol:
         Highest allowed negative value of the square of the unitary error.
-        
-        Should be more than machine precision (:math:`\sim 10^{-16}` 
+
+        Should be more than machine precision (:math:`\sim 10^{-16}`
         for ``float64``) but less than ``unitary_tol`` squared.
     unitary_tol:
         Highest allowed deviation from unitarity (weighted with Schmidt values)
@@ -145,14 +145,14 @@ def basis_rotation(
             f"the numerical tolerance {numerical_tol:.1e}."
         )
         assert_array_less(abs(unitary_error_square), numerical_tol, err_mssg)
-        logging.info(
+        logger.info(
             f"{mode.capitalize()} devitation from unitary: The square of the "
             f"unitary error {unitary_error_square:.4e} is negative, setting it to zero."
         )
         unitary_error = 0.0
     else:
         unitary_error = np.sqrt(unitary_error_square)
-        logging.info(f"{mode.capitalize()} deviation from unitary: {unitary_error:.4e}")
+        logger.info(f"{mode.capitalize()} deviation from unitary: {unitary_error:.4e}")
 
     if unitary_error > unitary_tol:
         warnings.warn(
@@ -182,7 +182,7 @@ def basis_rotation(
         Sb_C = overlap.scale_axis(Schmidt_ket, v_ket)
 
     schmidt_error = npc.norm(Sb_C - C_Sk)
-    logging.info(f"{mode.capitalize()} Schmidt value mixing:   {schmidt_error:.4e}")
+    logger.info(f"{mode.capitalize()} Schmidt value mixing:   {schmidt_error:.4e}")
     if schmidt_error > schmidt_tol:
         warnings.warn(
             f"\nMixing between unequal Schmidt value sectors on the {mode} side is\n"
@@ -197,6 +197,7 @@ class iMPSError(NamedTuple):
 
     If printed, only non-zero approximation errors are displayed.
     """
+
     left_unitary: float
     """Deviation of left environment from unitarity."""
     left_schmidt: float
@@ -236,6 +237,7 @@ def MPS_to_iMPS(
     cut: int,
     unitary_tol: float = _UNITARY_TOL,
     schmidt_tol: float = _SCHMIDT_TOL,
+    offset: Iterable[int | Literal["auto"]] | int | Literal["auto"] = "auto",
 ) -> tuple[nw.MPS, iMPSError]:
     """Constructs an iMPS by comparing two finite MPS.
 
@@ -270,6 +272,16 @@ def MPS_to_iMPS(
     schmidt_tol:
         Maximum mixing of unequal Schmidt values by the gauge rotation matrices
         before a warning is raised.
+    offset:
+        Charge quantum numbers to be subtracted from virtual leg charges of the
+        output iMPS.
+
+        The idea is to remove the total expected charge to the left of the iMPS
+        unit cell, so that the virtual charges of the iMPS are closer to 0.
+
+        For each conserved charge, can be either an explicit charge or ``"auto"``
+        (0 for :math:`\mathbb{Z}_N` charges, rounded weighted average for U(1) charges).
+        Default: ``"auto"`` for all charges.
 
     Returns
     -------
@@ -286,7 +298,8 @@ def MPS_to_iMPS(
             "The given two MPS must differ by one unit cell, got "
             f"{L_long} - {L_short} != {sites_per_cell}"
         )
-    if mps_short.chinfo != mps_long.chinfo:
+    chinfo: npc.ChargeInfo = mps_short.chinfo
+    if chinfo != mps_long.chinfo:
         raise ValueError("Incompatible ChargeInfo in the two MPS")
     assert all(x is not None for x in mps_short.form), "mps_short is not canonical"
     assert all(x is not None for x in mps_long.form), "mps_long is not canonical"
@@ -300,6 +313,32 @@ def MPS_to_iMPS(
 
     # Schmidt values in the short chain at the reference cut
     S0 = mps_short.get_SL(cut)
+
+    # regularise offset
+    qmod = chinfo.mod
+    if not isinstance(offset, Iterable) or isinstance(offset, str):
+        offset = [offset] * len(qmod)
+        logger.info(f"Using {offset = !r} for all conserved charges")
+    else:
+        assert len(offset) == len(qmod), f"Expected {len(qmod)} offsets"
+
+    def guess_offset(offset, qmod, q_flat):
+        if isinstance(offset, (int, np.integer)):
+            return offset
+        elif offset == "auto":
+            if qmod != 1:
+                return 0
+            else:
+                q_avg = (S0**2) @ q_flat
+                return round(q_avg)
+        else:
+            raise TypeError(f"Expected integer or 'auto' as offset, got {offset!r}")
+
+    vL_leg: npc.LegCharge = mps_short._B[cut].get_leg("vL").copy()
+    offset = [guess_offset(*x) for x in zip(offset, qmod, vL_leg.to_qflat().T)]
+    offset = np.asarray(offset, int)
+    logger.info("Using charge offsets {offset}")
+    vL_leg.charges = chinfo.make_valid(vL_leg.charges - offset)
 
     # Left gauge fixing matrix C
     bra = mps_short.extract_segment(0, cut - 1)
@@ -345,5 +384,10 @@ def MPS_to_iMPS(
     schmidt_values = [S0] + schmidt_values + [S0]
 
     iMPS = nw.MPS(sites, tensors, schmidt_values, bc="infinite", form="B")
+
+    # apply offset if nonzero
+    if not np.all(offset == 0):
+        iMPS.gauge_total_charge(vL_leg=vL_leg, vR_leg=vL_leg.conj())
+
     error = iMPSError(left_unitary, left_schmidt, right_unitary, right_schmidt)
     return iMPS, error
