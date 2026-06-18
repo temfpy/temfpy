@@ -1220,6 +1220,7 @@ def C_to_MPS(
     diag_tol: float = _DIAG_TOL,
     ortho_center: int = None,
     spinful: Literal["simple", "PH", None] = None,
+    unit_cell_width: int | None = None,
 ) -> networks.MPS:
     r"""MPS representation of a Slater determinant from its correlation matrix.
 
@@ -1245,6 +1246,11 @@ def C_to_MPS(
         spin-rotation symmetric state of spinful fermions or not (``None``),
         either with (``"PH"``) or without (``"simple"``) particle-hole
         rotation in the down-spin sector.
+    unit_cell_width:
+        Physical length of the chain or cylinder being simulated.
+
+        Defaults to the number of physical sites (i.e. half the number of
+        MPS tensors for nontrivial ``spinful``).
 
     Returns
     -------
@@ -1258,6 +1264,12 @@ def C_to_MPS(
       defaults to 1e-12.
     """
     trunc_par = to_stopping_condition(trunc_par)
+
+    # verify unit_cell_width *before* doubling C
+    if unit_cell_width is None:
+        unit_cell_width = len(C)
+    elif len(C) % unit_cell_width != 0:
+        raise ValueError(f"{unit_cell_width = } does not divide system size {len(C)}")
 
     if spinful == "simple":
         C = spinful_correlation_matrix(C, False)
@@ -1334,7 +1346,9 @@ def C_to_MPS(
         Schmidt = Schmidt_new
 
     form = ["A"] * ortho_center + ["B"] * (L - ortho_center)
-    mps = networks.mps.MPS([fermion_site] * L, tensors, λs, form=form)
+    mps = networks.mps.MPS(
+        [fermion_site] * L, tensors, λs, form=form, unit_cell_width=unit_cell_width
+    )
 
     return mps
 
@@ -1351,6 +1365,7 @@ def C_to_iMPS(
     schmidt_tol: float = iMPS._SCHMIDT_TOL,
     spinful: Literal["simple", "PH", None] = None,
     offset: int | Literal["auto"] = "auto",
+    unit_cell_width: int | None = None,
 ) -> tuple[networks.MPS, iMPS.iMPSError]:
     r"""iMPS representation of a Slater determinant from correlation matrices.
 
@@ -1410,6 +1425,9 @@ def C_to_iMPS(
         If ``spinful == "simple"``, it is interpreted *per spin species*, i.e.,
         the actual offset in particle number is ``2 * offset``. As such, the
         automatic offset is guaranteed to be even.
+    unit_cell_width:
+        Physical length of the chain or cylinder being simulated.
+        Defaults to ``sites_per_cell``.
 
     Returns
     -------
@@ -1429,6 +1447,12 @@ def C_to_iMPS(
       refer to indices in the original correlation matrices.
     """
     trunc_par = to_stopping_condition(trunc_par)
+
+    # verify unit_cell_width *before* doubling C
+    if unit_cell_width is None:
+        unit_cell_width = sites_per_cell
+    elif sites_per_cell % unit_cell_width != 0:
+        raise ValueError(f"{unit_cell_width = } does not divide {sites_per_cell = }")
 
     if spinful == "simple":
         if offset == "auto":  # NB C_short and cut not yet doubled
@@ -1527,7 +1551,12 @@ def C_to_iMPS(
     tensors[0] = npc.tensordot(C, tensors[0], axes=["vR", "vL"])
 
     iMPS_ = networks.MPS(
-        [fermion_site] * sites_per_cell, tensors, λs, bc="infinite", form="B"
+        [fermion_site] * sites_per_cell,
+        tensors,
+        λs,
+        bc="infinite",
+        form="B",
+        unit_cell_width=unit_cell_width,
     )
     error = iMPS.iMPSError(left_unitary, left_schmidt, 0.0, 0.0)
     return iMPS_, error
@@ -1540,6 +1569,7 @@ def H_to_MPS(
     diag_tol: float = _DIAG_TOL,
     ortho_center: int = None,
     spinful: Literal["simple", "PH", None] = None,
+    unit_cell_width: int | None = None,
 ) -> networks.MPS:
     r"""MPS representation of a Slater determinant from its single body Hamiltonian.
 
@@ -1565,6 +1595,11 @@ def H_to_MPS(
         spin-rotation symmetric state of spinful fermions or not (``None``),
         either with (``"PH"``) or without (``"simple"``) particle-hole
         rotation in the down-spin sector.
+    unit_cell_width:
+        Physical length of the chain or cylinder being simulated.
+
+        Defaults to the number of physical sites (i.e. half the number of
+        MPS tensors for nontrivial ``spinful``).
 
     Returns
     -------
@@ -1580,7 +1615,12 @@ def H_to_MPS(
 
     C, _ = correlation_matrix(H)
     return C_to_MPS(
-        C, trunc_par, diag_tol=diag_tol, ortho_center=ortho_center, spinful=spinful
+        C,
+        trunc_par,
+        diag_tol=diag_tol,
+        ortho_center=ortho_center,
+        spinful=spinful,
+        unit_cell_width=unit_cell_width,
     )
 
 
@@ -1596,6 +1636,7 @@ def H_to_iMPS(
     schmidt_tol: float = iMPS._SCHMIDT_TOL,
     spinful: Literal["simple", "PH", None] = None,
     offset: int | Literal["auto"] = "auto",
+    unit_cell_width: int | None = None,
 ) -> tuple[networks.MPS, iMPS.iMPSError]:
     r"""iMPS representation of a Slater determinant from single particle Hamiltonians.
 
@@ -1653,6 +1694,9 @@ def H_to_iMPS(
         If ``spinful == "simple"``, it is interpreted *per spin species*, i.e.,
         the actual offset in particle number is ``2 * offset``. As such, the
         automatic offset is guaranteed to be even.
+    unit_cell_width:
+        Physical length of the chain or cylinder being simulated.
+        Defaults to ``sites_per_cell``.
 
     Returns
     -------
@@ -1684,4 +1728,5 @@ def H_to_iMPS(
         schmidt_tol=schmidt_tol,
         spinful=spinful,
         offset=offset,
+        unit_cell_width=unit_cell_width,
     )
