@@ -40,7 +40,7 @@ def parity_mask(leg: npc.charges.LegCharge, parity: int = 0) -> np.ndarray:
     Returns
     -------
         A boolean mask selecting the physical charge blocks
-        that can be used by :func:`~tenpy.linalg.np_conserved.Array.iproject`.
+        that can be used by :meth:`~tenpy.linalg.np_conserved.Array.iproject`.
 
     """
     mask = (leg.to_qflat() % 2 == parity % 2).ravel()
@@ -63,7 +63,7 @@ def number_mask(leg: npc.charges.LegCharge, n: int) -> np.ndarray:
     Returns
     -------
         A boolean mask selecting the physical charge block
-        that can be used by :func:`~tenpy.linalg.np_conserved.Array.iproject`.
+        that can be used by :meth:`~tenpy.linalg.np_conserved.Array.iproject`.
     """
     mask = (leg.to_qflat() == n).ravel()
 
