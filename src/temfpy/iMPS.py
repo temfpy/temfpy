@@ -286,7 +286,7 @@ def MPS_to_iMPS(
     unit_cell_width:
         Physical length of the iMPS unit cell.
 
-        If ``None`` (default), try to infer from
+        If :obj:`None` (default), try to infer from
         :attr:`~tenpy.networks.mps.MPSGeometry.N_sites_per_hor_spacing`
         (aka cylinder width) of the two input MPS:
 
@@ -342,7 +342,7 @@ def MPS_to_iMPS(
         cylinder1 = sites_per_cell // unit_cell_width
         assert (
             cut % cylinder1 == 0
-        ), f"{cut = } does not divide requested cylinder circumference {cylinder1}"
+        ), f"{cut = } not divisible into requested cylinder circumferences of {cylinder1}"
 
     # set unit_cell_width of input MPS to match the new cylinder width
     # so `MPS.extract_segment` doesn't complain

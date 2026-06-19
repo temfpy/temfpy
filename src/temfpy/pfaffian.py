@@ -1026,7 +1026,7 @@ class SchmidtVectors:
     r"""Dictionary mapping the number of :math:`\gamma^\dagger` excitations
     to slice of sets/singular values corresponding to that excitation number.
 
-    That is, each row in ``left_sets[idx_n[n]]`` contains n ``True`` entries.
+    That is, each row in ``left_sets[idx_n[n]]`` contains n :obj:`True` entries.
 
     Slices follow each other in the order 0, 2,..., 1, 3,...
     """
@@ -1035,7 +1035,7 @@ class SchmidtVectors:
     to slice of sets/singular values corresponding to that excitation number.
 
     That is, each row in ``left_sets[idx_parity[n]]`` contains an even (odd)
-    number of ``True`` entries if n=0 (1).
+    number of :obj:`True` entries if n=0 (1).
     """
 
     @property
@@ -1532,7 +1532,7 @@ class MPSTensorData:
     """Bra Schmidt vectors in terms of the excitations in :attr:`pfaffian_matrix`.
     
     Given the block structure of :attr:`pfaffian_matrix`, each row starts with
-    a number of ``False`` entries corresponding to the ket excitations.
+    a number of :obj:`False` entries corresponding to the ket excitations.
     
     If the tensor contains a physical leg, it is double the length of
     :attr:`~SchmidtVectors.sets` and contains all Schmidt vectors with the on-site
@@ -1558,7 +1558,7 @@ class MPSTensorData:
     """Ket Schmidt vectors in terms of the excitations in :attr:`pfaffian_matrix`.
     
     Given the block structure of :attr:`pfaffian_matrix`, each row ends with
-    a number of ``False`` entries corresponding to the bra excitations.
+    a number of :obj:`False` entries corresponding to the bra excitations.
     """
     idx_n_ket: np.ndarray
     """:attr:`~SchmidtVectors.idx_n` of the ket Schmidt vector."""

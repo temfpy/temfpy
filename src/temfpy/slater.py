@@ -1243,7 +1243,7 @@ def C_to_MPS(
         Midpoint of the chain by default.
     spinful:
         Whether to treat the input correlation matrix as describing a
-        spin-rotation symmetric state of spinful fermions or not (``None``),
+        spin-rotation symmetric state of spinful fermions or not (:obj:`None`),
         either with (``"PH"``) or without (``"simple"``) particle-hole
         rotation in the down-spin sector.
     unit_cell_width:
@@ -1412,7 +1412,7 @@ def C_to_iMPS(
         before a warning is raised.
     spinful:
         Whether to treat the input correlation matrices as describing a
-        spin-rotation symmetric state of spinful fermions or not (``None``),
+        spin-rotation symmetric state of spinful fermions or not (:obj:`None`),
         either with (``"PH"``) or without (``"simple"``) particle-hole
         rotation in the down-spin sector.
     offset:
@@ -1591,7 +1591,7 @@ def H_to_MPS(
         Midpoint of the chain by default.
     spinful:
         Whether to treat the input single particle Hamiltonian as describing a
-        spin-rotation symmetric state of spinful fermions or not (``None``),
+        spin-rotation symmetric state of spinful fermions or not (:obj:`None`),
         either with (``"PH"``) or without (``"simple"``) particle-hole
         rotation in the down-spin sector.
     unit_cell_width:
@@ -1680,7 +1680,7 @@ def H_to_iMPS(
         before a warning is raised.
     spinful:
         Whether to treat the input single particle Hamiltonians as describing a
-        spin-rotation symmetric state of spinful fermions or not (``None``),
+        spin-rotation symmetric state of spinful fermions or not (:obj:`None`),
         either with (``"PH"``) or without (``"simple"``) particle-hole
         rotation in the down-spin sector.
     offset:

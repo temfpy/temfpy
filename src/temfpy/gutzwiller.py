@@ -120,7 +120,7 @@ def abrikosov(
     unit_cell_width:
         Physical length of the system represented by the MPS.
 
-        If ``None`` (default), keep the existing
+        If :obj:`None` (default), keep the existing
         :attr:`~tenpy.networks.mps.MPSGeometry.unit_cell_width` if it divides
         the new, halved, system size. Otherwise, replace with the new MPS length
         (i.e., treat it as a chain).
@@ -312,7 +312,7 @@ def abrikosov_ph(
     unit_cell_width:
         Physical length of the system represented by the MPS.
 
-        If ``None`` (default), keep the existing
+        If :obj:`None` (default), keep the existing
         :attr:`~tenpy.networks.mps.MPSGeometry.unit_cell_width` if it divides
         the new, halved, system size. Otherwise, replace with the new MPS length
         (i.e., treat it as a chain).
