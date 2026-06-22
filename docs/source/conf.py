@@ -3,15 +3,16 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 import os
+import temfpy
 
 # -- Project information -- #
 # ------------------------- #
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "TeMFpy"
-copyright = "2025, Simon Hans Hille, Attila Szabó"
+copyright = "2025-%Y, Simon Hans Hille, Attila Szabó"
 author = "Simon Hans Hille, Attila Szabó"
-release = "2025"
+version = release = temfpy.__version__
 
 # -- General configuration -- #
 # --------------------------- #

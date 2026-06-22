@@ -40,7 +40,7 @@ def parity_mask(leg: npc.charges.LegCharge, parity: int = 0) -> np.ndarray:
     Returns
     -------
         A boolean mask selecting the physical charge blocks
-        that can be used by :class:`~tenpy.networks.Array.iproject`.
+        that can be used by :meth:`~tenpy.linalg.np_conserved.Array.iproject`.
 
     """
     mask = (leg.to_qflat() % 2 == parity % 2).ravel()
@@ -63,11 +63,29 @@ def number_mask(leg: npc.charges.LegCharge, n: int) -> np.ndarray:
     Returns
     -------
         A boolean mask selecting the physical charge block
-        that can be used by :class:`~tenpy.networks.Array.iproject`.
+        that can be used by :meth:`~tenpy.linalg.np_conserved.Array.iproject`.
     """
     mask = (leg.to_qflat() == n).ravel()
 
     return mask
+
+
+def _check_unit_cell_width(
+    mps: networks.MPS, unit_cell_width: int | None, group: int = 2
+):
+    if unit_cell_width is None:
+        unit_cell_width = mps.unit_cell_width
+        if (mps.L // group) % unit_cell_width != 0:
+            warn(
+                f"Input MPS {unit_cell_width = } does not divide new MPS size "
+                f"{mps.L // group}\nDefault to chain geometry"
+            )
+            unit_cell_width = mps.L // group
+    elif (mps.L // group) % unit_cell_width != 0:
+        raise ValueError(
+            f"{unit_cell_width = } does not divide new MPS size {mps.L // group}"
+        )
+    mps.unit_cell_width = unit_cell_width
 
 
 # Gutzwiller projections
@@ -81,6 +99,7 @@ def abrikosov(
     return_canonical: bool = True,
     cutoff: float = 1e-12,
     q_left: None | int = None,
+    unit_cell_width: int | None = None,
 ) -> None | networks.MPS:
     r"""Projection from Abrikosov fermions to a spin-1/2 Hilbert space.
 
@@ -116,6 +135,13 @@ def abrikosov(
 
         Has to be a charge sector contained within :attr:`~tenpy.linalg.charges.LegCharge.charges`
         of the leftmost virtual leg of the iMPS unit cell.
+    unit_cell_width:
+        Physical length of the system represented by the MPS.
+
+        If :obj:`None` (default), keep the existing
+        :attr:`~tenpy.networks.mps.MPSGeometry.unit_cell_width` if it divides
+        the new, halved, system size. Otherwise, replace with the new MPS length
+        (i.e., treat it as a chain).
 
     Returns
     -------
@@ -124,6 +150,7 @@ def abrikosov(
     Note
     ----
         Currently,
+
         - no symmetry quantum numbers other than fermion number or parity can be handled.
         - only ``'finite'`` and ``'infinite'`` boundary conditions are supported.
     """
@@ -183,6 +210,9 @@ def abrikosov(
     if not inplace:
         mps = mps.copy()
         logger.debug(f"Deep copied MPS before Gutzwiller projection.")
+
+    # normalise unit_cell_width
+    _check_unit_cell_width(mps, unit_cell_width)
 
     # normalise legs and tensor charges
     mps.gauge_total_charge(qtotal=qtotal)
@@ -244,6 +274,7 @@ def abrikosov_ph(
     cutoff: float = 1e-12,
     offset: int = 0,
     parity: Literal[0, 1] = 0,
+    unit_cell_width: int | None = None,
 ) -> None | networks.MPS:
     r"""Projection from particle-hole rotated Abrikosov fermions to a spin-1/2 Hilbert space.
 
@@ -285,6 +316,13 @@ def abrikosov_ph(
         fermion number to spin on virtual legs:
 
         ``2S^z = number - offset - bond_index``
+    unit_cell_width:
+        Physical length of the system represented by the MPS.
+
+        If :obj:`None` (default), keep the existing
+        :attr:`~tenpy.networks.mps.MPSGeometry.unit_cell_width` if it divides
+        the new, halved, system size. Otherwise, replace with the new MPS length
+        (i.e., treat it as a chain).
 
     Returns
     -------
@@ -339,6 +377,9 @@ def abrikosov_ph(
     if not inplace:
         mps = mps.copy()
         logger.debug(f"Deep copied MPS before Gutzwiller projection.")
+
+    # normalise unit_cell_width
+    _check_unit_cell_width(mps, unit_cell_width)
 
     # Shift all tensor charges to the end
     mps.gauge_total_charge(qtotal=qtotal)

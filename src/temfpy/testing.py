@@ -6,6 +6,7 @@ that determines whether the tests raise :class:`AssertionError`\ s or issue
 :class:`ComparisonWarning`\ s. For speed-critical applications, they may
 also be turned off altogether.
 """
+from typing import Literal
 import warnings
 import numpy as np
 
@@ -13,7 +14,7 @@ from .utils import HT
 
 _DIAG_TOL = 1e-8
 
-TEST_ACTION: str = "warn"
+TEST_ACTION: Literal["raise", "warn", "pass"] = "warn"
 """Determines how the testing functions in this module (and elsewhere in TeMFpy) behave.
 
 Allowed values:
@@ -116,7 +117,7 @@ def check_schmidt_decomposition(modes, C: np.ndarray, diag_tol: float = _DIAG_TO
 
     Parameters
     ----------
-    modes: :class:`slater.SchmidtModes` | :class:`pfaffian.SchmidtModes`
+    modes: :class:`temfpy.slater.SchmidtModes` | :class:`temfpy.pfaffian.SchmidtModes`
         Schmidt modes to check
     C:
         (Nambu) correlation matrix

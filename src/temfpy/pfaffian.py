@@ -1026,7 +1026,7 @@ class SchmidtVectors:
     r"""Dictionary mapping the number of :math:`\gamma^\dagger` excitations
     to slice of sets/singular values corresponding to that excitation number.
 
-    That is, each row in ``left_sets[idx_n[n]]`` contains n ``True`` entries.
+    That is, each row in ``left_sets[idx_n[n]]`` contains n :obj:`True` entries.
 
     Slices follow each other in the order 0, 2,..., 1, 3,...
     """
@@ -1035,7 +1035,7 @@ class SchmidtVectors:
     to slice of sets/singular values corresponding to that excitation number.
 
     That is, each row in ``left_sets[idx_parity[n]]`` contains an even (odd)
-    number of ``True`` entries if n=0 (1).
+    number of :obj:`True` entries if n=0 (1).
     """
 
     @property
@@ -1532,7 +1532,7 @@ class MPSTensorData:
     """Bra Schmidt vectors in terms of the excitations in :attr:`pfaffian_matrix`.
     
     Given the block structure of :attr:`pfaffian_matrix`, each row starts with
-    a number of ``False`` entries corresponding to the ket excitations.
+    a number of :obj:`False` entries corresponding to the ket excitations.
     
     If the tensor contains a physical leg, it is double the length of
     :attr:`~SchmidtVectors.sets` and contains all Schmidt vectors with the on-site
@@ -1558,7 +1558,7 @@ class MPSTensorData:
     """Ket Schmidt vectors in terms of the excitations in :attr:`pfaffian_matrix`.
     
     Given the block structure of :attr:`pfaffian_matrix`, each row ends with
-    a number of ``False`` entries corresponding to the bra excitations.
+    a number of :obj:`False` entries corresponding to the bra excitations.
     """
     idx_n_ket: np.ndarray
     """:attr:`~SchmidtVectors.idx_n` of the ket Schmidt vector."""
@@ -1769,6 +1769,7 @@ class MPSTensorData:
 #### High-level functions ####
 #### -------------------- ####
 
+
 def C_to_MPS(
     C: np.ndarray,
     trunc_par: dict | StoppingCondition,
@@ -1776,6 +1777,7 @@ def C_to_MPS(
     basis: str,
     diag_tol: float = _DIAG_TOL,
     ortho_center: int = None,
+    unit_cell_width: int | None = None,
 ) -> networks.MPS:
     r"""
     MPS representation of a Nambu mean-field ground state from its correlation matrix.
@@ -1800,6 +1802,9 @@ def C_to_MPS(
     diag_tol:
         Largest allowed offdiagonal matrix element in diagonalised / SVD
         correlation submatrices before an error is raised.
+    unit_cell_width:
+        Physical length of the chain or cylinder being simulated.
+        Defaults to the number of sites.
 
     Returns
     -------
@@ -1815,6 +1820,11 @@ def C_to_MPS(
     trunc_par = to_stopping_condition(trunc_par)
 
     L = len(C) // 2
+
+    if unit_cell_width is None:
+        unit_cell_width = L
+    elif L % unit_cell_width != 0:
+        raise ValueError(f"{unit_cell_width = } does not divide system size {L}")
 
     # lists for accumulating the tensors and singular values
     tensors = [None] * L
@@ -1892,7 +1902,9 @@ def C_to_MPS(
         Schmidt = Schmidt_new
 
     form = ["A"] * ortho_center + ["B"] * (L - ortho_center)
-    mps = networks.mps.MPS([fermion_site] * L, tensors, λs, form=form)
+    mps = networks.mps.MPS(
+        [fermion_site] * L, tensors, λs, form=form, unit_cell_width=unit_cell_width
+    )
 
     return mps
 
@@ -1908,6 +1920,7 @@ def C_to_iMPS(
     diag_tol: float = _DIAG_TOL,
     unitary_tol: float = iMPS._UNITARY_TOL,
     schmidt_tol: float = iMPS._SCHMIDT_TOL,
+    unit_cell_width: int | None = None,
 ) -> tuple[networks.MPS, iMPS.iMPSError]:
     r"""iMPS representation of a Nambu mean-field state from correlation matrices.
 
@@ -1956,6 +1969,8 @@ def C_to_iMPS(
     schmidt_tol:
         Maximum mixing of unequal Schmidt values by the gauge rotation matrices
         before a warning is raised.
+    unit_cell_width:
+        Physical length of the iMPS unit cell. Defaults to ``sites_per_cell``.
 
     Returns
     -------
@@ -1986,6 +2001,11 @@ def C_to_iMPS(
         "The given two MPS must differ by one unit cell, got "
         f"{L_long} - {L_short} != {sites_per_cell}"
     )
+
+    if unit_cell_width is None:
+        unit_cell_width = sites_per_cell
+    elif sites_per_cell % unit_cell_width != 0:
+        raise ValueError(f"{unit_cell_width = } does not divide {sites_per_cell = }")
 
     # lists for accumulating the tensors and singular values
     tensors = []
@@ -2048,7 +2068,12 @@ def C_to_iMPS(
     tensors[0] = npc.tensordot(C, tensors[0], axes=["vR", "vL"])
 
     iMPS_ = networks.MPS(
-        [fermion_site] * sites_per_cell, tensors, λs, bc="infinite", form="B"
+        [fermion_site] * sites_per_cell,
+        tensors,
+        λs,
+        bc="infinite",
+        form="B",
+        unit_cell_width=unit_cell_width,
     )
     error = iMPS.iMPSError(left_unitary, left_schmidt, 0.0, 0.0)
     return iMPS_, error
@@ -2061,6 +2086,7 @@ def H_to_MPS(
     basis: str,
     diag_tol: float = _DIAG_TOL,
     ortho_center: int = None,
+    unit_cell_width: int | None = None,
 ) -> networks.MPS:
     r"""MPS representation of a Nambu mean-field ground state from its single particle Hamiltonian.
 
@@ -2084,6 +2110,9 @@ def H_to_MPS(
     diag_tol:
         Largest allowed offdiagonal matrix element in diagonalised / SVD
         correlation submatrices before an error is raised.
+    unit_cell_width:
+        Physical length of the chain or cylinder being simulated.
+        Defaults to the number of sites.
 
     Returns
     -------
@@ -2103,6 +2132,7 @@ def H_to_MPS(
         basis=basis,
         diag_tol=diag_tol,
         ortho_center=ortho_center,
+        unit_cell_width=unit_cell_width,
     )
 
 
@@ -2117,10 +2147,11 @@ def H_to_iMPS(
     diag_tol: float = _DIAG_TOL,
     unitary_tol: float = iMPS._UNITARY_TOL,
     schmidt_tol: float = iMPS._SCHMIDT_TOL,
+    unit_cell_width: int | None = None,
 ) -> tuple[networks.MPS, iMPS.iMPSError]:
     r"""iMPS representation of a Nambu mean-field state from single particle hamiltonians.
 
-    It is expected that the two single-particle Hamiltonians describe two 
+    It is expected that the two single-particle Hamiltonians describe two
     translation-invariant systems that differ by one repeating unit cell.
 
     The method is analogous to :func:`.iMPS.MPS_to_iMPS`, with two differences:
@@ -2164,6 +2195,8 @@ def H_to_iMPS(
     schmidt_tol:
         Maximum mixing of unequal Schmidt values by the gauge rotation matrices
         before a warning is raised.
+    unit_cell_width:
+        Physical length of the iMPS unit cell. Defaults to ``sites_per_cell``.
 
     Returns
     -------
@@ -2180,7 +2213,7 @@ def H_to_iMPS(
     - If :attr:`trunc_par.degeneracy_tol` is not provided, the degeneracy tolerance
       defaults to 1e-12.
     """
-        
+
     C_short = correlation_matrix(H_short, basis=f"{basis}->{basis}")
     C_long = correlation_matrix(H_long, basis=f"{basis}->{basis}")
     return C_to_iMPS(
@@ -2193,5 +2226,5 @@ def H_to_iMPS(
         diag_tol=diag_tol,
         unitary_tol=unitary_tol,
         schmidt_tol=schmidt_tol,
+        unit_cell_width=unit_cell_width,
     )
-

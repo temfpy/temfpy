@@ -238,8 +238,9 @@ def MPS_to_iMPS(
     unitary_tol: float = _UNITARY_TOL,
     schmidt_tol: float = _SCHMIDT_TOL,
     offset: Iterable[int | Literal["auto"]] | int | Literal["auto"] = "auto",
+    unit_cell_width: int | None = None,
 ) -> tuple[nw.MPS, iMPSError]:
-    """Constructs an iMPS by comparing two finite MPS.
+    r"""Constructs an iMPS by comparing two finite MPS.
 
     The two MPS are expected to represent the ground states of a gapped,
     translation invariant Hamiltonian on two system sizes that differ by
@@ -282,6 +283,20 @@ def MPS_to_iMPS(
         For each conserved charge, can be either an explicit charge or ``"auto"``
         (0 for :math:`\mathbb{Z}_N` charges, rounded weighted average for U(1) charges).
         Default: ``"auto"`` for all charges.
+    unit_cell_width:
+        Physical length of the iMPS unit cell.
+
+        If :obj:`None` (default), try to infer from
+        :attr:`~tenpy.networks.mps.MPSGeometry.N_sites_per_hor_spacing`
+        (aka cylinder width) of the two input MPS:
+
+        - If they're the same and ``cut`` is also a multiple (i.e., it corresponds
+          to whole cylinder rungs), keep the same cylinder width for the iMPS.
+        - Otherwise, discard both and default to ``sites_per_cell`` (i.e., a chain).
+
+        If specified, it must divide ``sites_per_cell`` and the quotient
+        (i.e., the cylinder width) must divide ``cut`` (i.e., the iMPS unit cell
+        must correspond to whole rungs of the cylinder).
 
     Returns
     -------
@@ -304,12 +319,37 @@ def MPS_to_iMPS(
     assert all(x is not None for x in mps_short.form), "mps_short is not canonical"
     assert all(x is not None for x in mps_long.form), "mps_long is not canonical"
 
-    # TODO: In TenPy unit_cell_width for a segment is
-    # TODO: not set correctly. If this is fixed by TenPy, remove workaround
-    # ------------------------
-    mps_short.unit_cell_width = mps_short.L
-    mps_long.unit_cell_width = mps_long.L
-    # ------------------------
+    if unit_cell_width is None:
+        cylinder1 = mps_short.N_sites_per_hor_spacing
+        cylinder2 = mps_long.N_sites_per_hor_spacing
+        if cylinder1 != cylinder2:
+            warnings.warn(
+                f"Unequal cylinder circumferences {cylinder1}, {cylinder2},\n"
+                "discard `unit_cell_width` of input MPS"
+            )
+            cylinder1 = cylinder2 = 1
+        if cut % cylinder1 != 0:
+            warnings.warn(
+                f"{cut = } not divisible into cylinder circumferences of {cylinder1},\n"
+                "discard `unit_cell_width` of input MPS"
+            )
+            cylinder1 = cylinder2 = 1
+        unit_cell_width = sites_per_cell // cylinder1
+    else:
+        assert (
+            sites_per_cell % unit_cell_width == 0
+        ), f"{unit_cell_width = } does not divide {sites_per_cell = }"
+        cylinder1 = sites_per_cell // unit_cell_width
+        assert (
+            cut % cylinder1 == 0
+        ), f"{cut = } not divisible into requested cylinder circumferences of {cylinder1}"
+
+    # set unit_cell_width of input MPS to match the new cylinder width
+    # so `MPS.extract_segment` doesn't complain
+    # save the existing values to restore them at the end
+    ucw_old = mps_short.unit_cell_width, mps_long.unit_cell_width
+    mps_short.unit_cell_width = mps_short.L // cylinder1
+    mps_long.unit_cell_width = mps_long.L // cylinder1
 
     # Schmidt values in the short chain at the reference cut
     S0 = mps_short.get_SL(cut)
@@ -383,7 +423,15 @@ def MPS_to_iMPS(
     # Set Schmidt values on both ends to that of the reference MPS
     schmidt_values = [S0] + schmidt_values + [S0]
 
-    iMPS = nw.MPS(sites, tensors, schmidt_values, bc="infinite", form="B")
+    iMPS = nw.MPS(
+        sites,
+        tensors,
+        schmidt_values,
+        bc="infinite",
+        form="B",
+        unit_cell_width=unit_cell_width,
+    )
+    mps_short.unit_cell_width, mps_long.unit_cell_width = ucw_old
 
     # apply offset if nonzero
     if not np.all(offset == 0):
