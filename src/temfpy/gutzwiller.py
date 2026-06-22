@@ -70,6 +70,24 @@ def number_mask(leg: npc.charges.LegCharge, n: int) -> np.ndarray:
     return mask
 
 
+def _check_unit_cell_width(
+    mps: networks.MPS, unit_cell_width: int | None, group: int = 2
+):
+    if unit_cell_width is None:
+        unit_cell_width = mps.unit_cell_width
+        if (mps.L // group) % unit_cell_width != 0:
+            warn(
+                f"Input MPS {unit_cell_width = } does not divide new MPS size "
+                f"{mps.L // group}\nDefault to chain geometry"
+            )
+            unit_cell_width = mps.L // group
+    elif (mps.L // group) % unit_cell_width != 0:
+        raise ValueError(
+            f"{unit_cell_width = } does not divide new MPS size {mps.L // group}"
+        )
+    mps.unit_cell_width = unit_cell_width
+
+
 # Gutzwiller projections
 # ----------------------
 
@@ -194,18 +212,7 @@ def abrikosov(
         logger.debug(f"Deep copied MPS before Gutzwiller projection.")
 
     # normalise unit_cell_width
-    if unit_cell_width is None:
-        unit_cell_width = mps.unit_cell_width
-        if (mps.L // 2) % unit_cell_width != 0:
-            warn(
-                f"Input MPS {unit_cell_width = } does not divide new MPS size {mps.L//2}, discard"
-            )
-            unit_cell_width = mps.L // 2
-    elif (mps.L // 2) % unit_cell_width != 0:
-        raise ValueError(
-            f"{unit_cell_width = } does not divide new MPS size {mps.L//2}"
-        )
-    mps.unit_cell_width = unit_cell_width
+    _check_unit_cell_width(mps, unit_cell_width)
 
     # normalise legs and tensor charges
     mps.gauge_total_charge(qtotal=qtotal)
@@ -372,18 +379,7 @@ def abrikosov_ph(
         logger.debug(f"Deep copied MPS before Gutzwiller projection.")
 
     # normalise unit_cell_width
-    if unit_cell_width is None:
-        unit_cell_width = mps.unit_cell_width
-        if (mps.L // 2) % unit_cell_width != 0:
-            warn(
-                f"Input MPS {unit_cell_width = } does not divide new MPS size {mps.L//2}, discard"
-            )
-            unit_cell_width = mps.L // 2
-    elif (mps.L // 2) % unit_cell_width != 0:
-        raise ValueError(
-            f"{unit_cell_width = } does not divide new MPS size {mps.L//2}"
-        )
-    mps.unit_cell_width = unit_cell_width
+    _check_unit_cell_width(mps, unit_cell_width)
 
     # Shift all tensor charges to the end
     mps.gauge_total_charge(qtotal=qtotal)
