@@ -874,7 +874,8 @@ class SchmidtModes:
                 # Replace upper half with (Nambu) conjugates of the lower
                 v[:, x:] = v[:, :x].conj()
             elif LR == "R":
-                v[:, x : x + kh] = (v[:, x - kh : x] - 1j * v[:, x : x + kh]) / 2**0.5
+                v[:, x : x + kh] = (-1j * v[:, x - kh : x] + v[:, x : x + kh]) / 2**0.5
+                v[:, x : x + kh] = v[:, x : x + kh][:, ::-1]
                 # Replace lower half with (Nambu) conjugates of the upper
                 v[:, :x] = v[:, x:].conj()
             else:

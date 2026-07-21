@@ -15,6 +15,7 @@
 
 * Gutzwiller projections {func}`temfpy.gutzwiller.abrikosov` and {func}`temfpy.gutzwiller.abrikosov_ph` now handle most infinite fermion MPS correctly. [#18](https://github.com/temfpy/temfpy/pull/18)
 * A check in {method}`temfpy.pfaffian.SchmidtModes.from_correlation_matrix` assumed that at most half of all Nambu eigenvalues are 1/2, which is not always the case. These checks now pass. [#24](https://github.com/temfpy/temfpy/pull/24)
+* A bug in the construction of Nambu eigenvectors with eigenvalue 1/2 is now fixed. [#25](https://github.com/temfpy/temfpy/pull/25)
 
 ## TeMFpy 0.2.1 (28 January 2026)
 
