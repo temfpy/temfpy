@@ -1,6 +1,6 @@
 # Changelog
 
-## TeMFpy 0.3 (In development)
+## TeMFpy 0.3 (21 July 2026)
 
 ### API breaking changes
 
