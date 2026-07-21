@@ -808,7 +808,7 @@ class SchmidtModes:
                 w = np.column_stack((v[:, x0:x1].real, v[:, x0:x1].imag))
                 w, s, _ = svd(w)
 
-                s_exp = [1] * (2 * kh) + [0] * (2 * kh)
+                s_exp = [1] * (2 * kh) + [0] * (s.size - 2 * kh)
                 err = "1/2 eigenvectors cannot be made real"
                 assert_allclose(s, s_exp, rtol=0, atol=diag_tol, err_msg=err)
 
