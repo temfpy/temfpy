@@ -72,7 +72,7 @@ def assert_allclose(
         If the shapes of the two arrays don't match or any two entries
         deviate by more than the given tolerance.
 
-        Regardless of :data:`TEST_ACTION`, an :class:`AssertionError` is
+        Regardless of :data:`TEST_ACTION`, an :exc:`AssertionError` is
         raised if the shapes of the two arrays don't match.
     """
     if TEST_ACTION == "raise" or _shape_mismatch(actual, desired, strict):
@@ -111,7 +111,7 @@ def assert_array_less(
         If the shapes of the two arrays don't match or any entry of ``x`` is
         not less than the corresponding entry of ``y``.
 
-        Regardless of :data:`TEST_ACTION`, an :class:`AssertionError` is
+        Regardless of :data:`TEST_ACTION`, an :exc:`AssertionError` is
         raised if the shapes of the two arrays don't match.
     """
     if TEST_ACTION == "raise" or _shape_mismatch(x, y, strict):
