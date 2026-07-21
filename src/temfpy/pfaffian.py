@@ -43,6 +43,7 @@ from functools import partial
 
 import numpy as np
 from numpy.linalg import eigh, inv, svd
+from scipy.stats import ortho_group
 import tenpy.linalg.np_conserved as npc
 from tenpy import networks
 from pfapack.ctypes import pfaffian as cpf
@@ -863,7 +864,17 @@ class SchmidtModes:
                 vL[:, ixL] = vL[:, ixL] @ U
                 vR[:, ixR] = vR[:, ixR] @ Vh.T
 
-        logger.info(f"{k} Schmidt modes found")
+        # shuffle the basis of 1/2 modes
+        if kh > 0:
+            # quasirandom orthogonal matrix
+            O = ortho_group.rvs(2 * kh, random_state=1234)
+            if vL is not None:
+                vL[:, x - kh : x + kh] = vL[:, x - kh : x + kh] @ O
+            if vR is not None:
+                vR[:, y - kh : y + kh] = vR[:, y - kh : y + kh] @ O
+
+        logger.info(f"2 * {k} entangled Schmidt modes found")
+        logger.debug(f"2 * {kh} Schmidt modes with eigenvalue 1/2")
 
         # Fix Nambu symmetry, convert to complex-fermion basis, compute parity
         def nambu(v, kh, LR):
