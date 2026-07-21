@@ -41,6 +41,16 @@ class ComparisonWarning(Warning):
     """Generic warning class for failed equality testing or comparison."""
 
 
+def _shape_mismatch(x: np.ndarray, y: np.ndarray, strict: bool = False) -> bool:
+    """Whether the numpy tests find the shapes of x and y to mismatch."""
+    if np.ndim(x) == 0 and np.ndim(y) == 0:  # both are scalars -> :)
+        return False
+    elif np.ndim(x) == 0 or np.ndim(y) == 0:  # one is scalar -> only problem for strict
+        return strict
+    else:  # both are nontrivial arrays, shapes must match exactly
+        return np.shape(x) != np.shape(y)
+
+
 def assert_allclose(
     actual: np.ndarray,
     desired: np.ndarray,
@@ -61,8 +71,11 @@ def assert_allclose(
     AssertionError | ComparisonWarning
         If the shapes of the two arrays don't match or any two entries
         deviate by more than the given tolerance.
+
+        Regardless of :data:`TEST_ACTION`, an :exception:`AssertionError` is
+        raised if the shapes of the two arrays don't match.
     """
-    if TEST_ACTION == "raise":
+    if TEST_ACTION == "raise" or _shape_mismatch(actual, desired, strict):
         np.testing.assert_allclose(
             actual, desired, rtol, atol, equal_nan, err_msg, verbose, strict=strict
         )
@@ -97,8 +110,11 @@ def assert_array_less(
     AssertionError | ComparisonWarning
         If the shapes of the two arrays don't match or any entry of ``x`` is
         not less than the corresponding entry of ``y``.
+
+        Regardless of :data:`TEST_ACTION`, an :exception:`AssertionError` is
+        raised if the shapes of the two arrays don't match.
     """
-    if TEST_ACTION == "raise":
+    if TEST_ACTION == "raise" or _shape_mismatch(x, y, strict):
         np.testing.assert_array_less(x, y, err_msg, verbose, strict=strict)
     elif TEST_ACTION == "warn":
         try:
