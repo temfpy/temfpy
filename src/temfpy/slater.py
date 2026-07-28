@@ -1547,6 +1547,10 @@ def C_to_iMPS(
         unitary_tol=unitary_tol,
         schmidt_tol=schmidt_tol,
     )
+    # subtract offset != 0 from virtual legs
+    if offset != 0:
+        C.get_leg("vL").charges -= offset
+        C.get_leg("vR").charges -= offset
     tensors[0] = npc.tensordot(C, tensors[0], axes=["vR", "vL"])
 
     iMPS_ = networks.MPS(

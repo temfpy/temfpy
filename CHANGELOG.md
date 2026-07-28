@@ -1,5 +1,13 @@
 # Changelog
 
+## TeMFpy 0.4 (in development)
+
+## TeMFpy 0.3.1 (28 July 2026)
+
+### Bug fixes
+
+* The `offset` parameter is now applied to the gauge-fixing matrix in {func}`temfpy.slater.C_to_iMPS`. [#28](https://github.com/temfpy/temfpy/pull/28)
+
 ## TeMFpy 0.3 (21 July 2026)
 
 ### API breaking changes
