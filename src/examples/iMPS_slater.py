@@ -20,7 +20,7 @@ cut = L_short // 2
 
 H_short = H(L_short)
 H_long = H(L_short + cell)
-iMPS, val_metric = slater.H_to_iMPS(H_short, H_long, trunc_par, 2, cut)
+iMPS, val_metric = slater.H_to_iMPS(H_short, H_long, trunc_par, 2, cut, offset=0)
 print("Error metric:", val_metric)
 
 # check overlap after inserting more unit cells
