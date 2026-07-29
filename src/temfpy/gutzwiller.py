@@ -241,7 +241,7 @@ def abrikosov(
         # --------------------------------------------------------
         B.iproject([mask_vL, mask_p, mask_vR], ["vL", "p", "vR"])
 
-        B = B.drop_charge(chinfo=chinfo_s)
+        mps._B[idx] = B.drop_charge(chinfo=chinfo_s)
 
     mps.chinfo = chinfo_s
     mps.grouped = 1
@@ -432,10 +432,10 @@ def abrikosov_ph(
             leg_vR.charges -= offset + idx + 1
 
         else:  # None
-            B = B.drop_charge(charge="parity_N", chinfo=chinfo_s)
+            mps._B[idx] = B.drop_charge(charge="parity_N", chinfo=chinfo_s)
 
     if mps.bc == "infinite" and conserved_spin == "Sz":
-        mps._B[-1].gauge_total_charge("vR", mps._B[-1].qtotal - mps.L)
+        mps._B[-1] = mps._B[-1].gauge_total_charge("vR", mps._B[-1].qtotal - mps.L)
 
     mps.chinfo = chinfo_s
     mps.grouped = 1
