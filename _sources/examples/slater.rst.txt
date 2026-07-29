@@ -1,0 +1,6 @@
+slater.py
+=========
+
+`on github <https://github.com/temfpy/temfpy/blob/master/src/examples/slater.py>`_ (`download <https://github.com/temfpy/temfpy/raw/master/src/examples/slater.py>`_).
+
+.. literalinclude:: /../../src/examples/slater.py
