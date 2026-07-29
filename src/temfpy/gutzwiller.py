@@ -128,7 +128,7 @@ def abrikosov(
     return_canonical:
         Whether to transform the output MPS to right canonical form.
     cutoff:
-        Cutoff for Schmidt values to keep in the canonical form.
+        Cutoff for Schmidt values to keep in the canonical form. Only used for finite MPS.
     q_left:
         For infinite MPS **only**, determines which fermion number/parity sector
         of the leftmost virtual leg to keep.
@@ -254,7 +254,13 @@ def abrikosov(
 
     if return_canonical:
         # Transform into right canoncial form
-        mps.canonical_form(cutoff=cutoff)
+        match mps.bc:
+            case "finite":
+                mps.canonical_form_finite(cutoff=cutoff)
+            case "infinite":
+                mps.canonical_form_infinite1()
+            case _:
+                raise NotImplementedError(f"Boundary condition {mps.bc!r} not supported")
         logger.info("Transformed MPS to right canonical form")
     else:
         warn(
@@ -307,7 +313,7 @@ def abrikosov_ph(
     return_canonical:
         Whether to transform the output MPS to right canonical form.
     cutoff:
-        Cutoff for Schmidt values to keep in the canonical form.
+        Cutoff for Schmidt values to keep in the canonical form. Only used for finite MPS.
     parity:
         For infinite MPS **only**, determines which fermion parity sector
         of the virtual legs to keep in the projected iMPS.
@@ -445,7 +451,13 @@ def abrikosov_ph(
 
     if return_canonical:
         # Transform into right canoncial form
-        mps.canonical_form(cutoff=cutoff)
+        match mps.bc:
+            case "finite":
+                mps.canonical_form_finite(cutoff=cutoff)
+            case "infinite":
+                mps.canonical_form_infinite1()
+            case _:
+                raise NotImplementedError(f"Boundary condition {mps.bc!r} not supported")
         logger.info("Transformed MPS to right canonical form")
     else:
         warn(
