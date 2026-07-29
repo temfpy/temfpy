@@ -2,6 +2,12 @@
 
 ## TeMFpy 0.4 (in development)
 
+## TeMFpy 0.3.2 (29 July 2026)
+
+### Bug fixes
+
+* Fixed an error in {func}`temfpy.gutzwiller.abrikosov` and {func}`temfpy.gutzwiller.abrikosov_ph` for infinite MPS when `return_canonical=True` by preventing an unsupported `cutoff` argument and resolving the correct canonical form via boundary conditions. [#29](https://github.com/temfpy/temfpy/pull/29)
+
 ## TeMFpy 0.3.1 (28 July 2026)
 
 ### Bug fixes
