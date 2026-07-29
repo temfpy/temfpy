@@ -128,7 +128,7 @@ def abrikosov(
     return_canonical:
         Whether to transform the output MPS to right canonical form.
     cutoff:
-        Cutoff for Schmidt values to keep in the canonical form.
+        Cutoff for Schmidt values to keep in the canonical form. Only used for finite MPS.
     q_left:
         For infinite MPS **only**, determines which fermion number/parity sector
         of the leftmost virtual leg to keep.
