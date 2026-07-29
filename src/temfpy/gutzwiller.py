@@ -341,7 +341,6 @@ def abrikosov_ph(
 
         - no symmetry quantum numbers other than fermion number or parity can be handled.
         - only ``'finite'`` and ``'infinite'`` boundary conditions are supported.
-        - For infinite MPS, ``return_canonical`` triggers :meth:`~tenpy.networks.mps.MPS.canonical_form_infinite1`.
     """
 
     assert (
