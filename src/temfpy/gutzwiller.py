@@ -248,11 +248,14 @@ def abrikosov(
     mps.sites = [spin_site] * mps.L
 
     mps.form = [None] * mps.L
+
     # TODO: Tenpy at the moment requires the schmidt vectors to be non trivial to determine 
-    # TODO: the bond dimensions. As soon as this is fixed, change this back to
-    # TODO: mps._S = [None] * (mps.L + 1)
-    legs = [mps._B[0].get_leg("vL")] + [B.get_leg("vR") for B in mps._B]
-    mps._S = [np.eye(leg.ind_len) for leg in legs]
+    # TODO: the bond dimensions. As soon as this is fixed, change this to
+    # TODO: mps._S = [None] * (mps.L + 1) if mps.finite else [None] * mps.L
+    legs = [B.get_leg("vL") for B in mps._B]
+    if mps.finite: 
+        legs += [mps._B[-1].get_leg("vR")]
+    mps._S = [np.ones(leg.ind_len)/np.sqrt(leg.ind_len) for leg in legs]
 
     logger.info("Completed projection to spin-1/2 space. No conserved charges left.")
 
@@ -446,12 +449,13 @@ def abrikosov_ph(
     mps.sites = [spin_site] * mps.L
 
     mps.form = [None] * mps.L
-
     # TODO: Tenpy at the moment requires the schmidt vectors to be non trivial to determine 
-    # TODO: the bond dimensions. As soon as this is fixed, change this back to
-    # TODO: mps._S = [None] * (mps.L + 1)
-    legs = [mps._B[0].get_leg("vL")] + [B.get_leg("vR") for B in mps._B]
-    mps._S = [np.eye(leg.ind_len) for leg in legs]
+    # TODO: the bond dimensions. As soon as this is fixed, change this to
+    # TODO: mps._S = [None] * (mps.L + 1) if mps.finite else [None] * mps.L
+    legs = [B.get_leg("vL") for B in mps._B]
+    if mps.finite:
+        legs += [mps._B[-1].get_leg("vR")]
+    mps._S = [np.ones(leg.ind_len)/np.sqrt(leg.ind_len) for leg in legs]
     
     logger.info(
         "Completed projection to spin-1/2 space. Conserved charge is now %s",
