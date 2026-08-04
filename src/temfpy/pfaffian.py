@@ -1695,8 +1695,8 @@ class MPSTensorData:
         elif len(v_bra) == len(v_ket):
             # copy v_bra and sets_bra if parity fix needed
             if Schmidt_bra.parity(mode) % 2 != Schmidt_ket.parity(mode) % 2:
-                v_bra = v_bra.copy().setflags(write=True)
-                sets_bra = sets_bra.copy().setflags(write=True)
+                v_bra = v_bra.copy()
+                sets_bra = sets_bra.copy()
         else:
             raise ValueError(
                 f"{mode.capitalize()} sides `Schmidt_bra` and `Schmidt_ket` must match\n"
