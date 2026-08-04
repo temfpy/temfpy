@@ -1455,7 +1455,7 @@ def C_to_iMPS(
 
     if spinful == "simple":
         if offset == "auto":  # NB C_short and cut not yet doubled
-            offset = 2 * round(np.trace(C_short[:cut, :cut]))
+            offset = 2 * round(np.trace(C_short[:cut, :cut]).real)
             logger.info(f"Using total offset {offset} for conserved fermion number")
         else:
             offset *= 2
