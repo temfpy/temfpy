@@ -7,6 +7,7 @@
 * Gutzwiller projection routines now correctly keep the effect of non-inplace {class}`~tenpy.linalg.np_conserved.Array` operations such as {meth}`~tenpy.linalg.np_conserved.Array.drop_charge` and {meth}`~tenpy.linalg.np_conserved.Array.gauge_total_charge`. [#30](https://github.com/temfpy/temfpy/pull/30)
 * Gutzwiller projection routines add a complete set of dummy Schmidt values for compatibility with {meth}`~tenpy.networks.mps.MPS.canonical_form_infinite1` in TeNPy v1.1.0. [#31](https://github.com/temfpy/temfpy/pull/31)
 * Fix a bug preventing {func}`temfpy.slater.C_to_iMPS` to be used with complex correlation matrices. [#32](https://github.com/temfpy/temfpy/pull/32)
+* Removed unnecessary and erroneous {meth}`~numpy.ndarray.setflags` calls from {meth}`temfpy.pfaffian.MPSTensorData.from_schmidt_vectors`. [#33](https://github.com/temfpy/temfpy/pull/33)
 
 ## TeMFpy 0.3.2 (29 July 2026)
 
