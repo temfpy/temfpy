@@ -1488,7 +1488,7 @@ def C_to_iMPS(
     )
 
     if offset == "auto":  # NB took care of spinful="simple" already
-        offset = round(np.trace(C_short[:cut, :cut]))
+        offset = round(np.trace(C_short[:cut, :cut].real))
         logger.info(f"Using offset {offset} for conserved fermion number")
 
     # lists for accumulating the tensors and singular values
