@@ -2,7 +2,7 @@
 #
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
-import os
+import os, shutil
 import temfpy
 
 # -- Project information -- #
@@ -21,7 +21,7 @@ version = release = temfpy.__version__
 # Note that it is somehow important that napoleon comes first
 # see github.com/tox-dev/sphinx-autodoc-typehints
 extensions = [
-    "myst_nb",
+    "myst_nb", # markdown support for sphinx
     "sphinx.ext.napoleon",  # Latex docstring style
     "sphinx.ext.autodoc",
     "sphinx_autodoc_typehints",
@@ -30,6 +30,10 @@ extensions = [
     "sphinx.ext.autosummary",  # extracts taglines from docstrings
     "sphinx.ext.extlinks",  # shortcuts to create hyperlinks
 ]
+
+# -- sphinx.ext.myst_nb -- #
+nb_execution_timeout = 600
+myst_enable_extensions = ["dollarmath", "amsmath"]
 
 # -- sphinx.ext.autodoc -- #
 autodoc_member_order = "bysource"
@@ -96,29 +100,37 @@ def create_example_stubs():
     """create stub files for examples to include them in the documentation."""
     folders = [
         (["examples"], ".py", []),
+        (["examples"], ".ipynb", []), 
     ]
     for subfolders, extension, excludes in folders:
         outdir = os.path.join(os.path.dirname(__file__), *subfolders)
-        if not os.path.isdir(outdir):
-            os.mkdir(outdir)
+        os.makedirs(outdir, exist_ok=True)
         files = os.listdir(os.path.join(REPO_PREFIX, *subfolders))
         files = sorted(
             [fn for fn in files if fn.endswith(extension) and fn not in excludes]
         )
         for fn in files:
-            outfile = os.path.join(outdir, os.path.splitext(fn)[0] + ".rst")
-            if os.path.exists(outfile):
-                continue
             dirs = "/".join(["src"] + subfolders)
-            sentence = (
-                "`on github <{base}/blob/master/{dirs!s}/{fn!s}>`_ "
-                "(`download <{base}/raw/master/{dirs!s}/{fn!s}>`_)."
-            )
-            sentence = sentence.format(dirs=dirs, fn=fn, base=GITHUBBASE)
-            include = f".. literalinclude:: /../../{dirs}/{fn}"
-            text = "\n".join([fn, "=" * len(fn), "", sentence, "", include, ""])
-            with open(outfile, "w") as f:
-                f.write(text)
+            
+            if extension == ".py":
+                outfile = os.path.join(outdir, os.path.splitext(fn)[0] + ".rst")
+                if os.path.exists(outfile):
+                    continue
+                sentence = (
+                    "`on github <{base}/blob/master/{dirs!s}/{fn!s}>`_ "
+                    "(`download <{base}/raw/master/{dirs!s}/{fn!s}>`_)."
+                ).format(dirs=dirs, fn=fn, base=GITHUBBASE)
+                
+                include = f".. literalinclude:: /../../{dirs}/{fn}"
+                text = "\n".join([fn, "=" * len(fn), "", sentence, "", include, ""])
+                with open(outfile, "w") as f:
+                    f.write(text)
+
+            elif extension == ".ipynb":
+                # copy jupyter notebooks to the docs folder so that they can be executed by sphinx
+                src_file = os.path.join(REPO_PREFIX, *subfolders, fn)
+                dest_file = os.path.join(outdir, fn)
+                shutil.copyfile(src_file, dest_file)
 
 
 create_example_stubs()
