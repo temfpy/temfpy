@@ -10,6 +10,7 @@ getting_started/installation
 getting_started/contribute
 getting_started/citing
 getting_started/examples
+getting_started/tutorials
 changelog
 ```
 

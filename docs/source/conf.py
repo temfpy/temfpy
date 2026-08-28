@@ -100,7 +100,7 @@ def create_example_stubs():
     """create stub files for examples to include them in the documentation."""
     folders = [
         (["examples"], ".py", []),
-        (["examples"], ".ipynb", []), 
+        (["tutorials"], ".ipynb", []), 
     ]
     for subfolders, extension, excludes in folders:
         outdir = os.path.join(os.path.dirname(__file__), *subfolders)
