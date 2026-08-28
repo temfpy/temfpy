@@ -1,0 +1,707 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flux sweeping in the pi-flux kagome Dirac spin liquid &mdash; TeMFpy 0.3.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=b9ceff23" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.svg"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d5a15cff"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Changelog" href="../changelog.html" />
+    <link rel="prev" title="Tutorials" href="../getting_started/tutorials.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            TeMFpy
+              <img src="../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/contribute.html">Contributors’ guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/contribute.html#best-practices">Best practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/contribute.html#discuss-before-you-contribute">Discuss before you contribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/contribute.html#no-giant-prs">No giant PRs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/contribute.html#document-your-changes">Document your changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/contribute.html#coding-style">Coding style</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/contribute.html#how-to-submit-a-pr">How to submit a PR</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/citing.html">Citing TeMFpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/examples.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/gutzwiller.html">gutzwiller.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/iMPS.html">iMPS.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/iMPS_pfaffian.html">iMPS_pfaffian.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/iMPS_slater.html">iMPS_slater.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/pfaffian.html">pfaffian.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/slater.html">slater.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../getting_started/tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Flux sweeping in the pi-flux kagome Dirac spin liquid</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#temfpy-0-4-in-development">TeMFpy 0.4 (in development)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#temfpy-0-3-3-28-august-2026">TeMFpy 0.3.3 (28 August 2026)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#temfpy-0-3-2-29-july-2026">TeMFpy 0.3.2 (29 July 2026)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id1">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#temfpy-0-3-1-28-july-2026">TeMFpy 0.3.1 (28 July 2026)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id2">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#temfpy-0-3-21-july-2026">TeMFpy 0.3 (21 July 2026)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#api-breaking-changes">API breaking changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#new-features">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id3">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#temfpy-0-2-1-28-january-2026">TeMFpy 0.2.1 (28 January 2026)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id4">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#temfpy-0-2-23-january-2026">TeMFpy 0.2 (23 January 2026)</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/slater.html">slater</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/slater.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes"><code class="docutils literal notranslate"><span class="pre">SchmidtModes</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.e"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.e</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.vL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.vR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.ixL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.ixL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.ixR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.ixR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.nL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.nL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.nR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.nR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.n_fermion"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.n_fermion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.n_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.n_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.size"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.n_filled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.n_filled()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.vL_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vL_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.vR_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vR_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.mode_vectors"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.mode_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.eigenvalues"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.eigenvalues()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.singular_values"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.singular_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.from_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.from_correlation_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.e_ratio"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.e_ratio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.embed_subsets"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.embed_subsets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtModes.schmidt_values"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.schmidt_values()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtVectors"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtVectors.modes"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.modes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtVectors.left_sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.left_sets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtVectors.right_sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.right_sets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtVectors.schmidt_values"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.schmidt_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtVectors.idx_L"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.idx_L</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtVectors.n_schmidt"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_schmidt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtVectors.n_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtVectors.nL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.nL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtVectors.nR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.nR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtVectors.n_fermion"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_fermion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtVectors.size"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtVectors.vL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.vL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtVectors.vR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.vR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtVectors.mode_vectors"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.mode_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtVectors.sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.sets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtVectors.from_schmidt_modes"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.from_schmidt_modes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.SchmidtVectors.from_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.from_correlation_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/slater.html#temfpy.slater.MPSTensorData"><code class="docutils literal notranslate"><span class="pre">MPSTensorData</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.MPSTensorData.mode"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.mode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.MPSTensorData.physical_leg"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.physical_leg</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.MPSTensorData.det_always"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.det_always</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.MPSTensorData.sometimes_matrix"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.sometimes_matrix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.MPSTensorData.idx_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.MPSTensorData.idx_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.MPSTensorData.new_sets_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.new_sets_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.MPSTensorData.new_sets_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.new_sets_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.MPSTensorData.qtotal"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.qtotal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.MPSTensorData.idx_physical"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_physical</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.MPSTensorData.from_schmidt_vectors"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.from_schmidt_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/slater.html#temfpy.slater.MPSTensorData.to_npc_array"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.to_npc_array()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/slater.html#functions">Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/slater.html#temfpy.slater.correlation_matrix"><code class="docutils literal notranslate"><span class="pre">correlation_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/slater.html#temfpy.slater.spinful_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">spinful_correlation_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/slater.html#temfpy.slater.C_to_MPS"><code class="docutils literal notranslate"><span class="pre">C_to_MPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/slater.html#temfpy.slater.C_to_iMPS"><code class="docutils literal notranslate"><span class="pre">C_to_iMPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/slater.html#temfpy.slater.H_to_MPS"><code class="docutils literal notranslate"><span class="pre">H_to_MPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/slater.html#temfpy.slater.H_to_iMPS"><code class="docutils literal notranslate"><span class="pre">H_to_iMPS()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/pfaffian.html">pfaffian</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/pfaffian.html#representing-nambu-correlation-matrices">Representing Nambu correlation matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/pfaffian.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes"><code class="docutils literal notranslate"><span class="pre">SchmidtModes</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.nL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.nL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.nR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.nR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.e"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.e</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.vL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.vR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.pL"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.pL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.pR"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.pR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.parity"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.parity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.n_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.n_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.size"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.vL_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vL_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.vR_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.vR_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.mode_vectors"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.mode_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.eigenvalues"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.eigenvalues()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.singular_values"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.singular_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.from_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.from_correlation_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.e_ratio"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.e_ratio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.embed_subsets"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.embed_subsets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtModes.schmidt_values"><code class="docutils literal notranslate"><span class="pre">SchmidtModes.schmidt_values()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.modes"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.modes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.left_sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.left_sets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.right_sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.right_sets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.schmidt_values"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.schmidt_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.idx_n"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.idx_n</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.idx_parity"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.idx_parity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.n_schmidt"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_schmidt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.n_entangled"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.n_entangled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.nL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.nL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.nR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.nR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.size"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.vL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.vL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.vR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.vR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.mode_vectors"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.mode_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.pL"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.pL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.pR"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.pR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.parity"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.parity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.sets"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.sets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.from_schmidt_modes"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.from_schmidt_modes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.SchmidtVectors.from_correlation_matrix"><code class="docutils literal notranslate"><span class="pre">SchmidtVectors.from_correlation_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData"><code class="docutils literal notranslate"><span class="pre">MPSTensorData</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.mode"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.mode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.norm"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.norm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.pfaffian_matrix"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.pfaffian_matrix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.labels"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.qtotal"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.qtotal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.leg_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.leg_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.new_sets_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.new_sets_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.idx_n_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_n_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.leg_idx_bra"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.leg_idx_bra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.leg_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.leg_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.new_sets_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.new_sets_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.idx_n_ket"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.idx_n_ket</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.from_schmidt_vectors"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.from_schmidt_vectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.MPSTensorData.to_npc_array"><code class="docutils literal notranslate"><span class="pre">MPSTensorData.to_npc_array()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/pfaffian.html#high-level-functions">High-level functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.correlation_matrix"><code class="docutils literal notranslate"><span class="pre">correlation_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.parity"><code class="docutils literal notranslate"><span class="pre">parity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.C_to_MPS"><code class="docutils literal notranslate"><span class="pre">C_to_MPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.C_to_iMPS"><code class="docutils literal notranslate"><span class="pre">C_to_iMPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.H_to_MPS"><code class="docutils literal notranslate"><span class="pre">H_to_MPS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.H_to_iMPS"><code class="docutils literal notranslate"><span class="pre">H_to_iMPS()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/pfaffian.html#helper-functions">Helper functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.vector_C2M"><code class="docutils literal notranslate"><span class="pre">vector_C2M()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.vector_M2C"><code class="docutils literal notranslate"><span class="pre">vector_M2C()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.matrix_C2M"><code class="docutils literal notranslate"><span class="pre">matrix_C2M()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.matrix_M2C"><code class="docutils literal notranslate"><span class="pre">matrix_M2C()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.assert_nambu"><code class="docutils literal notranslate"><span class="pre">assert_nambu()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.assert_nambu_hamiltonian"><code class="docutils literal notranslate"><span class="pre">assert_nambu_hamiltonian()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/pfaffian.html#temfpy.pfaffian.assert_nambu_correlation"><code class="docutils literal notranslate"><span class="pre">assert_nambu_correlation()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/iMPS.html">iMPS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/iMPS.html#temfpy.iMPS.MPS_to_iMPS"><code class="docutils literal notranslate"><span class="pre">MPS_to_iMPS()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/iMPS.html#temfpy.iMPS.overlap_schmidt"><code class="docutils literal notranslate"><span class="pre">overlap_schmidt()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/iMPS.html#temfpy.iMPS.basis_rotation"><code class="docutils literal notranslate"><span class="pre">basis_rotation()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/iMPS.html#temfpy.iMPS.iMPSError"><code class="docutils literal notranslate"><span class="pre">iMPSError</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/iMPS.html#temfpy.iMPS.iMPSError.left_unitary"><code class="docutils literal notranslate"><span class="pre">iMPSError.left_unitary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/iMPS.html#temfpy.iMPS.iMPSError.left_schmidt"><code class="docutils literal notranslate"><span class="pre">iMPSError.left_schmidt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/iMPS.html#temfpy.iMPS.iMPSError.right_unitary"><code class="docutils literal notranslate"><span class="pre">iMPSError.right_unitary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/iMPS.html#temfpy.iMPS.iMPSError.right_schmidt"><code class="docutils literal notranslate"><span class="pre">iMPSError.right_schmidt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/iMPS.html#temfpy.iMPS.iMPSError.left_total"><code class="docutils literal notranslate"><span class="pre">iMPSError.left_total</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/iMPS.html#temfpy.iMPS.iMPSError.right_total"><code class="docutils literal notranslate"><span class="pre">iMPSError.right_total</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/iMPS.html#temfpy.iMPS.iMPSError.total_error"><code class="docutils literal notranslate"><span class="pre">iMPSError.total_error</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/gutzwiller.html">gutzwiller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/gutzwiller.html#gutzwiller-projections-of-abrikosov-fermions">Gutzwiller projections of Abrikosov fermions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/gutzwiller.html#temfpy.gutzwiller.abrikosov"><code class="docutils literal notranslate"><span class="pre">abrikosov()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/gutzwiller.html#temfpy.gutzwiller.abrikosov_ph"><code class="docutils literal notranslate"><span class="pre">abrikosov_ph()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/gutzwiller.html#helper-functions">Helper functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/gutzwiller.html#temfpy.gutzwiller.parity_mask"><code class="docutils literal notranslate"><span class="pre">parity_mask()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/gutzwiller.html#temfpy.gutzwiller.number_mask"><code class="docutils literal notranslate"><span class="pre">number_mask()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/testing.html">testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/testing.html#temfpy.testing.TEST_ACTION"><code class="docutils literal notranslate"><span class="pre">TEST_ACTION</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/testing.html#testing-functions">Testing functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/testing.html#temfpy.testing.assert_allclose"><code class="docutils literal notranslate"><span class="pre">assert_allclose()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/testing.html#temfpy.testing.assert_array_less"><code class="docutils literal notranslate"><span class="pre">assert_array_less()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/testing.html#temfpy.testing.check_schmidt_decomposition"><code class="docutils literal notranslate"><span class="pre">check_schmidt_decomposition()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/testing.html#temfpy.testing.ComparisonWarning"><code class="docutils literal notranslate"><span class="pre">ComparisonWarning</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/schmidt_utils.html">schmidt_utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition"><code class="docutils literal notranslate"><span class="pre">StoppingCondition</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.sectors"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.sectors</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.chi_max"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.chi_max</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.svd_min"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.svd_min</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.degeneracy_tol"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.degeneracy_tol</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.__call__"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.__call__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/schmidt_utils.html#temfpy.schmidt_utils.StoppingCondition.truncate"><code class="docutils literal notranslate"><span class="pre">StoppingCondition.truncate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/schmidt_utils.html#temfpy.schmidt_utils.lowest_sums"><code class="docutils literal notranslate"><span class="pre">lowest_sums()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/utils.html">utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/utils.html#temfpy.utils.HT"><code class="docutils literal notranslate"><span class="pre">HT()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/utils.html#temfpy.utils.n_slice"><code class="docutils literal notranslate"><span class="pre">n_slice()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/utils.html#temfpy.utils.block_svd"><code class="docutils literal notranslate"><span class="pre">block_svd()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/utils.html#temfpy.utils.normalize_SV"><code class="docutils literal notranslate"><span class="pre">normalize_SV()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TeMFpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../getting_started/tutorials.html">Tutorials</a></li>
+      <li class="breadcrumb-item active">Flux sweeping in the pi-flux kagome Dirac spin liquid</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tutorials/pi_flux_kagome.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="flux-sweeping-in-the-pi-flux-kagome-dirac-spin-liquid">
+<h1>Flux sweeping in the pi-flux kagome Dirac spin liquid<a class="headerlink" href="#flux-sweeping-in-the-pi-flux-kagome-dirac-spin-liquid" title="Link to this heading"></a></h1>
+<p>This notebook implements part of the example workflow from the <a class="reference external" href="https://arxiv.org/abs/2510.05227">TeMFpy paper</a>, which considers a <span class="math notranslate nohighlight">\(\pi\)</span>-flux kagome model on a shifted cylinder with a spin flux <span class="math notranslate nohighlight">\(\theta\)</span> threaded through it.
+Specifically, we compute the inverse correlation length spectrum of its Gutzwiller-projected iMPS ground state at half filling for a single value of <span class="math notranslate nohighlight">\(\theta\)</span>.
+To achieve this, the notebook is structured into the following steps:</p>
+<ol class="arabic simple">
+<li><p>Construct the Hamiltonians</p></li>
+<li><p>Build the correlation matrices</p></li>
+<li><p>Obtain the iMPS representation and project to spin space</p></li>
+<li><p>Compute the inverse correlation lengths</p></li>
+</ol>
+<p>The full version of the code, used to generate all figures in paper, can be found in the <a class="reference external" href="https://github.com/temfpy/projects/tree/main/pi_flux_kagome">TeMFpy projects repository</a>.</p>
+<p style="font-size:2em"><strong>1. Construct the Hamiltonians</strong></p>
+<p>The Hamiltonian of the <span class="math notranslate nohighlight">\(\pi\)</span>-flux kagome model is given by</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{H}_{\pi\text{-flux}}(\theta) = - \sum_\sigma \sum_{\langle ij \rangle} e^{i\varphi_{ij}} f^\dagger_{i,\sigma} f_{j,\sigma}\, e^{\sigma\theta[\mathrm{cell}(i)-\mathrm{cell}(j)]/2L_2} \equiv \sum_\sigma \sum_{\alpha\beta} f^\dagger_{\alpha,\sigma}\, [h_\sigma(\theta)]_{\alpha\beta}\, f_{\beta,\sigma} \, ,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathrm{cell}(i)\)</span> denotes the unit cell of the lattice containing site <span class="math notranslate nohighlight">\(i\)</span>.
+Since the Hamiltonian is block diagonal in spin space and <span class="math notranslate nohighlight">\(h_\downarrow(\theta)=\bigl(h_\uparrow(\theta)\bigr)^*\)</span>, we only need to construct <span class="math notranslate nohighlight">\(h_\uparrow(\theta)\)</span>.</p>
+<p><strong>Specifying all hoppings</strong> - To build a quadratic Hamiltonian, a good first step is to specify the hoppings of the model.
+Due to translation invariance, we only need to specify the hoppings for a single unit cell.
+A hopping is given by an amplitude, the origin of the hopping, and the translation to the target.
+Since a lattice site can be specified by its unit-cell coordinates <span class="math notranslate nohighlight">\((x,y)\)</span> and its basis index <span class="math notranslate nohighlight">\(u\)</span>, we distinguish two types of hoppings:</p>
+<ul class="simple">
+<li><p>intra-hopping: a hopping within the same unit cell,</p></li>
+<li><p>inter-hopping: a hopping between two unit cells.
+In the following, the unit-cell coordinates are expressed in terms of the primitive basis vectors <span class="math notranslate nohighlight">\(a_1\)</span> and <span class="math notranslate nohighlight">\(a_2\)</span>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_intra_hoppings</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Format: u: [(t,ut), ...]</span>
+<span class="sd">    u = index of the basis site of the origin</span>
+<span class="sd">    t = hopping amplitude</span>
+<span class="sd">    ut = index of the basis site of the target</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="p">{</span>
+         <span class="mi">0</span><span class="p">:</span> <span class="p">[(</span><span class="n">t</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>
+         <span class="mi">1</span><span class="p">:</span> <span class="p">[(</span><span class="o">-</span><span class="n">t</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>
+         <span class="mi">2</span><span class="p">:</span> <span class="p">[(</span><span class="n">t</span><span class="p">,</span> <span class="mi">3</span><span class="p">)],</span>
+         <span class="mi">3</span><span class="p">:</span> <span class="p">[(</span><span class="o">-</span><span class="n">t</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="p">,</span> <span class="mi">5</span><span class="p">)],</span>
+         <span class="mi">4</span><span class="p">:</span> <span class="p">[(</span><span class="n">t</span><span class="p">,</span> <span class="mi">5</span><span class="p">)],</span>
+    <span class="p">}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_inter_hoppings</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">flux</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Format: u: [(t,[ut, delta_a]), ...]</span>
+<span class="sd">    u = index of the basis site of the origin</span>
+<span class="sd">    t = hopping amplitude</span>
+<span class="sd">    ut = index of the basis site of the target</span>
+<span class="sd">    delta_a = translation vector connecting the unit cells of the origin and the target</span>
+<span class="sd">    """</span>
+    <span class="n">phase</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">flux</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="mi">1</span><span class="p">:</span> <span class="p">[(</span><span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])])],</span>
+        <span class="mi">2</span><span class="p">:</span> <span class="p">[(</span><span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])])],</span>
+        <span class="mi">4</span><span class="p">:</span> <span class="p">[(</span><span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])])],</span>
+        <span class="mi">5</span><span class="p">:</span> <span class="p">[(</span><span class="n">t</span><span class="o">*</span><span class="n">phase</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])]),</span> <span class="p">(</span><span class="n">t</span><span class="o">*</span><span class="n">phase</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])])]</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Apply hoppings</strong> - Next, we need to be able to apply a hopping, i.e., given a position and a translation, determine the target site.
+To do so, we need to check:</p>
+<ul class="simple">
+<li><p>(1) Is the target within the lattice?</p></li>
+<li><p>(2) What is the position of the target?</p></li>
+</ul>
+<p>Together, these two checks implement the boundary conditions of the shifted cylinder.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">translate</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">translation</span><span class="p">,</span> <span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">pos</span>
+    <span class="n">ut</span><span class="p">,</span> <span class="n">delta_a</span> <span class="o">=</span> <span class="n">translation</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span><span class="o">+</span><span class="n">delta_a</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="n">delta_a</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">ut</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">target</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">target</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">L2</span><span class="p">:</span>
+        <span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">target</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">target</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">target</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">%</span> <span class="n">L2</span>
+
+    <span class="k">if</span> <span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">L1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">target</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Assembling the Hamiltonian</strong> - With the hoppings specified, we now need to convert a position into a 1D index.
+We choose a snake-like numbering (standard for MPS). Then, the Hamiltonian is built by looping over all unit cells, applying all hoppings each time.
+We need two cylinders whose lengths differ by the desired iMPS unit cell and which are long enough for the iMPS unit cell extracted from the middle of the cylinder to be representative of the thermodynamic limit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">get_index</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">L2</span><span class="p">):</span>
+    <span class="n">p1</span><span class="p">,</span><span class="n">p2</span><span class="p">,</span><span class="n">u</span> <span class="o">=</span> <span class="n">pos</span>
+    <span class="k">return</span> <span class="mi">6</span> <span class="o">*</span> <span class="p">(</span><span class="n">p2</span> <span class="o">+</span> <span class="n">L2</span> <span class="o">*</span> <span class="n">p1</span><span class="p">)</span> <span class="o">+</span> <span class="n">u</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_sp_hamiltonian</span><span class="p">(</span><span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">,</span> <span class="n">spinflux</span><span class="p">):</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="o">*</span><span class="n">L1</span><span class="o">*</span><span class="n">L2</span><span class="p">,</span> <span class="mi">6</span><span class="o">*</span><span class="n">L1</span><span class="o">*</span><span class="n">L2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+
+    <span class="n">intra_hoppings</span> <span class="o">=</span> <span class="n">get_intra_hoppings</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">inter_hoppings</span> <span class="o">=</span> <span class="n">get_inter_hoppings</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">spinflux</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">L2</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">p1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">p2</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L2</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+                <span class="n">pos</span> <span class="o">=</span> <span class="p">[</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">u</span><span class="p">]</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">get_index</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">L2</span><span class="p">)</span>
+
+                <span class="c1"># Intra-cell hoppings</span>
+                <span class="k">if</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">intra_hoppings</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">hopping</span> <span class="ow">in</span> <span class="n">intra_hoppings</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+                        <span class="n">t_hop</span><span class="p">,</span> <span class="n">u_target</span> <span class="o">=</span> <span class="n">hopping</span>
+                        <span class="n">target_pos</span> <span class="o">=</span> <span class="p">[</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">u_target</span><span class="p">]</span>
+                        <span class="n">target_idx</span> <span class="o">=</span> <span class="n">get_index</span><span class="p">(</span><span class="n">target_pos</span><span class="p">,</span> <span class="n">L2</span><span class="p">)</span>
+                        <span class="n">H</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="n">target_idx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">t_hop</span>
+
+                <span class="c1"># Inter-cell hoppings</span>
+                <span class="k">if</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">inter_hoppings</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">hopping</span> <span class="ow">in</span> <span class="n">inter_hoppings</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+                        <span class="n">t_hop</span><span class="p">,</span> <span class="n">translation</span> <span class="o">=</span> <span class="n">hopping</span>
+                        <span class="n">target_pos</span> <span class="o">=</span> <span class="n">translate</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">translation</span><span class="p">,</span> <span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">target_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">target_idx</span> <span class="o">=</span> <span class="n">get_index</span><span class="p">(</span><span class="n">target_pos</span><span class="p">,</span> <span class="n">L2</span><span class="p">)</span>
+                            <span class="n">H</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="n">target_idx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">t_hop</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">H</span> <span class="o">+</span> <span class="n">H</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">return</span> <span class="n">H</span>
+
+<span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">,</span> <span class="n">spinflux</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+
+<span class="n">H_long_up</span> <span class="o">=</span> <span class="n">generate_sp_hamiltonian</span><span class="p">(</span><span class="n">L1</span> <span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">L2</span><span class="p">,</span> <span class="n">spinflux</span><span class="p">)</span>
+<span class="n">H_short_up</span> <span class="o">=</span> <span class="n">H_long_up</span><span class="p">[:</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p style="font-size:2em"><strong>2. Build the correlation matrices</strong></p>
+<p>Since the Hamiltonian is block diagonal in spin space, the spinful correlation matrix <span class="math notranslate nohighlight">\(C^{(\mathrm{spinful)}}(\theta)\)</span>, can be constructed from the up-spin correlation matrix <span class="math notranslate nohighlight">\(C_\uparrow(\theta)\)</span>.
+Usually, this would be handled by <code class="docutils literal notranslate"><span class="pre">temfpy.slater.spinful_correlation_matrix()</span></code>. However here, <span class="math notranslate nohighlight">\(h_\uparrow(\theta)\)</span> and <span class="math notranslate nohighlight">\(h_\downarrow(\theta)\)</span> are not equal due to the spin-flux insertion, so we implement</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \left[C^{(\mathrm{spinful)}}_{\mathrm{ph}}(\theta)\right]_{ij} =
+    \begin{pmatrix}
+        C_\uparrow(\theta)_{ij} &amp; 0 \\
+        0 &amp;  \delta_{ij} - C_\downarrow(\theta)_{ij}
+    \end{pmatrix} =
+    \begin{pmatrix}
+        C_\uparrow(\theta)_{ij} &amp; 0 \\
+        0 &amp;  \delta_{ij} - C_\uparrow(\theta)^*_{ij}
+    \end{pmatrix} \, ,
+\end{split}\]</div>
+<p>which also performs a particle-hole rotation on the down spins so that the <span class="math notranslate nohighlight">\(U(1)\)</span> particle number corresponds to <span class="math notranslate nohighlight">\(S^z\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">temfpy.slater</span><span class="w"> </span><span class="kn">import</span> <span class="n">correlation_matrix</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">spinful_C_with_conjugation</span><span class="p">(</span><span class="n">H</span><span class="p">):</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">L</span><span class="o">%</span><span class="k">2</span> == 0 # otherwise half-filling is impossible
+
+    <span class="n">C_up</span><span class="p">,</span> <span class="n">_</span><span class="o">=</span> <span class="n">correlation_matrix</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">L</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
+    <span class="c1"># Add down-spin part</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">L</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">L</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">C_up</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">C</span><span class="p">[::</span><span class="mi">2</span><span class="p">,</span> <span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">C_up</span>
+    <span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="o">-</span> <span class="n">C_up</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">C</span>
+
+<span class="n">C_short_spinful</span> <span class="o">=</span> <span class="n">spinful_C_with_conjugation</span><span class="p">(</span><span class="n">H_short_up</span><span class="p">)</span>
+<span class="n">C_long_spinful</span> <span class="o">=</span> <span class="n">spinful_C_with_conjugation</span><span class="p">(</span><span class="n">H_long_up</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p style="font-size:2em"><strong>3. Obtain the iMPS representation and project to spin space</strong></p>
+<p>With the two spinful correlation matrices, we can use <code class="docutils literal notranslate"><span class="pre">temfpy.slater.C_to_iMPS()</span></code> to obtain the iMPS representation of the ground state at half filling and <code class="docutils literal notranslate"><span class="pre">temfpy.gutzwiller.abrikosov_ph()</span></code> to project it into spin space.
+For this, we have to specify which unit cell of the longer mean-field state should be extracted as a representative of the thermodynamic limit:
+This unit cell should align with the repeating unit cell of the mean-field Hamiltonian (in our case, it should start and end at integer multiples of the <span class="math notranslate nohighlight">\(2\times6=12\)</span>-site unit cell) and be as close to the middle of the finite cylinders as possible.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">temfpy.slater</span><span class="w"> </span><span class="kn">import</span> <span class="n">C_to_iMPS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">temfpy.gutzwiller</span><span class="w"> </span><span class="kn">import</span> <span class="n">abrikosov_ph</span>
+
+<span class="n">idx_cut</span> <span class="o">=</span> <span class="mi">12</span> <span class="o">*</span> <span class="p">((</span><span class="n">L1</span> <span class="o">*</span> <span class="n">L2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># Start of middle unit cell in C_short</span>
+<span class="n">psi_parton</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">C_to_iMPS</span><span class="p">(</span>
+    <span class="n">C_short</span> <span class="o">=</span> <span class="n">C_short_spinful</span><span class="p">,</span> 
+    <span class="n">C_long</span> <span class="o">=</span> <span class="n">C_long_spinful</span><span class="p">,</span> 
+    <span class="n">trunc_par</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'chi_max'</span><span class="p">:</span> <span class="mi">2000</span><span class="p">},</span> 
+    <span class="n">sites_per_cell</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> 
+    <span class="n">cut</span> <span class="o">=</span> <span class="n">idx_cut</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Gutzwiller projection</span>
+<span class="n">psi_spin</span> <span class="o">=</span> <span class="n">abrikosov_ph</span><span class="p">(</span><span class="n">psi_parton</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_canonical</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/temfpy/testing.py:88: ComparisonWarning: 
+vL and vR do not SVD C_LR
+Not equal to tolerance rtol=0, atol=1e-08
+
+Mismatched elements: 2732 / 366912 (0.745%)
+First 5 mismatches are at indices:
+ [0, 110]: (-0.0038184542478418002+0.0011563413425651232j) (ACTUAL), (-0.003818444743847009+0.0011563482366750524j) (DESIRED)
+ [0, 138]: (0.0038614383854817308+0.0010905950692269748j) (ACTUAL), (0.0038614297303503752+0.0010905897627798524j) (DESIRED)
+ [1, 111]: (0.0038184541696899884+0.0011563422561596873j) (ACTUAL), (0.003818444743847009+0.0011563482366750524j) (DESIRED)
+ [416, 32]: (-0.0002069313467235241-0.001834666815874365j) (ACTUAL), (-0.00020692085771833427-0.0018346713615569003j) (DESIRED)
+ [416, 34]: (0.0007064020898575276-0.0013299263125958925j) (ACTUAL), (0.0007064099769545321-0.0013299335608866387j) (DESIRED)
+Max absolute difference among violations: 4.65179676e-08
+Max relative difference among violations: 0.00015176
+  warnings.warn("\n" + err_msg + str(err), category=ComparisonWarning)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/temfpy/testing.py:88: ComparisonWarning: 
+vL and vR do not SVD C_LR
+Not equal to tolerance rtol=0, atol=1e-08
+
+Mismatched elements: 2778 / 373968 (0.743%)
+First 5 mismatches are at indices:
+ [0, 34]: (0.003932403071316204-0.0037455355170185143j) (ACTUAL), (0.003932392925007519-0.003745535292693551j) (DESIRED)
+ [0, 110]: (-0.003779575203032147+0.0011169294669105484j) (ACTUAL), (-0.0037795656448628917+0.0011169365644914395j) (DESIRED)
+ [0, 126]: (-0.0019111668597786673-0.003421095657179017j) (ACTUAL), (-0.00191115719869134-0.003421092901299113j) (DESIRED)
+ [0, 138]: (0.003810544713740989+0.0010764331326136932j) (ACTUAL), (0.003810535858531917+0.0010764279116299512j) (DESIRED)
+ [1, 35]: (-0.003932403126031744-0.0037455351670182984j) (ACTUAL), (-0.003932392925007519-0.003745535292693551j) (DESIRED)
+Max absolute difference among violations: 4.65683836e-08
+Max relative difference among violations: 0.00014704
+  warnings.warn("\n" + err_msg + str(err), category=ComparisonWarning)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/temfpy/iMPS.py:158: UserWarning: 
+Left overlap matrix deviates from unitarity by (0.004484639364009605+0j).
+Increasing the bond dimension may be useful.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/temfpy/iMPS.py:187: UserWarning: 
+Mixing between unequal Schmidt value sectors on the left side is
+1.8592303644845935e-05. Increasing the number of sites may help.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/temfpy/gutzwiller.py:79: UserWarning: Input MPS unit_cell_width = 12 does not divide new MPS size 6
+Default to chain geometry
+  warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>canonical_form_infinite: project to significantly smaller chi
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>canonical_form_infinite: project to significantly smaller chi
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>canonical_form_infinite: project to significantly smaller chi
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>canonical_form_infinite: project to significantly smaller chi
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>canonical_form_infinite: project to significantly smaller chi
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>canonical_form_infinite: project to significantly smaller chi
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>canonical_form_infinite: project to significantly smaller chi
+</pre></div>
+</div>
+</div>
+</div>
+<p style="font-size:2em"><strong>4. Compute the inverse correlation lengths</strong></p>
+<p>We are interested in the correlation lengths of the spin-spin correlator <span class="math notranslate nohighlight">\(\langle S_i^+ S_j^-\rangle\)</span>, which can be obtained from the eigenvalues <span class="math notranslate nohighlight">\(\lambda\)</span> of the iMPS transfer matrix via <span class="math notranslate nohighlight">\(\xi^{-1} = -\log|\lambda|\)</span>.
+Since these operators change the conserved quantum number <span class="math notranslate nohighlight">\(2S^z\)</span> of the iMPS, the relevant eigenvalues are those associated with eigenvectors of charge sector 2. We use <a class="reference external" href="https://tenpy.readthedocs.io/en/latest/">TeNpy</a> for this.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tenpy.networks</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransferMatrix</span>
+
+<span class="n">tm</span> <span class="o">=</span> <span class="n">TransferMatrix</span><span class="p">(</span><span class="n">psi_spin</span><span class="p">,</span> <span class="n">psi_spin</span><span class="p">,</span> <span class="n">charge_sector</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">num_ev</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">eigV</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">eigenvectors</span><span class="p">(</span><span class="n">num_ev</span> <span class="o">=</span> <span class="n">num_ev</span><span class="p">)</span>
+<span class="n">inverse_correlation_length</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">eigV</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>At this point, we have successfully computed the inverse correlation length for a single spin flux <span class="math notranslate nohighlight">\(\theta\)</span>.
+To obtain the full spectrum, we would need to iterate over all values of the spin flux.
+This, together with the code to obtain all other figures in the paper, can be found in the <a class="reference external" href="https://github.com/temfpy/temfpy">examples repository</a>.
+As a last step in this notebook, we plot the correlation length for this single flux, and see that we indeed hit a Dirac cone (<span class="math notranslate nohighlight">\(\xi \rightarrow 0\)</span>) at <span class="math notranslate nohighlight">\(\theta = \pi\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">fluxes</span> <span class="o">=</span> <span class="n">num_ev</span> <span class="o">*</span> <span class="p">[</span><span class="n">spinflux</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">fluxes</span><span class="p">,</span> <span class="n">inverse_correlation_length</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> 
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">fluxes</span> <span class="o">=</span> <span class="n">num_ev</span> <span class="o">*</span> <span class="p">[</span><span class="n">spinflux</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">fluxes</span><span class="p">,</span> <span class="n">inverse_correlation_length</span><span class="p">)</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named 'matplotlib'
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../getting_started/tutorials.html" class="btn btn-neutral float-left" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025-2026, Simon Hans Hille, Attila Szabó.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
