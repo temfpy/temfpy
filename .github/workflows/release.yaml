@@ -94,7 +94,7 @@ jobs:
     needs: [build_package]
     runs-on: ubuntu-latest
     environment:
-      name: pypiss
+      name: pypi
       url: https://pypi.org/project/temfpy/
     permissions:
       contents: read
