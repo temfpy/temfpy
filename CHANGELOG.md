@@ -2,6 +2,8 @@
 
 ## TeMFpy 0.4 (in development)
 
+## TeMFpy 0.3.3 (28 August 2026)
+
 ### Bug fixes
 
 * Gutzwiller projection routines now correctly keep the effect of non-inplace {class}`~tenpy.linalg.np_conserved.Array` operations such as {meth}`~tenpy.linalg.np_conserved.Array.drop_charge` and {meth}`~tenpy.linalg.np_conserved.Array.gauge_total_charge`. [#30](https://github.com/temfpy/temfpy/pull/30)
