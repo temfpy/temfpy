@@ -2,7 +2,7 @@
 
 ## TeMFpy 0.4 (in development)
 
-## TeMFpy 0.3.2 (28 August 2026)
+## TeMFpy 0.3.3 (28 August 2026)
 
 ### Bug fixes
 
